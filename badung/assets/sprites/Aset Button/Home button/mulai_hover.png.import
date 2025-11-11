@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw6tvc46dbnbo"
-path="res://.godot/imported/start button hover.png-f6848bf0dc60e3fad171b77590cdfb52.ctex"
+uid="uid://vwbu5dk0lbyp"
+path="res://.godot/imported/mulai_hover.png-9de9fa30c62c50ef52be0fd28c411d00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/Home button/start button hover.png"
-dest_files=["res://.godot/imported/start button hover.png-f6848bf0dc60e3fad171b77590cdfb52.ctex"]
+source_file="res://assets/sprites/Aset Button/Home button/mulai_hover.png"
+dest_files=["res://.godot/imported/mulai_hover.png-9de9fa30c62c50ef52be0fd28c411d00.ctex"]
 
 [params]
 

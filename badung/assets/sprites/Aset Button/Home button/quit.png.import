@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3ffgxh5v136k"
-path="res://.godot/imported/keluar.svg-cea9aa2fa1a55a429e09408ab47d2fb0.ctex"
+uid="uid://brw5a3547qub7"
+path="res://.godot/imported/quit.png-6db500ad5037a3750098ef673bc8f608.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/Home button/keluar.svg"
-dest_files=["res://.godot/imported/keluar.svg-cea9aa2fa1a55a429e09408ab47d2fb0.ctex"]
+source_file="res://assets/sprites/Aset Button/Home button/quit.png"
+dest_files=["res://.godot/imported/quit.png-6db500ad5037a3750098ef673bc8f608.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

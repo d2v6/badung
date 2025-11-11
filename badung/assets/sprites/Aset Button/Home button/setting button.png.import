@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xeioujdyv7gx"
-path="res://.godot/imported/tutorial button.svg-9165d618040a6d7dfa385696dc3ab29a.ctex"
+uid="uid://bybvnw6iqqjbv"
+path="res://.godot/imported/setting button.png-daaf9aa0b01ff5e08a8f346a42a72d69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/Home button/tutorial button.svg"
-dest_files=["res://.godot/imported/tutorial button.svg-9165d618040a6d7dfa385696dc3ab29a.ctex"]
+source_file="res://assets/sprites/Aset Button/Home button/setting button.png"
+dest_files=["res://.godot/imported/setting button.png-daaf9aa0b01ff5e08a8f346a42a72d69.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

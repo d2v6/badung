@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tauev4f44bp3"
-path="res://.godot/imported/start button.png-3348403aff4291cf4271c1d21008ceb5.ctex"
+uid="uid://w1nub8i1eyi2"
+path="res://.godot/imported/mulai.png-48f44ed94ec687548e4341a208d21ec9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/Home button/start button.png"
-dest_files=["res://.godot/imported/start button.png-3348403aff4291cf4271c1d21008ceb5.ctex"]
+source_file="res://assets/sprites/Aset Button/Home button/mulai.png"
+dest_files=["res://.godot/imported/mulai.png-48f44ed94ec687548e4341a208d21ec9.ctex"]
 
 [params]
 
