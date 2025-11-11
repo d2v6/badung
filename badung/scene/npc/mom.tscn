@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://es0hoh0nd4yw"]
+
+[ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/mom.gd" id="1_pnctf"]
+[ext_resource type="Texture2D" uid="uid://qv3y81u126ip" path="res://assets/sprites/charater_example.png" id="2_ey7fl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8g8p"]
+atlas = ExtResource("2_ey7fl")
+region = Rect2(64, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8g8p")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
+radius = 15.033297
+
+[node name="Mom" type="CharacterBody2D"]
+script = ExtResource("1_pnctf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -46)
+scale = Vector2(3.7812498, 3.7812498)
+sprite_frames = SubResource("SpriteFrames_kk4ol")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -17)
+shape = SubResource("CircleShape2D_4reak")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

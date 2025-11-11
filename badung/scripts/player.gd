@@ -21,6 +21,10 @@ func _physics_process(delta: float) -> void:
 
 # update funtcion pas udh ada sprite direction y
 func _update_animation(direction: Vector2, velocity: Vector2) -> void:
+	if(direction.x > 0):
+		animated_sprite.flip_h = false
+	else:
+		animated_sprite.flip_h = true;
 	if velocity == Vector2.ZERO:
 		animated_sprite.play("idle")
 	else:

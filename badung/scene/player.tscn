@@ -83,7 +83,7 @@ region = Rect2(192, 96, 32, 32)
 atlas = ExtResource("1_xo3ru")
 region = Rect2(224, 96, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hjaqi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -157,19 +157,20 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
-radius = 17.029387
+radius = 19.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_hjaqi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, -46)
-scale = Vector2(3.7812498, 3.7812498)
-sprite_frames = SubResource("SpriteFrames_kk4ol")
+position = Vector2(7.1525574e-07, -48)
+scale = Vector2(4.4279175, 3.977865)
+sprite_frames = SubResource("SpriteFrames_hjaqi")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.9601243
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -18)
+position = Vector2(0, -19)
 shape = SubResource("CircleShape2D_4reak")
+
+[node name="Camera2D" type="Camera2D" parent="."]

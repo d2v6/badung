@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="badung"
-run/main_scene="uid://vliww4ddhpnd"
+run/main_scene="uid://hnldfnc1mcaw"
 config/features=PackedStringArray("4.5", "Forward Plus")
+
+[autoload]
+
+SceneTransition="*res://scene/main/scene_transition.tscn"
 
 [input]
 
