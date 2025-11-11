@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://baeww4cfqv76d"]
+[gd_scene load_steps=4 format=3 uid="uid://d1261hhkmm05o"]
 
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_wwbp6"]
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player.tscn" id="2_nxvai"]
