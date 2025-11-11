@@ -4,6 +4,8 @@ const SPEED = 300.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+var held_objective: Node2D = null
+
 func _physics_process(delta: float) -> void:
 	var direction = Vector2(
 		Input.get_axis("left", "right"),
@@ -19,12 +21,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation(direction, velocity)
 
+# Called by objective when grabbed
+func on_objective_grabbed(objective: Node2D) -> void:
+	held_objective = objective
+	print("Player is now holding: ", objective.name)
+
 # update funtcion pas udh ada sprite direction y
 func _update_animation(direction: Vector2, velocity: Vector2) -> void:
-	if(direction.x > 0):
+	if (direction.x > 0) :
 		animated_sprite.flip_h = false
-	else:
+	elif (direction.x < 0):
 		animated_sprite.flip_h = true;
+
 	if velocity == Vector2.ZERO:
 		animated_sprite.play("idle")
 	else:

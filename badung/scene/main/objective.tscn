@@ -1,0 +1,168 @@
+[gd_scene load_steps=16 format=3 uid="uid://bljpmixwqyh0l"]
+
+[ext_resource type="Texture2D" uid="uid://qv3y81u126ip" path="res://assets/sprites/charater_example.png" id="1_i7ijm"]
+[ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/objective.gd" id="1_scdjc"]
+[ext_resource type="Texture2D" uid="uid://drbdpox4tf83c" path="res://assets/sprites/Aset Button/WASD/K1.png" id="2_scdjc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbup2"]
+atlas = ExtResource("1_i7ijm")
+region = Rect2(64, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_scdjc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbup2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nbup2"]
+radius = 29.017237
+
+[sub_resource type="Animation" id="Animation_i7ijm"]
+resource_name = "default"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_scdjc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nbup2"]
+_data = {
+&"RESET": SubResource("Animation_scdjc"),
+&"default": SubResource("Animation_i7ijm")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scdjc"]
+atlas = ExtResource("1_i7ijm")
+region = Rect2(64, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nbup2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scdjc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qdi1e"]
+radius = 29.017237
+
+[sub_resource type="Animation" id="Animation_q5vvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1lprp"]
+resource_name = "default"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m4jf3"]
+_data = {
+&"RESET": SubResource("Animation_q5vvo"),
+&"default": SubResource("Animation_1lprp")
+}
+
+[node name="Objective" type="Node2D"]
+script = ExtResource("1_scdjc")
+
+[node name="Glow" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_scdjc")
+
+[node name="Item" type="Sprite2D" parent="."]
+
+[node name="Grab Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grab Area"]
+shape = SubResource("CircleShape2D_nbup2")
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(41, -27.000002)
+scale = Vector2(0.012818288, 0.012818288)
+texture = ExtResource("2_scdjc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Button"]
+libraries = {
+&"": SubResource("AnimationLibrary_nbup2")
+}
+autoplay = "default"
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Glow" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_nbup2")
+
+[node name="Item" type="Sprite2D" parent="Node2D"]
+
+[node name="Grab Area" type="Area2D" parent="Node2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Grab Area"]
+shape = SubResource("CircleShape2D_qdi1e")
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Sprite2D" parent="Node2D"]
+visible = false
+position = Vector2(41, -27.000002)
+scale = Vector2(0.012818288, 0.012818288)
+texture = ExtResource("2_scdjc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Button"]
+libraries = {
+&"": SubResource("AnimationLibrary_m4jf3")
+}
+autoplay = "default"

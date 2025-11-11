@@ -1,0 +1,149 @@
+[gd_scene load_steps=12 format=3 uid="uid://bn70kgvjs5jw5"]
+
+[ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/objective.gd" id="1_objective"]
+[ext_resource type="Texture2D" uid="uid://dn7j3e65apiud" path="res://assets/sprites/Aset Furnitur/shiny decoy template/Untitled_Artwork.png" id="2_lu82n"]
+[ext_resource type="Texture2D" uid="uid://drbdpox4tf83c" path="res://assets/sprites/Aset Button/WASD/K1.png" id="2_scdjc"]
+[ext_resource type="Texture2D" uid="uid://c518ljx5hvtei" path="res://assets/sprites/Aset Furnitur/Ruangan Kanan Bawah/sofa.png" id="3_ijijc"]
+
+[sub_resource type="Animation" id="Animation_ha1xi"]
+resource_name = "default"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.01, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.05, 0.05), Vector2(0.07, 0.07), Vector2(0.05, 0.05)]
+}
+
+[sub_resource type="Animation" id="Animation_rsq6c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.07360843, 0.07360843)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sl2in"]
+_data = {
+&"RESET": SubResource("Animation_rsq6c"),
+&"default": SubResource("Animation_ha1xi")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5n8x3"]
+radius = 86.023254
+
+[sub_resource type="Animation" id="Animation_scdjc"]
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i7ijm"]
+resource_name = "default"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nbup2"]
+_data = {
+&"RESET": SubResource("Animation_scdjc"),
+&"default": SubResource("Animation_i7ijm")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_objective")
+
+[node name="Glow" type="Sprite2D" parent="."]
+position = Vector2(0, 1.9073486e-06)
+scale = Vector2(0.07360843, 0.07360843)
+texture = ExtResource("2_lu82n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Glow"]
+libraries = {
+&"": SubResource("AnimationLibrary_sl2in")
+}
+autoplay = "default"
+
+[node name="Item" type="Sprite2D" parent="."]
+position = Vector2(9.536743e-07, 1.9073486e-06)
+scale = Vector2(0.021604937, 0.021604938)
+texture = ExtResource("3_ijijc")
+
+[node name="Grab Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grab Area"]
+shape = SubResource("CircleShape2D_5n8x3")
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(54, -36.000008)
+rotation = -0.012678309
+scale = Vector2(0.014833501, 0.014833501)
+texture = ExtResource("2_scdjc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Button"]
+libraries = {
+&"": SubResource("AnimationLibrary_nbup2")
+}
+autoplay = "RESET"
+
+[connection signal="body_entered" from="Grab Area" to="." method="_on_grab_area_body_entered"]
+[connection signal="body_exited" from="Grab Area" to="." method="_on_grab_area_body_exited"]
