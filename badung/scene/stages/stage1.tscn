@@ -20,5 +20,12 @@ polygon = PackedVector2Array(-752, 226, -487, 228, -53, -197, -49, -297, -459, -
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_y11c3")]
 position = Vector2(-70, 0)
 
+[node name="Camera" type="Camera2D" parent="Player"]
+position = Vector2(70, 0)
+limit_left = -1340
+limit_top = -990
+limit_right = 1340
+limit_bottom = 990
+
 [node name="Mom" parent="." instance=ExtResource("2_sgk2f")]
 position = Vector2(-748, -286)
