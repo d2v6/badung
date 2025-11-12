@@ -25,6 +25,7 @@ var current_stage = ""
 var wander_target = Vector2.ZERO
 var wander_timer = 0.0
 var wander_interval = 2.0  # Time between choosing new wander targets
+var wander_center = Vector2.ZERO  # Current center point for wandering (updates as she moves)
 var is_chasing = false
 var stuck_timer = 0.0
 var last_position = Vector2.ZERO
@@ -36,11 +37,17 @@ var wall_raycasts = []
 var navigation_agent: NavigationAgent2D = null
 var path_update_timer = 0.0
 var path_update_interval = 0.5  # Update path every 0.5 seconds
+var use_navigation_agent = true
+var navigation_toggle_timer = 0.0
+var navigation_toggle_interval = 5.0  # Switch between agent/direct every 5 seconds
+var navigation_available = false  # Track if navigation is properly set up
 
 @onready var timer: Timer = $Timer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
+	print("[Mom] Initializing navigation system...")
+	
 	# Create and configure NavigationAgent2D
 	navigation_agent = NavigationAgent2D.new()
 	navigation_agent.path_desired_distance = 4.0
@@ -50,19 +57,27 @@ func _ready() -> void:
 	navigation_agent.max_speed = CHASE_SPEED
 	add_child(navigation_agent)
 	
+	print("[Mom] NavigationAgent2D created and added to scene tree")
+	
 	# Wait for first physics frame for navigation to initialize
 	call_deferred("_setup_navigation")
 
 func _setup_navigation() -> void:
 	# Detect current stage from scene name
 	current_stage = get_tree().current_scene.name.to_lower()
+	print("[Mom] Current stage: ", current_stage)
 	
 	# Set starting position
 	if current_stage in stage_starting_positions:
 		starting_position = stage_starting_positions[current_stage]
 		global_position = starting_position
+		print("[Mom] Set starting position to: ", starting_position)
 	else:
 		starting_position = global_position
+		print("[Mom] Using current position as starting position: ", starting_position)
+	
+	# Set initial wander center to starting position
+	wander_center = starting_position
 	
 	# Create raycasts for wall detection
 	create_wall_raycasts()
@@ -70,6 +85,21 @@ func _setup_navigation() -> void:
 	# Set initial wander target
 	choose_new_wander_target()
 	last_position = global_position
+	
+	# Check if navigation is available
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	
+	if navigation_agent:
+		var test_map = navigation_agent.get_navigation_map()
+		navigation_available = test_map != RID()
+		if navigation_available:
+			print("[Mom] ✅ Navigation2D is AVAILABLE and properly set up!")
+		else:
+			print("[Mom] ⚠️ Navigation2D NOT available - no NavigationRegion2D found in scene")
+			print("[Mom] Will use direct movement only")
+	else:
+		print("[Mom] ❌ NavigationAgent2D is NULL")
 
 func create_wall_raycasts() -> void:
 	# Create raycasts in multiple directions (front, front-left, front-right, left, right)
@@ -96,6 +126,17 @@ func _physics_process(delta: float) -> void:
 	# Check if stuck (not moving much)
 	check_if_stuck(delta)
 	
+	# Toggle between navigation agent and direct movement periodically
+	navigation_toggle_timer += delta
+	if navigation_toggle_timer >= navigation_toggle_interval:
+		use_navigation_agent = !use_navigation_agent
+		navigation_toggle_timer = 0.0
+		if is_chasing:
+			if use_navigation_agent and navigation_available:
+				print("[Mom] 🗺️ Switching to NAVIGATION AGENT pathfinding")
+			else:
+				print("[Mom] ➡️ Switching to DIRECT movement")
+	
 	# Find player
 	var player = get_tree().get_first_node_in_group("player")
 	
@@ -111,11 +152,12 @@ func _physics_process(delta: float) -> void:
 		is_chasing = false
 		wander(delta)
 	
-	# Use navigation agent for pathfinding when chasing
-	if is_chasing and navigation_agent and not navigation_agent.is_navigation_finished():
-		var next_position = navigation_agent.get_next_path_position()
-		var direction = (next_position - global_position).normalized()
-		velocity = direction * CHASE_SPEED
+	# Use navigation agent for pathfinding when chasing (if enabled and available)
+	if is_chasing and use_navigation_agent and navigation_available and navigation_agent:
+		if not navigation_agent.is_navigation_finished():
+			var next_position = navigation_agent.get_next_path_position()
+			var direction = (next_position - global_position).normalized()
+			velocity = direction * CHASE_SPEED
 	
 	move_and_slide()
 	
@@ -201,23 +243,30 @@ func should_chase_player(player: Node) -> bool:
 	return angle_to_player <= DETECTION_ANGLE / 2.0
 
 func chase_player(player: Node, delta: float) -> void:
-	if not navigation_agent:
-		# Fallback to direct chase if navigation not ready
+	# Use navigation agent if enabled and available
+	if use_navigation_agent and navigation_available and navigation_agent:
+		# Update path periodically
+		path_update_timer += delta
+		if path_update_timer >= path_update_interval:
+			navigation_agent.target_position = player.global_position
+			path_update_timer = 0.0
+			var distance_to_target = global_position.distance_to(player.global_position)
+			print("[Mom] 🗺️ Navigation path updated. Distance to player: ", distance_to_target)
+	else:
+		# Direct chase (no navigation agent)
 		var direction = (player.global_position - global_position).normalized()
 		velocity = direction * CHASE_SPEED
-		return
-	
-	# Update path periodically
-	path_update_timer += delta
-	if path_update_timer >= path_update_interval:
-		navigation_agent.target_position = player.global_position
-		path_update_timer = 0.0
+		if path_update_timer == 0.0:  # Log only once when switching modes
+			print("[Mom] ➡️ Using direct movement. Distance to player: ", global_position.distance_to(player.global_position))
+			path_update_timer = 0.01  # Prevent repeated logs
 
 func wander(delta: float) -> void:
 	wander_timer -= delta
 	
 	# Check if reached wander target or time to choose new target
 	if global_position.distance_to(wander_target) < 20.0 or wander_timer <= 0:
+		# Update wander center to current position (wander around current location)
+		wander_center = global_position
 		choose_new_wander_target()
 		wander_timer = wander_interval
 	
@@ -228,7 +277,7 @@ func wander(delta: float) -> void:
 func choose_new_wander_target() -> void:
 	# Try multiple times to find a valid wander target that doesn't hit walls
 	for attempt in range(MAX_WALL_CHECK_ATTEMPTS):
-		# Choose random point within wander radius from starting position
+		# Choose random point within wander radius from current wander center
 		var random_angle = randf() * TAU  # Random angle in radians
 		var random_distance = randf() * WANDER_RADIUS
 		
@@ -237,7 +286,7 @@ func choose_new_wander_target() -> void:
 			sin(random_angle) * random_distance
 		)
 		
-		var potential_target = starting_position + offset
+		var potential_target = wander_center + offset
 		
 		# Check if path to target is clear
 		if is_path_clear(global_position, potential_target):
