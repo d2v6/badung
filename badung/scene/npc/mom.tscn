@@ -1,21 +1,74 @@
-[gd_scene load_steps=6 format=3 uid="uid://es0hoh0nd4yw"]
+[gd_scene load_steps=18 format=3 uid="uid://es0hoh0nd4yw"]
 
 [ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/mom.gd" id="1_pnctf"]
-[ext_resource type="Texture2D" uid="uid://qv3y81u126ip" path="res://assets/sprites/charater_example.png" id="2_ey7fl"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r8g8p"]
-atlas = ExtResource("2_ey7fl")
-region = Rect2(64, 192, 32, 32)
+[ext_resource type="Texture2D" uid="uid://nkg3ul8qskg8" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9799.PNG" id="2_ptdu4"]
+[ext_resource type="Texture2D" uid="uid://bnu0xfsh5h3ev" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9800.PNG" id="3_r74iw"]
+[ext_resource type="Texture2D" uid="uid://dofvydhyo5nom" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9801.PNG" id="4_or2se"]
+[ext_resource type="Texture2D" uid="uid://dq5h0au2q6ndl" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9802.PNG" id="5_iv4xr"]
+[ext_resource type="Texture2D" uid="uid://bfxys5usxtd3g" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9803.PNG" id="6_pt2wr"]
+[ext_resource type="Texture2D" uid="uid://dxcp7pbi2i52v" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9804.PNG" id="7_7r1x0"]
+[ext_resource type="Texture2D" uid="uid://bqq7ffv4s3ie0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9805.PNG" id="8_53njn"]
+[ext_resource type="Texture2D" uid="uid://dc8smquqi5haw" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/J3.PNG" id="9_yog2o"]
+[ext_resource type="Texture2D" uid="uid://bpflr377l6kyd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j4.PNG" id="10_t8aoe"]
+[ext_resource type="Texture2D" uid="uid://4eacali5ypc3" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j5.PNG" id="11_gayx5"]
+[ext_resource type="Texture2D" uid="uid://ck6vu40pv0y2g" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j6.PNG" id="12_h86u3"]
+[ext_resource type="Texture2D" uid="uid://dy50eu8sq523r" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j7.PNG" id="13_x44vj"]
+[ext_resource type="Texture2D" uid="uid://by0ql680ncrqg" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j8.PNG" id="14_5v3iy"]
+[ext_resource type="Texture2D" uid="uid://m3euy74q6gor" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j9.PNG" id="15_h8i23"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r8g8p")
+"texture": ExtResource("2_ptdu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_r74iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_or2se")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_iv4xr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pt2wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7r1x0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_53njn")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_yog2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_t8aoe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gayx5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_h86u3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_x44vj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_5v3iy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_h8i23")
+}],
+"loop": true,
+"name": &"run",
+"speed": 9.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
@@ -25,8 +78,8 @@ radius = 15.033297
 script = ExtResource("1_pnctf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -46)
-scale = Vector2(3.7812498, 3.7812498)
+position = Vector2(0, -18)
+scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_kk4ol")
 animation = &"idle"
 autoplay = "idle"

@@ -33,6 +33,7 @@ var last_position = Vector2.ZERO
 var wall_raycasts = []
 
 @onready var timer: Timer = $Timer
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	# Detect current stage from scene name
@@ -98,6 +99,9 @@ func _physics_process(delta: float) -> void:
 		velocity += avoidance
 	
 	move_and_slide()
+	
+	# Update animation based on movement
+	update_animation()
 	
 	# Update last position for stuck detection
 	last_position = global_position
@@ -244,3 +248,25 @@ func _on_timer_timeout() -> void:
 	Engine.time_scale = 1
 	var current_scene = get_tree().current_scene.scene_file_path
 	SceneTransition.change_scene(current_scene)
+
+func update_animation() -> void:
+	if not animated_sprite:
+		return
+	
+	# Check if mom is moving
+	var is_moving = velocity.length() > 10.0
+	
+	if is_moving:
+		# Play run animation when moving
+		if animated_sprite.animation != "run":
+			animated_sprite.play("run")
+		
+		# Flip sprite based on movement direction
+		if velocity.x < 0:
+			animated_sprite.flip_h = true
+		elif velocity.x > 0:
+			animated_sprite.flip_h = false
+	else:
+		# Play idle animation when stopped
+		if animated_sprite.animation != "idle":
+			animated_sprite.play("idle")
