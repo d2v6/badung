@@ -25,4 +25,4 @@ polygon = PackedVector2Array(-1135, -576, -962, -739, -644, -735, -466, -575, -4
 
 [node name="Furniture" type="StaticBody2D" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Node" type="Node" parent="."]
