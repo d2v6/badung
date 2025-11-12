@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 
-@onready var animated_sprite: AnimatedSprite2D = $animation
+@onready var idle: AnimatedSprite2D = $idle
+@onready var run: AnimatedSprite2D = $run
 
 var held_objective: Node2D = null
 
@@ -29,11 +30,15 @@ func on_objective_grabbed(objective: Node2D) -> void:
 # update funtcion pas udh ada sprite direction y
 func _update_animation(direction: Vector2, velocity: Vector2) -> void:
 	if (direction.x > 0) :
-		animated_sprite.flip_h = false
+		idle.flip_h = false
+		run.flip_h = false
 	elif (direction.x < 0):
-		animated_sprite.flip_h = true;
+		idle.flip_h = true;
+		run.flip_h = true;
 
 	if velocity == Vector2.ZERO:
-		animated_sprite.play("idle")
+		idle.visible = true
+		run.visible = false
 	else:
-		animated_sprite.play("run")
+		idle.visible = false
+		run.visible = true

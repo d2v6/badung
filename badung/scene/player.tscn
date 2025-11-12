@@ -1,21 +1,20 @@
 [gd_scene load_steps=19 format=3 uid="uid://8no6klrt2tee"]
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
-[ext_resource type="Texture2D" uid="uid://b0i3qb3j3b01j" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
-[ext_resource type="Texture2D" uid="uid://dh1ygpqsnm4u1" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9825.PNG" id="3_s4jxa"]
-[ext_resource type="Texture2D" uid="uid://w0gnonlsjxvt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9826.PNG" id="4_bup7g"]
-[ext_resource type="Texture2D" uid="uid://cd4eibxcc6qqc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9827.PNG" id="5_4ja17"]
-[ext_resource type="Texture2D" uid="uid://bdvleveriivy7" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9828.PNG" id="6_v4iqv"]
-[ext_resource type="Texture2D" uid="uid://ut76me1wrod0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9829.PNG" id="7_42h83"]
-[ext_resource type="Texture2D" uid="uid://7clre2dfp8l3" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 1 .png" id="8_iuf2t"]
-[ext_resource type="Texture2D" uid="uid://tsxb7jk6tu8o" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 2.png" id="9_jrjdb"]
-[ext_resource type="Texture2D" uid="uid://b3orwgap5lm2k" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 3.png" id="10_kk4ol"]
-[ext_resource type="Texture2D" uid="uid://c5bqaa60ym03p" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 4 melek.png" id="11_4reak"]
-[ext_resource type="Texture2D" uid="uid://b3pfb8xut2w1s" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 4 merem.png" id="12_wt23p"]
-[ext_resource type="Texture2D" uid="uid://uood8uqpvib4" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 5.png" id="13_k8m7u"]
-[ext_resource type="Texture2D" uid="uid://brbvmvnhaec55" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 6.png" id="14_qucqc"]
-[ext_resource type="Texture2D" uid="uid://q2eviu1vuqca" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 7.png" id="15_xsw3c"]
-[ext_resource type="Texture2D" uid="uid://xnrn4xfcld32" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan 8.png" id="16_l1uwf"]
+[ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
+[ext_resource type="Texture2D" uid="uid://chadamr5a2mov" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9825.PNG" id="3_s4jxa"]
+[ext_resource type="Texture2D" uid="uid://nrlofc8y4dlm" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9826.PNG" id="4_bup7g"]
+[ext_resource type="Texture2D" uid="uid://b1mmvq5hu31qf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9827.PNG" id="5_4ja17"]
+[ext_resource type="Texture2D" uid="uid://b0xpg0l7knr4v" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9828.PNG" id="6_v4iqv"]
+[ext_resource type="Texture2D" uid="uid://b21iyvbxcrnqn" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9829.PNG" id="7_42h83"]
+[ext_resource type="Texture2D" uid="uid://drdnq8c8gbjuq" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-1.png" id="8_j4wxg"]
+[ext_resource type="Texture2D" uid="uid://dpwy5skagph4q" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-2.png" id="9_bup7g"]
+[ext_resource type="Texture2D" uid="uid://c664vwcgddy8h" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-3.png" id="10_4ja17"]
+[ext_resource type="Texture2D" uid="uid://bw3plin37lsn5" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-4.png" id="11_v4iqv"]
+[ext_resource type="Texture2D" uid="uid://ot55fvkt4f81" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-5.png" id="12_42h83"]
+[ext_resource type="Texture2D" uid="uid://wuxasq2bjqyy" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-6.png" id="13_iuf2t"]
+[ext_resource type="Texture2D" uid="uid://cntoriky76htf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-7.png" id="14_jrjdb"]
+[ext_resource type="Texture2D" uid="uid://crsnleljbches" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-8.png" id="15_kk4ol"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hjaqi"]
 animations = [{
@@ -41,34 +40,34 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 8.0
-}, {
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4reak"]
+animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_iuf2t")
+"texture": ExtResource("8_j4wxg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_jrjdb")
+"texture": ExtResource("9_bup7g")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_kk4ol")
+"texture": ExtResource("10_4ja17")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_4reak")
+"texture": ExtResource("11_v4iqv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_wt23p")
+"texture": ExtResource("12_42h83")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_k8m7u")
+"texture": ExtResource("13_iuf2t")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_qucqc")
+"texture": ExtResource("14_jrjdb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_xsw3c")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_l1uwf")
+"texture": ExtResource("15_kk4ol")
 }],
 "loop": true,
 "name": &"run",
@@ -82,13 +81,22 @@ radius = 19.0
 collision_layer = 3
 script = ExtResource("1_hjaqi")
 
-[node name="animation" type="AnimatedSprite2D" parent="."]
-position = Vector2(1.9999962, -1.9073486e-06)
-scale = Vector2(0.10081366, 0.090566956)
+[node name="idle" type="AnimatedSprite2D" parent="."]
+position = Vector2(2.0000038, -32.999996)
+scale = Vector2(0.056902528, 0.05111896)
 sprite_frames = SubResource("SpriteFrames_hjaqi")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.6113486
+frame_progress = 0.46546978
+
+[node name="run" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(2, -32)
+scale = Vector2(0.07161464, 0.07161458)
+sprite_frames = SubResource("SpriteFrames_4reak")
+animation = &"run"
+autoplay = "run"
+frame_progress = 0.40984592
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -19)

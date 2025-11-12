@@ -1,0 +1,163 @@
+[gd_scene load_steps=32 format=3 uid="uid://bcf7cy8kf5xwn"]
+
+[ext_resource type="Script" uid="uid://yhlwosddjacr" path="res://scripts/kaka.gd" id="1_d4s0l"]
+[ext_resource type="Texture2D" uid="uid://bym643byqtdxs" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9807.PNG" id="2_ywwko"]
+[ext_resource type="Texture2D" uid="uid://djwhf70vmq8fk" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9808.PNG" id="3_qa6aw"]
+[ext_resource type="Texture2D" uid="uid://eiimqfs8dhou" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9809.PNG" id="4_kbtae"]
+[ext_resource type="Texture2D" uid="uid://7njh3lb3ucbb" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9810.PNG" id="5_nsimo"]
+[ext_resource type="Texture2D" uid="uid://br2vrghwt0ooj" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9811.PNG" id="6_icalr"]
+[ext_resource type="Texture2D" uid="uid://cuwkryujyibrd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9812.PNG" id="7_b1jlh"]
+[ext_resource type="Texture2D" uid="uid://dyvaaaixe8wxt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9813.PNG" id="8_61jnk"]
+[ext_resource type="Texture2D" uid="uid://da2kmlxjsgknd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j1.PNG" id="9_krio1"]
+[ext_resource type="Texture2D" uid="uid://buamwnb52visp" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j2.PNG" id="10_3ki67"]
+[ext_resource type="Texture2D" uid="uid://dsru6kd1foy2a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j3.PNG" id="11_6s68g"]
+[ext_resource type="Texture2D" uid="uid://c6r43s6qqpcrv" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j4.PNG" id="12_msick"]
+[ext_resource type="Texture2D" uid="uid://de6vxe8aqgs27" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j5.PNG" id="13_rnafh"]
+[ext_resource type="Texture2D" uid="uid://38hnehlxr2a7" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j6.PNG" id="14_4cl2f"]
+[ext_resource type="Texture2D" uid="uid://clius27f7nn4i" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j7.PNG" id="15_ajdh7"]
+[ext_resource type="Texture2D" uid="uid://cc453hmx7t1vd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j8.PNG" id="16_i2ol4"]
+[ext_resource type="Texture2D" uid="uid://2x0o71n0to2g" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j9.PNG" id="17_va341"]
+[ext_resource type="Texture2D" uid="uid://rtvbkrl8ybc1" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j10.PNG" id="18_wiqie"]
+[ext_resource type="Texture2D" uid="uid://dpf31el85qo5" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j11.PNG" id="19_ryj8u"]
+[ext_resource type="Texture2D" uid="uid://b626kf0ovggnt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9788.PNG" id="20_jri68"]
+[ext_resource type="Texture2D" uid="uid://cgx85hul1r751" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9789.PNG" id="21_1u6nw"]
+[ext_resource type="Texture2D" uid="uid://csmov7accqshc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9790.PNG" id="22_id4eh"]
+[ext_resource type="Texture2D" uid="uid://dnj0ium4vfkfg" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9791.PNG" id="23_f3hv2"]
+[ext_resource type="Texture2D" uid="uid://cheg6ulqok8oc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9792.PNG" id="24_ly36b"]
+[ext_resource type="Texture2D" uid="uid://c8o0fgrh4cg65" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9793.PNG" id="25_hfcgt"]
+[ext_resource type="Texture2D" uid="uid://dalin8otlxsen" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9794.PNG" id="26_1kfu3"]
+[ext_resource type="Texture2D" uid="uid://byff2g3u04lxj" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9795.PNG" id="27_ggfsp"]
+[ext_resource type="Texture2D" uid="uid://dnpiwkus5flvv" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9796.PNG" id="28_rpfuu"]
+[ext_resource type="Texture2D" uid="uid://em0xuymrbq5h" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9797.PNG" id="29_33ktb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ywwko")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qa6aw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_kbtae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nsimo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_icalr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b1jlh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_61jnk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_krio1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3ki67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_6s68g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_msick")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_rnafh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_4cl2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ajdh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_i2ol4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_va341")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_wiqie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ryj8u")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_jri68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_1u6nw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_id4eh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_f3hv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_ly36b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_hfcgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_1kfu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_ggfsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_rpfuu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_33ktb")
+}],
+"loop": true,
+"name": &"tunjuk",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
+radius = 15.033297
+
+[node name="Kaka" type="CharacterBody2D"]
+script = ExtResource("1_d4s0l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.99999976, -7.0000076)
+scale = Vector2(0.09796163, 0.09796163)
+sprite_frames = SubResource("SpriteFrames_kk4ol")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.8980341
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -17)
+shape = SubResource("CircleShape2D_4reak")
+
+[node name="Vision" type="Area2D" parent="."]
+position = Vector2(0, -17)
+
+[node name="VisionPolygon" type="Polygon2D" parent="Vision"]
+color = Color(0, 1, 0, 0.3)
+polygon = PackedVector2Array(0, 0, 150, -50, 150, 50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision"]
+polygon = PackedVector2Array(0, 0, 150, -50, 150, 50)
+
+[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
