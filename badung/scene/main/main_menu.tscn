@@ -5,11 +5,17 @@
 [ext_resource type="Texture2D" uid="uid://w1nub8i1eyi2" path="res://assets/sprites/Aset Button/Home button/mulai.png" id="3_ruq5w"]
 [ext_resource type="Texture2D" uid="uid://vwbu5dk0lbyp" path="res://assets/sprites/Aset Button/Home button/mulai_hover.png" id="4_dbghu"]
 [ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="5_o0k0e"]
-[ext_resource type="Texture2D" uid="uid://dh88h4aiaogxj" path="res://assets/sprites/Aset Button/Home button/quit hover.png" id="6_p7ily"]
 [ext_resource type="Texture2D" uid="uid://bybvnw6iqqjbv" path="res://assets/sprites/Aset Button/Home button/setting button.png" id="6_qims6"]
-[ext_resource type="Texture2D" uid="uid://ckg23s6c4sltj" path="res://assets/sprites/Aset Button/Home button/setting button hover.png" id="6_xnsce"]
 [ext_resource type="Texture2D" uid="uid://b4kuc3arrvswp" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button.png" id="8_p7ily"]
-[ext_resource type="Texture2D" uid="uid://bscl6buqknlfs" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button-clicked.png" id="9_g8y13"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qims6"]
+load_path = "res://.godot/imported/quit hover.png-cfeb18fc6e9445de9f91049003b7ce97.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_acbhw"]
+load_path = "res://.godot/imported/setting button hover.png-4f3225967af0b9f3f8c55740ac64c842.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xnsce"]
+load_path = "res://.godot/imported/homepage-tutorial-button-clicked.png-fe254b29c2288dc3b1f61ebcbce3f363.ctex"
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -26,15 +32,6 @@ position = Vector2(575.2222, 324)
 scale = Vector2(0.59814817, 0.59814817)
 texture = ExtResource("1_lgni4")
 metadata/_edit_lock_ = true
-
-[node name="tutorial" type="Button" parent="."]
-layout_mode = 0
-offset_left = 522.0
-offset_top = 511.0
-offset_right = 647.0
-offset_bottom = 553.0
-text = "Tutorial
-"
 
 [node name="start" type="TextureButton" parent="."]
 layout_mode = 1
@@ -55,8 +52,8 @@ offset_top = 37.0
 offset_right = 136.0
 offset_bottom = 148.0
 texture_normal = ExtResource("5_o0k0e")
-texture_pressed = ExtResource("6_p7ily")
-texture_hover = ExtResource("6_p7ily")
+texture_pressed = SubResource("CompressedTexture2D_qims6")
+texture_hover = SubResource("CompressedTexture2D_qims6")
 
 [node name="setting" type="TextureButton" parent="."]
 layout_mode = 0
@@ -65,8 +62,8 @@ offset_top = 46.0
 offset_right = 1087.0
 offset_bottom = 140.0
 texture_normal = ExtResource("6_qims6")
-texture_pressed = ExtResource("6_xnsce")
-texture_hover = ExtResource("6_xnsce")
+texture_pressed = SubResource("CompressedTexture2D_acbhw")
+texture_hover = SubResource("CompressedTexture2D_acbhw")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 layout_mode = 0
@@ -75,9 +72,9 @@ offset_top = 530.0
 offset_right = 687.0
 offset_bottom = 613.0
 texture_normal = ExtResource("8_p7ily")
-texture_pressed = ExtResource("9_g8y13")
-texture_hover = ExtResource("9_g8y13")
+texture_pressed = SubResource("CompressedTexture2D_xnsce")
+texture_hover = SubResource("CompressedTexture2D_xnsce")
 
-[connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="start" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_tutorial_pressed"]
