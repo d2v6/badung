@@ -23,4 +23,4 @@ limit_bottom = 990
 position = Vector2(-748, -286)
 
 [node name="Kaka" parent="." instance=ExtResource("4_sgk2f")]
-position = Vector2(-376, 259)
+position = Vector2(-3, 606)

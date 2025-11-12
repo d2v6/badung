@@ -49,7 +49,7 @@ func _set_new_target() -> void:
 
 
 func _on_tutorial_pressed() -> void:
-	SceneTransition.change_scene("res://scene/stages/tutorial.tscn")
+	SceneTransition.change_scene("res://scene/stages/pre_tutorial.tscn")
 
 
 func _on_start_button_pressed() -> void:

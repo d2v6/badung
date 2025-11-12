@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba355volitdcv"
-path="res://.godot/imported/ARROW ATAS BAWAH.svg-371a2ba5acb871ed4bc21a7b0df6eafc.ctex"
+uid="uid://bovrq8vl2q2x"
+path="res://.godot/imported/4.png-c218a858fc86d54692f8b6f2a082d7cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/ARROW ATAS BAWAH.svg"
-dest_files=["res://.godot/imported/ARROW ATAS BAWAH.svg-371a2ba5acb871ed4bc21a7b0df6eafc.ctex"]
+source_file="res://assets/sprites/tutorial/4.png"
+dest_files=["res://.godot/imported/4.png-c218a858fc86d54692f8b6f2a082d7cd.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

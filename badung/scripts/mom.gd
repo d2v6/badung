@@ -12,15 +12,6 @@ const WALL_RAYCAST_DISTANCE = 50.0
 const WALL_AVOIDANCE_FORCE = 1.5
 const MAX_WALL_CHECK_ATTEMPTS = 5
 
-# Starting positions for each stage
-var stage_starting_positions = {
-	"tutorial": Vector2(-800, -400),
-	"stage1": Vector2(-800, -400),
-	"stage2": Vector2(-300, 100),
-	# Add more stages as needed
-}
-
-var starting_position = Vector2.ZERO
 var current_stage = ""
 var wander_target = Vector2.ZERO
 var wander_timer = 0.0
@@ -66,18 +57,6 @@ func _setup_navigation() -> void:
 	# Detect current stage from scene name
 	current_stage = get_tree().current_scene.name.to_lower()
 	print("[Mom] Current stage: ", current_stage)
-	
-	# Set starting position
-	if current_stage in stage_starting_positions:
-		starting_position = stage_starting_positions[current_stage]
-		global_position = starting_position
-		print("[Mom] Set starting position to: ", starting_position)
-	else:
-		starting_position = global_position
-		print("[Mom] Using current position as starting position: ", starting_position)
-	
-	# Set initial wander center to starting position
-	wander_center = starting_position
 	
 	# Create raycasts for wall detection
 	create_wall_raycasts()

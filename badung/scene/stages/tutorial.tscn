@@ -21,6 +21,9 @@ metadata/_edit_lock_ = true
 
 [node name="Background" parent="." instance=ExtResource("2_w2nxe")]
 
+[node name="Mom" parent="." instance=ExtResource("3_n3n2a")]
+position = Vector2(-531, -371)
+
 [node name="Player" parent="." instance=ExtResource("2_nxvai")]
 position = Vector2(-81, 29)
 
@@ -30,9 +33,6 @@ limit_left = -1340
 limit_top = -990
 limit_right = 1340
 limit_bottom = 990
-
-[node name="Mom" parent="." instance=ExtResource("3_n3n2a")]
-position = Vector2(-748, -286)
 
 [node name="Objective" parent="." instance=ExtResource("2_n3n2a")]
 position = Vector2(-295, 182)
@@ -57,15 +57,18 @@ position = Vector2(274, -16)
 texture = ExtResource("10_5rfpf")
 
 [node name="Sprite2D5" type="Sprite2D" parent="."]
-position = Vector2(-495, 28)
+z_index = 1
+position = Vector2(-513, 3)
 texture = ExtResource("11_j0dn6")
 
 [node name="Sprite2D7" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(403, -17)
 texture = ExtResource("12_wkhna")
 
 [node name="Sprite2D6" type="Sprite2D" parent="."]
-position = Vector2(-413, -54)
+z_index = 1
+position = Vector2(-411, -90.5)
 texture = ExtResource("13_3ihpg")
 
 [node name="Label" type="Label" parent="."]
@@ -76,16 +79,19 @@ offset_bottom = 47.0
 text = "Jalan"
 
 [node name="Label3" type="Label" parent="."]
-offset_left = -521.0
-offset_top = 61.0
-offset_right = -472.0
-offset_bottom = 84.0
+z_index = 1
+offset_left = -539.0
+offset_top = 36.0
+offset_right = -490.0
+offset_bottom = 59.0
 text = "Ambil"
 
 [node name="Label4" type="Label" parent="."]
-offset_left = -448.0
-offset_top = -23.0
-offset_right = -388.0
+z_index = 1
+offset_left = -446.0
+offset_top = -59.5
+offset_right = -386.0
+offset_bottom = -36.5
 text = "Lempar"
 
 [node name="Label2" type="Label" parent="."]

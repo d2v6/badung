@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/objective.gd" id="1_objective"]
 [ext_resource type="Texture2D" uid="uid://dn7j3e65apiud" path="res://assets/sprites/Aset Furnitur/shiny decoy template/Untitled_Artwork.png" id="2_lu82n"]
-[ext_resource type="Texture2D" uid="uid://8ko6reoqhlg6" path="res://assets/sprites/Aset Furnitur/ruang tamu/Decoy.png" id="3_lu82n"]
+[ext_resource type="Texture2D" uid="uid://bbulft4v67mb2" path="res://assets/sprites/ipad.png" id="3_lu82n"]
 [ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="4_ijijc"]
 
 [sub_resource type="Animation" id="Animation_1lprp"]
@@ -108,6 +108,7 @@ _data = {
 }
 
 [node name="Objective" type="Node2D"]
+z_index = 1
 script = ExtResource("1_objective")
 
 [node name="Glow" type="Sprite2D" parent="."]
@@ -121,8 +122,7 @@ libraries = {
 autoplay = "new_animation"
 
 [node name="Main Item" type="Sprite2D" parent="."]
-position = Vector2(51.000004, 27)
-scale = Vector2(0.15995263, 0.15995261)
+scale = Vector2(0.25486422, 0.2548642)
 texture = ExtResource("3_lu82n")
 
 [node name="Grab Area" type="Area2D" parent="."]

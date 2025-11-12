@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ckcfmgsvevyhk"]
+[gd_scene load_steps=26 format=3 uid="uid://ckcfmgsvevyhk"]
 
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_jirmm"]
 [ext_resource type="Texture2D" uid="uid://c8kh25c48fa7f" path="res://assets/sprites/Aset Furnitur/Kamar Main Chara/Untitled_Artwork-1.png" id="2_xpwal"]
@@ -25,7 +25,16 @@
 [ext_resource type="Texture2D" uid="uid://c58f2ougpijvl" path="res://assets/sprites/Aset Furnitur/dapur/oven.png" id="22_t82x3"]
 [ext_resource type="Texture2D" uid="uid://bsmrnnnmghdhp" path="res://assets/sprites/Aset Furnitur/ruang tamu/Untitled_Artwork-1.png" id="23_mnldi"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nav"]
+vertices = PackedVector2Array(-1100, -550, -1100, 900, 1300, 900, 1300, -950, -1200, -950, -1200, -550)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1100, -550, -1200, -550, -1200, -950, 1300, -950, 1300, 900, -1100, 900)])
+
 [node name="Background" type="StaticBody2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_nav")
 
 [node name="background" type="Sprite2D" parent="."]
 texture = ExtResource("1_jirmm")
