@@ -58,3 +58,7 @@ func _on_start_button_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_setting_pressed() -> void:
+	SceneTransition.change_scene("res://scene/settings/settingpage.tscn")

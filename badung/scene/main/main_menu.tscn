@@ -77,4 +77,5 @@ texture_hover = SubResource("CompressedTexture2D_xnsce")
 
 [connection signal="pressed" from="start" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="setting" to="." method="_on_setting_pressed"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_tutorial_pressed"]
