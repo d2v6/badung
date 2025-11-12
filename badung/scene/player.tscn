@@ -79,6 +79,7 @@ animations = [{
 radius = 19.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 5
 collision_layer = 3
 script = ExtResource("1_hjaqi")
 
@@ -91,5 +92,5 @@ autoplay = "idle"
 frame_progress = 0.6113486
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -19)
+position = Vector2(-1, 30)
 shape = SubResource("CircleShape2D_4reak")
