@@ -136,6 +136,7 @@ animations = [{
 radius = 15.033297
 
 [node name="Kaka" type="CharacterBody2D"]
+z_index = 4
 script = ExtResource("1_d4s0l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -155,9 +156,9 @@ position = Vector2(0, -17)
 
 [node name="VisionPolygon" type="Polygon2D" parent="Vision"]
 color = Color(0, 1, 0, 0.3)
-polygon = PackedVector2Array(0, 0, 150, -50, 150, 50)
+polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision"]
-polygon = PackedVector2Array(0, 0, 150, -50, 150, 50)
+polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 
 [connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]

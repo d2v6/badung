@@ -3,8 +3,6 @@ extends CharacterBody2D
 # Movement settings
 const SPEED = 100.0
 const WANDER_RADIUS = 300.0  # How far from starting position to wander (smaller for single spot)
-const DETECTION_RADIUS = 500.0  # How close player needs to be to detect
-const DETECTION_ANGLE = 120.0  # Field of view in degrees (120 = front 120 degrees)
 const REPORT_TIME = 3.0  # How long to spot player before reporting
 
 # Wall avoidance settings
@@ -86,6 +84,17 @@ func create_wall_raycasts() -> void:
 		wall_raycasts.append(raycast)
 
 func _physics_process(delta: float) -> void:
+	# Continuously check line of sight if player is in vision area
+	if player_in_sight and player_reference:
+		# Verify line of sight is still clear
+		if not is_path_clear(global_position, player_reference.global_position):
+			# Wall is blocking, lose sight
+			player_in_sight = false
+			spot_timer = 0.0
+			print("Kaka: Lost sight - wall blocking!")
+			if vision_shape and not has_reported:
+				vision_shape.modulate = Color(0, 1, 0, 0.3)  # Back to green
+	
 	# Update spot timer if player is in sight
 	if player_in_sight and player_reference and not has_reported:
 		spot_timer += delta
@@ -126,6 +135,10 @@ func _physics_process(delta: float) -> void:
 		var avoidance = calculate_wall_avoidance()
 		if avoidance != Vector2.ZERO:
 			velocity += avoidance
+		
+		# Rotate vision cone to match movement direction
+		if velocity.length() > 10.0:
+			update_vision_direction()
 	
 	move_and_slide()
 	
@@ -156,16 +169,29 @@ func look_at_player() -> void:
 		elif direction_to_player.x > 0:
 			animated_sprite.flip_h = false
 
+func update_vision_direction() -> void:
+	# Rotate vision cone to match movement direction
+	if velocity.length() > 0:
+		var movement_angle = velocity.angle()
+		
+		# Smoothly rotate towards movement direction
+		if vision_area:
+			vision_area.rotation = lerp_angle(vision_area.rotation, movement_angle, 0.15)
+
 func _on_vision_body_entered(body: Node2D) -> void:
 	# Check if it's the player
 	if body.is_in_group("player"):
-		player_in_sight = true
-		player_reference = body
-		spot_timer = 0.0
-		print("Kaka: Player entered vision!")
-		# Change vision color to yellow (warning)
-		if vision_shape:
-			vision_shape.modulate = Color(1, 1, 0, 0.3)
+		# Check if there's a clear line of sight (no walls blocking)
+		if is_path_clear(global_position, body.global_position):
+			player_in_sight = true
+			player_reference = body
+			spot_timer = 0.0
+			print("Kaka: Player entered vision!")
+			# Change vision color to yellow (warning)
+			if vision_shape:
+				vision_shape.modulate = Color(1, 1, 0, 0.3)
+		else:
+			print("Kaka: Player in area but blocked by wall")
 
 func _on_vision_body_exited(body: Node2D) -> void:
 	# Check if it's the player leaving
