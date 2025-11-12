@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1261hhkmm05o"]
+[gd_scene load_steps=14 format=3 uid="uid://d1261hhkmm05o"]
 
 [ext_resource type="PackedScene" uid="uid://chpkhdookufrq" path="res://scene/game_manager.tscn" id="1_w2nxe"]
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_wwbp6"]
@@ -6,6 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player.tscn" id="2_nxvai"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="3_n3n2a"]
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/finish_zone.tscn" id="5_n3n2a"]
+[ext_resource type="Texture2D" uid="uid://0yfphshlf20s" path="res://assets/sprites/keybooard_inputs/w_key_icon.png" id="7_ev3wj"]
+[ext_resource type="Texture2D" uid="uid://cs84wjnckkw25" path="res://assets/sprites/keybooard_inputs/a_key_icon.png" id="8_arkmt"]
+[ext_resource type="Texture2D" uid="uid://df5agf0voait0" path="res://assets/sprites/keybooard_inputs/S_key_icon.png" id="9_st82b"]
+[ext_resource type="Texture2D" uid="uid://dt8ksetaj8v5s" path="res://assets/sprites/keybooard_inputs/d_key_icon.png" id="10_5rfpf"]
+[ext_resource type="Texture2D" uid="uid://cguhjdyu1wwkx" path="res://assets/sprites/keybooard_inputs/j_key_icon.png" id="11_j0dn6"]
+[ext_resource type="Texture2D" uid="uid://b63rva16tuaa8" path="res://assets/sprites/keybooard_inputs/shift_key_icon.png" id="12_wkhna"]
+[ext_resource type="Texture2D" uid="uid://bt23cs58al7i5" path="res://assets/sprites/keybooard_inputs/k_key_icon.png" id="13_3ihpg"]
 
 [node name="Tutorial" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -45,3 +52,58 @@ position = Vector2(-295, 182)
 
 [node name="Finish Zone" parent="." instance=ExtResource("5_n3n2a")]
 position = Vector2(-44, 377)
+
+[node name="w" type="Sprite2D" parent="."]
+position = Vector2(215, -78)
+texture = ExtResource("7_ev3wj")
+
+[node name="a" type="Sprite2D" parent="."]
+position = Vector2(155, -16)
+texture = ExtResource("8_arkmt")
+
+[node name="s" type="Sprite2D" parent="."]
+position = Vector2(212, -18)
+texture = ExtResource("9_st82b")
+
+[node name="d" type="Sprite2D" parent="."]
+position = Vector2(274, -16)
+texture = ExtResource("10_5rfpf")
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(-495, 28)
+texture = ExtResource("11_j0dn6")
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+position = Vector2(403, -17)
+texture = ExtResource("12_wkhna")
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+position = Vector2(-413, -54)
+texture = ExtResource("13_3ihpg")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 192.0
+offset_top = 24.0
+offset_right = 241.0
+offset_bottom = 47.0
+text = "Jalan"
+
+[node name="Label3" type="Label" parent="."]
+offset_left = -521.0
+offset_top = 61.0
+offset_right = -472.0
+offset_bottom = 84.0
+text = "Ambil"
+
+[node name="Label4" type="Label" parent="."]
+offset_left = -448.0
+offset_top = -23.0
+offset_right = -388.0
+text = "Lempar"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 382.0
+offset_top = 25.0
+offset_right = 420.0
+offset_bottom = 48.0
+text = "Lari"
