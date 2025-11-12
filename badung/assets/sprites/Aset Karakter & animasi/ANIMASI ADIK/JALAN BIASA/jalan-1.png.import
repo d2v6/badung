@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nrlofc8y4dlm"
-path="res://.godot/imported/IMG_9826.PNG-193d04b21682d3976f70d0e77ad37ed2.ctex"
+uid="uid://drdnq8c8gbjuq"
+path="res://.godot/imported/jalan-1.png-788ad49fea98d03ee562ab0b5d00b80f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9826.PNG"
-dest_files=["res://.godot/imported/IMG_9826.PNG-193d04b21682d3976f70d0e77ad37ed2.ctex"]
+source_file="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-1.png"
+dest_files=["res://.godot/imported/jalan-1.png-788ad49fea98d03ee562ab0b5d00b80f.ctex"]
 
 [params]
 
