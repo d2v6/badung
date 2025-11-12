@@ -68,7 +68,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbup2"]
-radius = 29.017237
+radius = 69.065186
 
 [sub_resource type="Animation" id="Animation_scdjc"]
 loop_mode = 2
@@ -108,7 +108,7 @@ _data = {
 }
 
 [node name="Objective" type="Node2D"]
-z_index = 1
+z_index = 5
 script = ExtResource("1_objective")
 
 [node name="Glow" type="Sprite2D" parent="."]

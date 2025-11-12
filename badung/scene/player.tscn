@@ -78,7 +78,7 @@ animations = [{
 radius = 19.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-z_index = 5
+z_index = 10
 collision_layer = 3
 script = ExtResource("1_hjaqi")
 

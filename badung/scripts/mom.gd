@@ -1,11 +1,14 @@
 extends CharacterBody2D
 
+# Preload game over overlay
+const GAME_OVER_OVERLAY = preload("res://scene/main/game_over.tscn")
+
 # Movement settings
-const SPEED = 100.0
-const CHASE_SPEED = 180.0
-const WANDER_RADIUS = 150.0  # How far from starting position to wander
-const DETECTION_RADIUS = 1000.0  # How close player needs to be to trigger chase
-const DETECTION_ANGLE = 120.0  # Field of view in degrees (120 = front 120 degrees)
+const SPEED = 200.0
+const CHASE_SPEED = 350.0
+const WANDER_RADIUS = 100.0  # How far from marker to patrol
+const PATROL_TIME = 5.0  # How long to patrol at each marker before moving to next
+const MARKER_REACH_DISTANCE = 30.0  # How close to get to marker before starting patrol
 
 # Wall avoidance settings
 const WALL_RAYCAST_DISTANCE = 50.0
@@ -15,42 +18,32 @@ const MAX_WALL_CHECK_ATTEMPTS = 5
 var current_stage = ""
 var wander_target = Vector2.ZERO
 var wander_timer = 0.0
-var wander_interval = 2.0  # Time between choosing new wander targets
-var wander_center = Vector2.ZERO  # Current center point for wandering (updates as she moves)
+var wander_interval = 2.0 
+var wander_center = Vector2.ZERO  
 var is_chasing = false
 var stuck_timer = 0.0
 var last_position = Vector2.ZERO
 
+# Marker patrol system
+var patrol_markers: Array[Marker2D] = []
+var current_marker_index: int = 0
+var is_at_marker: bool = false
+var patrol_timer: float = 0.0
+var patrol_mode: bool = true  # True = following markers, False = free wander
+
+# Vision detection
+var player_in_sight: bool = false
+var player_reference: CharacterBody2D = null
+
 # Raycasts for wall detection
 var wall_raycasts = []
 
-# Pathfinding
-var navigation_agent: NavigationAgent2D = null
-var path_update_timer = 0.0
-var path_update_interval = 0.5  # Update path every 0.5 seconds
-var use_navigation_agent = true
-var navigation_toggle_timer = 0.0
-var navigation_toggle_interval = 5.0  # Switch between agent/direct every 5 seconds
-var navigation_available = false  # Track if navigation is properly set up
-
-@onready var timer: Timer = $Timer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var vision_area: Area2D = $Vision
+@onready var vision_shape: Polygon2D = $Vision/VisionPolygon
 
 func _ready() -> void:
-	print("[Mom] Initializing navigation system...")
-	
-	# Create and configure NavigationAgent2D
-	navigation_agent = NavigationAgent2D.new()
-	navigation_agent.path_desired_distance = 4.0
-	navigation_agent.target_desired_distance = 4.0
-	navigation_agent.avoidance_enabled = true
-	navigation_agent.radius = 20.0
-	navigation_agent.max_speed = CHASE_SPEED
-	add_child(navigation_agent)
-	
-	print("[Mom] NavigationAgent2D created and added to scene tree")
-	
-	# Wait for first physics frame for navigation to initialize
+	# Wait for first physics frame for scene to initialize
 	call_deferred("_setup_navigation")
 
 func _setup_navigation() -> void:
@@ -61,24 +54,49 @@ func _setup_navigation() -> void:
 	# Create raycasts for wall detection
 	create_wall_raycasts()
 	
+	# Find all Marker2D nodes in the scene for patrol
+	find_patrol_markers()
+	
 	# Set initial wander target
+	if patrol_markers.size() > 0:
+		wander_center = patrol_markers[0].global_position
+		patrol_mode = true
+		print("[Mom] Found ", patrol_markers.size(), " patrol markers")
+	else:
+		patrol_mode = false
+		print("[Mom] No patrol markers found, using free wander mode")
+	
 	choose_new_wander_target()
 	last_position = global_position
 	
-	# Check if navigation is available
-	await get_tree().physics_frame
-	await get_tree().physics_frame
+	# Set initial vision color (red for wandering)
+	if vision_shape:
+		vision_shape.modulate = Color(1, 0, 0, 0.3)  # Red with transparency
 	
-	if navigation_agent:
-		var test_map = navigation_agent.get_navigation_map()
-		navigation_available = test_map != RID()
-		if navigation_available:
-			print("[Mom] ✅ Navigation2D is AVAILABLE and properly set up!")
-		else:
-			print("[Mom] ⚠️ Navigation2D NOT available - no NavigationRegion2D found in scene")
-			print("[Mom] Will use direct movement only")
-	else:
-		print("[Mom] ❌ NavigationAgent2D is NULL")
+	# Connect vision area signals
+	if vision_area:
+		vision_area.body_entered.connect(_on_vision_body_entered)
+		vision_area.body_exited.connect(_on_vision_body_exited)
+
+func find_patrol_markers() -> void:
+	# Find all Marker2D nodes in the scene
+	patrol_markers.clear()
+	var root = get_tree().current_scene
+	find_markers_recursive(root)
+	
+	# Sort markers by their name to ensure consistent patrol order
+	if patrol_markers.size() > 0:
+		patrol_markers.sort_custom(func(a, b): return a.name < b.name)
+
+func find_markers_recursive(node: Node) -> void:
+	# Check if this node is a Marker2D
+	if node is Marker2D:
+		patrol_markers.append(node)
+		print("[Mom] Found patrol marker: ", node.name, " at ", node.global_position)
+	
+	# Recursively check children
+	for child in node.get_children():
+		find_markers_recursive(child)
 
 func create_wall_raycasts() -> void:
 	# Create raycasts in multiple directions (front, front-left, front-right, left, right)
@@ -102,49 +120,52 @@ func _physics_process(delta: float) -> void:
 	# Check for collision with player
 	check_player_collision()
 	
+	# Continuously check line of sight if player is in vision area
+	if player_in_sight and player_reference:
+		# Verify line of sight is still clear
+		if not is_path_clear(global_position, player_reference.global_position):
+			# Wall is blocking, lose sight
+			player_in_sight = false
+			print("Mom: Lost sight - wall blocking!")
+	
 	# Check if stuck (not moving much)
 	check_if_stuck(delta)
 	
-	# Toggle between navigation agent and direct movement periodically
-	navigation_toggle_timer += delta
-	if navigation_toggle_timer >= navigation_toggle_interval:
-		use_navigation_agent = !use_navigation_agent
-		navigation_toggle_timer = 0.0
-		if is_chasing:
-			if use_navigation_agent and navigation_available:
-				print("[Mom] 🗺️ Switching to NAVIGATION AGENT pathfinding")
-			else:
-				print("[Mom] ➡️ Switching to DIRECT movement")
-	
-	# Find player
-	var player = get_tree().get_first_node_in_group("player")
-	
-	if player:
-		# Check if should chase player
-		if should_chase_player(player):
-			is_chasing = true
-			chase_player(player, delta)
-		else:
-			is_chasing = false
-			wander(delta)
+	# Check if should chase based on vision
+	if player_in_sight and player_reference:
+		is_chasing = true
+		chase_player(player_reference, delta)
 	else:
 		is_chasing = false
 		wander(delta)
 	
-	# Use navigation agent for pathfinding when chasing (if enabled and available)
-	if is_chasing and use_navigation_agent and navigation_available and navigation_agent:
-		if not navigation_agent.is_navigation_finished():
-			var next_position = navigation_agent.get_next_path_position()
-			var direction = (next_position - global_position).normalized()
-			velocity = direction * CHASE_SPEED
-	
 	move_and_slide()
+	
+	# Update vision direction and color
+	update_vision()
 	
 	# Update animation based on movement
 	update_animation()
 	
 	# Update last position for stuck detection
 	last_position = global_position
+
+func update_vision() -> void:
+	if not vision_area or not vision_shape:
+		return
+	
+	# Rotate vision cone to match movement direction
+	if velocity.length() > 10.0:
+		var movement_angle = velocity.angle()
+		vision_area.rotation = lerp_angle(vision_area.rotation, movement_angle, 0.15)
+	
+	# Update vision color based on state
+	if is_chasing:
+		# Darker red when chasing (more opaque and saturated)
+		vision_shape.modulate = Color(1, 0, 0, 0.5)  # Brighter/more opaque red
+	else:
+		# Normal red when wandering
+		vision_shape.modulate = Color(1, 0, 0, 0.3)  # Lighter/more transparent red
 
 func check_if_stuck(delta: float) -> void:
 	# Check if mom hasn't moved much
@@ -200,46 +221,74 @@ func calculate_wall_avoidance() -> Vector2:
 	
 	return avoidance_vector
 
-func should_chase_player(player: Node) -> bool:
-	var distance_to_player = global_position.distance_to(player.global_position)
-	
-	# Check if player is within detection radius
-	if distance_to_player > DETECTION_RADIUS:
-		return false
-	
-	# Check if player is in front of mom (within field of view)
-	var direction_to_player = (player.global_position - global_position).normalized()
-	var mom_facing = velocity.normalized()
-	
-	# If mom is not moving, assume facing right
-	if mom_facing == Vector2.ZERO:
-		mom_facing = Vector2.RIGHT
-	
-	var dot_product = mom_facing.dot(direction_to_player)
-	var angle_to_player = rad_to_deg(acos(dot_product))
-	
-	# Player is in detection cone if angle is less than half the field of view
-	return angle_to_player <= DETECTION_ANGLE / 2.0
+func _on_vision_body_entered(body: Node2D) -> void:
+	# Check if it's the player
+	if body.is_in_group("player"):
+		# Check if there's a clear line of sight (no walls blocking)
+		if is_path_clear(global_position, body.global_position):
+			player_in_sight = true
+			player_reference = body
+			print("Mom: Player entered vision!")
+		else:
+			print("Mom: Player in area but blocked by wall")
+
+func _on_vision_body_exited(body: Node2D) -> void:
+	# Check if it's the player leaving
+	if body.is_in_group("player") and body == player_reference:
+		player_in_sight = false
+		player_reference = null
+		print("Mom: Player left vision!")
+
+		print("Mom: Player left vision!")
 
 func chase_player(player: Node, delta: float) -> void:
-	# Use navigation agent if enabled and available
-	if use_navigation_agent and navigation_available and navigation_agent:
-		# Update path periodically
-		path_update_timer += delta
-		if path_update_timer >= path_update_interval:
-			navigation_agent.target_position = player.global_position
-			path_update_timer = 0.0
-			var distance_to_target = global_position.distance_to(player.global_position)
-			print("[Mom] 🗺️ Navigation path updated. Distance to player: ", distance_to_target)
-	else:
-		# Direct chase (no navigation agent)
-		var direction = (player.global_position - global_position).normalized()
-		velocity = direction * CHASE_SPEED
-		if path_update_timer == 0.0:  # Log only once when switching modes
-			print("[Mom] ➡️ Using direct movement. Distance to player: ", global_position.distance_to(player.global_position))
-			path_update_timer = 0.01  # Prevent repeated logs
+	# Direct chase towards player
+	var direction = (player.global_position - global_position).normalized()
+	velocity = direction * CHASE_SPEED
 
 func wander(delta: float) -> void:
+	if patrol_mode and patrol_markers.size() > 0:
+		patrol_with_markers(delta)
+	else:
+		free_wander(delta)
+
+func patrol_with_markers(delta: float) -> void:
+	var current_marker = patrol_markers[current_marker_index]
+	var distance_to_marker = global_position.distance_to(current_marker.global_position)
+	
+	# Check if we've reached the current marker
+	if not is_at_marker and distance_to_marker < MARKER_REACH_DISTANCE:
+		is_at_marker = true
+		patrol_timer = PATROL_TIME
+		wander_center = current_marker.global_position
+		choose_new_wander_target()
+		print("[Mom] Reached marker ", current_marker.name, " - Starting patrol")
+	
+	# If at marker, patrol around it
+	if is_at_marker:
+		patrol_timer -= delta
+		
+		# Patrol around the marker
+		wander_timer -= delta
+		if global_position.distance_to(wander_target) < 20.0 or wander_timer <= 0:
+			choose_new_wander_target()
+			wander_timer = wander_interval
+		
+		# Move towards local wander target
+		var direction = (wander_target - global_position).normalized()
+		velocity = direction * SPEED
+		
+		# After patrol time, move to next marker
+		if patrol_timer <= 0:
+			is_at_marker = false
+			current_marker_index = (current_marker_index + 1) % patrol_markers.size()
+			print("[Mom] Moving to next marker: ", patrol_markers[current_marker_index].name)
+	else:
+		# Move towards the current marker
+		var direction = (current_marker.global_position - global_position).normalized()
+		velocity = direction * SPEED
+
+func free_wander(delta: float) -> void:
 	wander_timer -= delta
 	
 	# Check if reached wander target or time to choose new target
@@ -297,13 +346,8 @@ func check_player_collision() -> void:
 		
 		# Check if collided with player
 		if collider and (collider.is_in_group("player") or collider.name == "CharacterBody2D"):
-			Engine.time_scale = 0.5
-			timer.start()
-
-func _on_timer_timeout() -> void:
-	Engine.time_scale = 1
-	var current_scene = get_tree().current_scene.scene_file_path
-	SceneTransition.change_scene(current_scene)
+			# Show game over overlay
+			show_game_over()
 
 func update_animation() -> void:
 	if not animated_sprite:
@@ -326,3 +370,23 @@ func update_animation() -> void:
 		# Play idle animation when stopped
 		if animated_sprite.animation != "idle":
 			animated_sprite.play("idle")
+
+func show_game_over() -> void:
+	# Find the player's camera
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		print("[Mom] Error: Player not found!")
+		return
+	
+	var camera = player.get_node_or_null("Camera")
+	if not camera:
+		print("[Mom] Error: Camera not found on player!")
+		return
+	
+	# Instance the game over overlay
+	var overlay = GAME_OVER_OVERLAY.instantiate()
+	# Add it to the player's camera so it follows the camera view
+	camera.add_child(overlay)
+	# Show the game over screen (FAILURE - caught by mom)
+	overlay.show_game_over(overlay.GameOverType.FAILURE)
+	print("[Mom] Game Over - Player caught!")

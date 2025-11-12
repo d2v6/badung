@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=7 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/background.tscn" id="1_y11c3"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="2_sgk2f"]
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player.tscn" id="2_y11c3"]
 [ext_resource type="PackedScene" uid="uid://bcf7cy8kf5xwn" path="res://scene/npc/kaka.tscn" id="4_sgk2f"]
+[ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/finish_zone.tscn" id="5_vaint"]
+[ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/objective.tscn" id="6_14aav"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Background" parent="." instance=ExtResource("1_y11c3")]
 
 [node name="Player" parent="." instance=ExtResource("2_y11c3")]
-position = Vector2(-70, 0)
+position = Vector2(604, 688)
 
 [node name="Camera" type="Camera2D" parent="Player"]
 position = Vector2(70, 0)
@@ -20,7 +22,13 @@ limit_right = 1340
 limit_bottom = 990
 
 [node name="Mom" parent="." instance=ExtResource("2_sgk2f")]
-position = Vector2(-748, -286)
+position = Vector2(-107, 187)
 
 [node name="Kaka" parent="." instance=ExtResource("4_sgk2f")]
 position = Vector2(-3, 606)
+
+[node name="Finish Zone" parent="." instance=ExtResource("5_vaint")]
+position = Vector2(421, 535)
+
+[node name="Objective" parent="." instance=ExtResource("6_14aav")]
+position = Vector2(-943, -382)

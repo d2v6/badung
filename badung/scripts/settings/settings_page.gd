@@ -115,7 +115,7 @@ func _update_sfx_button_texture(is_unmuted: bool) -> void:
 
 
 func _on_quit_pressed() -> void:
-	SceneTransition.change_scene("res://scene/main/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scene/main/main_menu.tscn")
 
 
 func _on_music_btn_pressed() -> void:

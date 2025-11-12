@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Movement settings
 const SPEED = 100.0
 const WANDER_RADIUS = 300.0  # How far from starting position to wander (smaller for single spot)
-const REPORT_TIME = 3.0  # How long to spot player before reporting
+const REPORT_TIME = 1.0  # How long to spot player before reporting
 
 # Wall avoidance settings
 const WALL_RAYCAST_DISTANCE = 50.0

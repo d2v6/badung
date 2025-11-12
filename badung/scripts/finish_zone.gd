@@ -1,5 +1,8 @@
 extends Area2D
 
+# Preload game over overlay for success screen
+const GAME_OVER_OVERLAY = preload("res://scene/main/game_over.tscn")
+
 var current_level: String = ""
 
 signal level_completed()
@@ -10,6 +13,9 @@ func _ready() -> void:
 	if scene:
 		current_level = scene.name.to_lower()
 		print("Finish Zone ready - Level: ", current_level)
+	
+	# Add to finish_zone group so overlay can find us
+	add_to_group("finish_zone")
 
 func _on_body_entered(player: Node2D) -> void:
 	print("=== Player entered finish zone ===")
@@ -26,6 +32,30 @@ func _on_body_entered(player: Node2D) -> void:
 	print(">>> Level complete! Player has objective <<<")
 	level_completed.emit()
 	
+	# Show success overlay
+	show_success_overlay()
+
+func show_success_overlay() -> void:
+	# Find the player's camera
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		print("[FinishZone] Error: Player not found!")
+		return
+	
+	var camera = player.get_node_or_null("Camera")
+	if not camera:
+		print("[FinishZone] Error: Camera not found on player!")
+		return
+	
+	# Instance the game over overlay
+	var overlay = GAME_OVER_OVERLAY.instantiate()
+	# Add it to the player's camera so it follows the camera view
+	camera.add_child(overlay)
+	# Show the success screen (SUCCESS - level completed)
+	overlay.show_game_over(overlay.GameOverType.SUCCESS)
+	print("[FinishZone] Level Complete - Berhasil!")
+
+func handle_level_transition() -> void:
 	# Handle level completion based on current level
 	match current_level:
 		"tutorial":

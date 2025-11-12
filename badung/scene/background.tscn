@@ -402,3 +402,41 @@ polygon = PackedVector2Array(-145, 269, -145, 30, -89, 28, -84, 269)
 [node name="wall" type="Sprite2D" parent="."]
 z_index = 1
 texture = ExtResource("13_2y26r")
+
+[node name="Patrol Points" type="Node2D" parent="."]
+
+[node name="1st" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-501, -362)
+
+[node name="2" type="Marker2D" parent="Patrol Points"]
+position = Vector2(173, -341)
+
+[node name="3" type="Marker2D" parent="Patrol Points"]
+position = Vector2(945, -220)
+
+[node name="4" type="Marker2D" parent="Patrol Points"]
+position = Vector2(748, 29)
+
+[node name="5" type="Marker2D" parent="Patrol Points"]
+position = Vector2(896, 393)
+
+[node name="6" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-37, 200)
+
+[node name="7" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-58, 621)
+
+[node name="8" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-311, 681)
+
+[node name="9" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-332, 270)
+
+[node name="10" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-843, 291)
+
+[node name="11" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-798, 646)
+
+[node name="12" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-814, -114)

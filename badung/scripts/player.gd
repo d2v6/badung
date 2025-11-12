@@ -7,6 +7,10 @@ const SPEED = 300.0
 
 var held_objective: Node2D = null
 
+func _ready() -> void:
+	# Set process mode to pausable (default, but explicit)
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+
 func _physics_process(delta: float) -> void:
 	var direction = Vector2(
 		Input.get_axis("left", "right"),

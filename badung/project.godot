@@ -14,20 +14,17 @@ config/name="badung"
 run/main_scene="uid://hnldfnc1mcaw"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
-[display]
-
-window/size/viewport_width=1152
-window/size/viewport_height=648
-window/size/mode=2
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
-
 [autoload]
 
 AudioManager="*res://scripts/audio_manager.gd"
 SceneTransition="*res://scene/main/scene_transition.tscn"
 Music="*res://scene/music.tscn"
 GameManager="*res://scene/game_manager.tscn"
+
+[display]
+
+window/size/mode=2
+window/stretch/mode="canvas_items"
 
 [input]
 
