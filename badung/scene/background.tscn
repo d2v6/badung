@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ckcfmgsvevyhk"]
+[gd_scene load_steps=25 format=3 uid="uid://ckcfmgsvevyhk"]
 
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_jirmm"]
 [ext_resource type="Texture2D" uid="uid://c8kh25c48fa7f" path="res://assets/sprites/Aset Furnitur/Kamar Main Chara/Untitled_Artwork-1.png" id="2_xpwal"]
@@ -15,6 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://dh757e6cgalnp" path="res://assets/sprites/wall.svg" id="13_2y26r"]
 [ext_resource type="Texture2D" uid="uid://c3yx4535sd7ly" path="res://assets/sprites/Aset Furnitur/Kamar Guest/Untitled_Artwork-6.png" id="13_oejpp"]
 [ext_resource type="Texture2D" uid="uid://c518ljx5hvtei" path="res://assets/sprites/Aset Furnitur/Ruangan Kanan Bawah/sofa.png" id="14_oejpp"]
+[ext_resource type="Texture2D" uid="uid://6iyd2xysiips" path="res://assets/sprites/Aset Furnitur/kamar mandi/kloset duduk.png" id="15_ow7i6"]
+[ext_resource type="Texture2D" uid="uid://cbk4dpjdxo3hj" path="res://assets/sprites/Aset Furnitur/kamar mandi/wastafel.png" id="16_a3gv3"]
+[ext_resource type="Texture2D" uid="uid://bqmpegkiddblh" path="res://assets/sprites/Aset Furnitur/Kamar Emak/Untitled_Artwork-1.png" id="17_sh5gf"]
+[ext_resource type="Texture2D" uid="uid://1vgj3ytdeqdc" path="res://assets/sprites/Aset Furnitur/Kamar Emak/Untitled_Artwork-3.png" id="18_qhdn6"]
+[ext_resource type="Texture2D" uid="uid://dfmisbf6gqtae" path="res://assets/sprites/Aset Furnitur/Kamar Emak/Untitled_Artwork-2.png" id="19_aly4q"]
+[ext_resource type="Texture2D" uid="uid://cbo6lp0o8jw01" path="res://assets/sprites/Aset Furnitur/dapur/Untitled_Artwork.png" id="20_stadm"]
+[ext_resource type="Texture2D" uid="uid://d2fuixsquo6k4" path="res://assets/sprites/Aset Furnitur/dapur/meja makan.png" id="21_6lede"]
+[ext_resource type="Texture2D" uid="uid://c58f2ougpijvl" path="res://assets/sprites/Aset Furnitur/dapur/oven.png" id="22_t82x3"]
+[ext_resource type="Texture2D" uid="uid://bsmrnnnmghdhp" path="res://assets/sprites/Aset Furnitur/ruang tamu/Untitled_Artwork-1.png" id="23_mnldi"]
 
 [node name="Background" type="StaticBody2D"]
 
@@ -228,6 +237,158 @@ texture = ExtResource("14_oejpp")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-knn-bwh/sofa2"]
 position = Vector2(977, 438)
 polygon = PackedVector2Array(-49, 134, -46, 231, -133, 230, -133, 121)
+
+[node name="kamar-mandi2" type="Node" parent="Furniture"]
+
+[node name="karpet" type="Sprite2D" parent="Furniture/kamar-mandi2"]
+position = Vector2(616.00006, 49)
+rotation = 1.5707964
+scale = Vector2(0.06733358, 0.06733354)
+texture = ExtResource("5_hehlj")
+
+[node name="toilet" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/toilet"]
+z_index = 2
+position = Vector2(781, -69)
+scale = Vector2(0.027416453, 0.027416443)
+texture = ExtResource("15_ow7i6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-mandi2/toilet"]
+z_index = 2
+position = Vector2(924, 31)
+rotation = 1.5707964
+polygon = PackedVector2Array(-95, 123, -82, 131, -78, 136, -78.99999, 151, -84.99999, 158, -97, 162, -123, 163, -124, 124)
+
+[node name="wastafel" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/wastafel"]
+z_index = 2
+position = Vector2(690, -78)
+scale = Vector2(0.044733178, 0.043893047)
+texture = ExtResource("16_a3gv3")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-mandi2/wastafel"]
+z_index = 2
+position = Vector2(814, -253)
+polygon = PackedVector2Array(-86, 217, -162, 217, -163, 147, -85, 147)
+
+[node name="bathup" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/bathup"]
+z_index = 2
+position = Vector2(575.36176, 7.7811003)
+rotation = 1.5707964
+scale = Vector2(0.11237967, 0.09222589)
+texture = ExtResource("8_xgh10")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-mandi2/bathup"]
+z_index = 2
+position = Vector2(765, 68)
+rotation = 1.5707964
+polygon = PackedVector2Array(34.000008, 223, -162, 217, -163, 157, 31.000008, 159)
+
+[node name="kamar-emak" type="Node" parent="Furniture"]
+
+[node name="kasur" type="StaticBody2D" parent="Furniture/kamar-emak"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/kasur"]
+z_index = 2
+position = Vector2(860.99994, -567)
+scale = Vector2(0.17926823, 0.17926815)
+texture = ExtResource("17_sh5gf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-emak/kasur"]
+z_index = 2
+position = Vector2(808, -783)
+polygon = PackedVector2Array(-97, 338, -90, 156, -165, 152, -166, 94, 145, 94, 145, 156, 70, 157, 79, 337)
+
+[node name="meja" type="StaticBody2D" parent="Furniture/kamar-emak"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/meja"]
+z_index = 2
+position = Vector2(1167, -301)
+scale = Vector2(0.1510006, 0.14816462)
+texture = ExtResource("18_qhdn6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-emak/meja"]
+z_index = 2
+position = Vector2(1151, -446)
+polygon = PackedVector2Array(-12, 215, -69, 219, -76, 147, -115, 148, -115, 69, -107, 69, -108, 98, -76, 99, -73, 18, -13, 18)
+
+[node name="sofa" type="StaticBody2D" parent="Furniture/kamar-emak"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/sofa"]
+z_index = 2
+position = Vector2(851, -316)
+scale = Vector2(0.14109409, 0.14109401)
+texture = ExtResource("19_aly4q")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/kamar-emak/sofa"]
+z_index = 2
+position = Vector2(748, -340)
+polygon = PackedVector2Array(-14, -44, -18.984009, -15.472809, -31, -7, -30, 40, -15, 69, 123, 70, 139, 41, 139, -8, 128, -13, 127, -24, 122, -44, 107, -52, 4, -52)
+
+[node name="dapur" type="Node" parent="Furniture"]
+
+[node name="dapur" type="StaticBody2D" parent="Furniture/dapur"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/dapur"]
+z_index = 2
+position = Vector2(345, -400)
+scale = Vector2(0.3797607, 0.3797607)
+texture = ExtResource("20_stadm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/dapur/dapur"]
+z_index = 2
+position = Vector2(166, -807)
+polygon = PackedVector2Array(-109, 166, -111, 283, -167, 285, -166, 94, 414, 93, 414, 238, 331, 238, 326, 164)
+
+[node name="meja" type="StaticBody2D" parent="Furniture/dapur"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/meja"]
+z_index = 2
+position = Vector2(285, -471.00003)
+scale = Vector2(0.0983398, 0.09649285)
+texture = ExtResource("21_6lede")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/dapur/meja"]
+z_index = 2
+position = Vector2(302, -580)
+polygon = PackedVector2Array(35, 207, -76, 208, -103, 148, -104, 76, -83, 47, 39, 46, 63, 77, 62, 145)
+
+[node name="oven" type="StaticBody2D" parent="Furniture/dapur"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/oven"]
+z_index = 2
+position = Vector2(511, -591)
+scale = Vector2(0.06128779, 0.061287757)
+texture = ExtResource("22_t82x3")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/dapur/oven"]
+z_index = 2
+position = Vector2(477, -561)
+polygon = PackedVector2Array(20, -79, 21, 32, 106, 32, 106, -79)
+
+[node name="living" type="Node" parent="Furniture"]
+
+[node name="sofa" type="StaticBody2D" parent="Furniture/living"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Furniture/living/sofa"]
+z_index = 2
+position = Vector2(-782.00006, -363.00003)
+scale = Vector2(0.16903634, 0.16903633)
+texture = ExtResource("23_mnldi")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Furniture/living/sofa"]
+z_index = 2
+position = Vector2(-747, -536)
+polygon = PackedVector2Array(-64, 303, -73, 267, -114, 268, -124, 303, -227, 304, -249, 257, -253, 200, -166, 188, -176, 104, -197, 15, -173, -29, -157, -41, -28, -37, -13, -19, 4, 10, 8, 68, -22, 111, -21, 189, 60, 204, 64, 236, 51, 275, 44, 295)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Furniture/living/sofa"]
+z_index = 2
+position = Vector2(-526, -545)
+polygon = PackedVector2Array(-145, 269, -145, 30, -89, 28, -84, 269)
 
 [node name="wall" type="Sprite2D" parent="."]
 z_index = 1
