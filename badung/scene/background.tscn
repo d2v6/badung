@@ -8,22 +8,21 @@
 texture = ExtResource("1_jirmm")
 metadata/_edit_lock_ = true
 
-[node name="Walls" type="Area2D" parent="."]
-
-[node name="InnerWall1" type="CollisionPolygon2D" parent="Walls"]
+[node name="InnerWall1" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-752, 226, -487, 228, -53, -197, -50, -257, -458, -250, -461, -125, -596, 5, -705, 9, -701, 157, -757, 157)
-metadata/_edit_lock_ = true
 
-[node name="InnerWall2" type="CollisionPolygon2D" parent="Walls"]
+[node name="InnerWall2" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(30, 133, 24, -3, 301, -251, 580, -249, 583, -390, 626, -389, 629, -149, 876, -145, 873, -28, 828, -29, 828, -71, 540, -69, 539, 149, 827, 149, 828, 75, 874, 76, 874, 311, 498, 301, 490, 137)
 
-[node name="InnerWall3" type="CollisionPolygon2D" parent="Walls"]
+[node name="InnerWall3" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-838, 459, -837, 378, -360, 379, -360, 645, -409, 643, -408, 699, -461, 703, -461, 639, -412, 635, -412, 452)
 
-[node name="InnerWall4" type="CollisionPolygon2D" parent="Walls"]
+[node name="InnerWall4" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-229, 696, -230, 552, -298, 555, -300, 485, -231, 483, -228, 319, -116, 327, -117, 392, -174, 392, -175, 699)
 
-[node name="OuterWall" type="CollisionPolygon2D" parent="Walls"]
+[node name="OuterWall" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-1135, -576, -962, -739, -644, -735, -466, -575, -465, -438, -408, -434, -406, -501, -8, -501, -3, -657, 580, -663, 582, -533, 634, -530, 630, -665, 968, -659, 1138, -491, 1146, -110, 1025, 3, 983, 4, 986, 309, 1063, 309, 1068, 661, 937, 794, 794, 797, 795, 434, 447, 432, 449, 547, 742, 548, 748, 828, 692, 870, 309, 867, 310, 546, 359, 547, 364, 480, 308, 486, 311, 318, -41, 323, -35, 393, 258, 393, 260, 592, 158, 595, 156, 769, 210, 768, 208, 701, 256, 701, 258, 867, -172, 869, -172, 802, -230, 803, -229, 862, -411, 872, -408, 805, -464, 804, -462, 872, -812, 873, -981, 683, -978, 456, -923, 457, -927, 385, -976, 383, -976, 224, -847, 227, -842, 153, -903, 153, -902, 2, -998, 6, -1145, -137, -1135, -560, -1185, -562, -1142, 980, 1340, 975, 1294, -978, -1234, -918, -1185, -583)
 
-[node name="Furniture" type="Area2D" parent="."]
+[node name="Furniture" type="StaticBody2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
