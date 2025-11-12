@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 # Movement settings
 const SPEED = 100.0
-const CHASE_SPEED = 150.0
+const CHASE_SPEED = 180.0
 const WANDER_RADIUS = 150.0  # How far from starting position to wander
-const DETECTION_RADIUS = 200.0  # How close player needs to be to trigger chase
+const DETECTION_RADIUS = 1000.0  # How close player needs to be to trigger chase
 const DETECTION_ANGLE = 120.0  # Field of view in degrees (120 = front 120 degrees)
 
 # Wall avoidance settings
@@ -32,10 +32,28 @@ var last_position = Vector2.ZERO
 # Raycasts for wall detection
 var wall_raycasts = []
 
+# Pathfinding
+var navigation_agent: NavigationAgent2D = null
+var path_update_timer = 0.0
+var path_update_interval = 0.5  # Update path every 0.5 seconds
+
 @onready var timer: Timer = $Timer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
+	# Create and configure NavigationAgent2D
+	navigation_agent = NavigationAgent2D.new()
+	navigation_agent.path_desired_distance = 4.0
+	navigation_agent.target_desired_distance = 4.0
+	navigation_agent.avoidance_enabled = true
+	navigation_agent.radius = 20.0
+	navigation_agent.max_speed = CHASE_SPEED
+	add_child(navigation_agent)
+	
+	# Wait for first physics frame for navigation to initialize
+	call_deferred("_setup_navigation")
+
+func _setup_navigation() -> void:
 	# Detect current stage from scene name
 	current_stage = get_tree().current_scene.name.to_lower()
 	
@@ -85,7 +103,7 @@ func _physics_process(delta: float) -> void:
 		# Check if should chase player
 		if should_chase_player(player):
 			is_chasing = true
-			chase_player(player)
+			chase_player(player, delta)
 		else:
 			is_chasing = false
 			wander(delta)
@@ -93,10 +111,11 @@ func _physics_process(delta: float) -> void:
 		is_chasing = false
 		wander(delta)
 	
-	# Apply wall avoidance
-	var avoidance = calculate_wall_avoidance()
-	if avoidance != Vector2.ZERO:
-		velocity += avoidance
+	# Use navigation agent for pathfinding when chasing
+	if is_chasing and navigation_agent and not navigation_agent.is_navigation_finished():
+		var next_position = navigation_agent.get_next_path_position()
+		var direction = (next_position - global_position).normalized()
+		velocity = direction * CHASE_SPEED
 	
 	move_and_slide()
 	
@@ -181,9 +200,18 @@ func should_chase_player(player: Node) -> bool:
 	# Player is in detection cone if angle is less than half the field of view
 	return angle_to_player <= DETECTION_ANGLE / 2.0
 
-func chase_player(player: Node) -> void:
-	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * CHASE_SPEED
+func chase_player(player: Node, delta: float) -> void:
+	if not navigation_agent:
+		# Fallback to direct chase if navigation not ready
+		var direction = (player.global_position - global_position).normalized()
+		velocity = direction * CHASE_SPEED
+		return
+	
+	# Update path periodically
+	path_update_timer += delta
+	if path_update_timer >= path_update_interval:
+		navigation_agent.target_position = player.global_position
+		path_update_timer = 0.0
 
 func wander(delta: float) -> void:
 	wander_timer -= delta
