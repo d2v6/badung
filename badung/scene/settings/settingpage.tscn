@@ -1,0 +1,97 @@
+[gd_scene load_steps=16 format=3 uid="uid://clfc1pg3iq3s3"]
+
+[ext_resource type="Script" uid="uid://dw8tgh4f1a0rk" path="res://scripts/settings/settings_page.gd" id="1_ova3x"]
+[ext_resource type="Texture2D" uid="uid://dmferreitr3ue" path="res://assets/sprites/Home bg.svg" id="2_dgtv5"]
+[ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="3_s0e17"]
+[ext_resource type="Texture2D" uid="uid://bwtx50m3kyqxw" path="res://assets/sprites/settings/background/modal/setting_background.png" id="4_sn07o"]
+[ext_resource type="Texture2D" uid="uid://clxbkwl8tuchb" path="res://assets/sprites/settings/icons/music/music_icon.png" id="5_o1isw"]
+[ext_resource type="Texture2D" uid="uid://df7u7yhl0h6iv" path="res://assets/sprites/settings/icons/music/music_icon_hover.png" id="6_lnfbs"]
+[ext_resource type="Texture2D" uid="uid://dxo4a6vljh8j5" path="res://assets/sprites/settings/icons/sfx/sound_icon.png" id="7_d7pmv"]
+[ext_resource type="Texture2D" uid="uid://jfdby1pn2ebh" path="res://assets/sprites/settings/icons/sfx/sound_icon_hover.png" id="8_23moo"]
+[ext_resource type="Texture2D" uid="uid://dfllsc5nplw8t" path="res://assets/sprites/settings/icons/slider_icon/slider_holder.png" id="9_y800k"]
+[ext_resource type="Texture2D" uid="uid://dth8u5ss1ktg" path="res://assets/sprites/settings/icons/slider_icon/slider_holder_grabbing.png" id="10_m1rd4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0evmt"]
+load_path = "res://.godot/imported/quit hover.png-cfeb18fc6e9445de9f91049003b7ce97.ctex"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8mdh"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sn07o"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5bicw"]
+bg_color = Color(0.89764225, 0.44884586, 0.37753448, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1isw"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
+
+[node name="Settingpage" type="Node2D"]
+script = ExtResource("1_ova3x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(574, 323)
+scale = Vector2(0.598, 0.598)
+texture = ExtResource("2_dgtv5")
+
+[node name="quit" type="TextureButton" parent="."]
+offset_left = 45.0
+offset_top = 37.0
+offset_right = 136.0
+offset_bottom = 148.0
+texture_normal = ExtResource("3_s0e17")
+texture_pressed = SubResource("CompressedTexture2D_0evmt")
+texture_hover = SubResource("CompressedTexture2D_0evmt")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(585, 331.00003)
+scale = Vector2(1.345, 1.345)
+texture = ExtResource("4_sn07o")
+
+[node name="musicBtn" type="TextureButton" parent="."]
+offset_left = 460.0
+offset_top = 352.0
+offset_right = 509.0
+offset_bottom = 398.0
+texture_normal = ExtResource("5_o1isw")
+texture_pressed = ExtResource("6_lnfbs")
+texture_hover = ExtResource("6_lnfbs")
+
+[node name="sfxBtn" type="TextureButton" parent="."]
+offset_left = 462.0
+offset_top = 267.0
+offset_right = 511.0
+offset_bottom = 314.0
+texture_normal = ExtResource("7_d7pmv")
+texture_pressed = ExtResource("8_23moo")
+texture_hover = ExtResource("8_23moo")
+
+[node name="HSliderSfx" type="HSlider" parent="."]
+offset_left = 521.0
+offset_top = 272.0
+offset_right = 727.0
+offset_bottom = 307.0
+theme_override_icons/grabber = ExtResource("9_y800k")
+theme_override_icons/grabber_highlight = ExtResource("10_m1rd4")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_i8mdh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_sn07o")
+max_value = 1.0
+step = 0.01
+value = 0.03
+
+[node name="HSliderMusic" type="HSlider" parent="."]
+offset_left = 521.0
+offset_top = 355.0
+offset_right = 727.0
+offset_bottom = 390.0
+theme_override_icons/grabber = ExtResource("9_y800k")
+theme_override_icons/grabber_highlight = ExtResource("10_m1rd4")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_5bicw")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_o1isw")
+max_value = 1.0
+step = 0.01
+value = 0.05
+
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="musicBtn" to="." method="_on_music_btn_pressed"]
+[connection signal="pressed" from="sfxBtn" to="." method="_on_sfx_btn_pressed"]
