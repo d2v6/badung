@@ -1,74 +1,74 @@
-[gd_scene load_steps=12 format=3 uid="uid://bn70kgvjs5jw5"]
+[gd_scene load_steps=12 format=3 uid="uid://bljpmixwqyh0l"]
 
 [ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/objective.gd" id="1_objective"]
 [ext_resource type="Texture2D" uid="uid://dn7j3e65apiud" path="res://assets/sprites/Aset Furnitur/shiny decoy template/Untitled_Artwork.png" id="2_lu82n"]
-[ext_resource type="Texture2D" uid="uid://drbdpox4tf83c" path="res://assets/sprites/Aset Button/WASD/K1.png" id="2_scdjc"]
-[ext_resource type="Texture2D" uid="uid://c518ljx5hvtei" path="res://assets/sprites/Aset Furnitur/Ruangan Kanan Bawah/sofa.png" id="3_ijijc"]
+[ext_resource type="Texture2D" uid="uid://8ko6reoqhlg6" path="res://assets/sprites/Aset Furnitur/ruang tamu/Decoy.png" id="3_lu82n"]
+[ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="4_ijijc"]
 
-[sub_resource type="Animation" id="Animation_ha1xi"]
-resource_name = "default"
+[sub_resource type="Animation" id="Animation_1lprp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.04980469, 0.049804688)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_q5vvo"]
+resource_name = "new_animation"
 length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1.01, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, 6.283185307179586]
+"values": [Vector2(0.04980469, 0.049804688), Vector2(0.07, 0.07), Vector2(0.05, 0.05)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
+tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1.01, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0.05, 0.05), Vector2(0.07, 0.07), Vector2(0.05, 0.05)]
+"values": [0.0, 3.1415927, 6.2831855]
 }
 
-[sub_resource type="Animation" id="Animation_rsq6c"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.07360843, 0.07360843)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_sl2in"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m4jf3"]
 _data = {
-&"RESET": SubResource("Animation_rsq6c"),
-&"default": SubResource("Animation_ha1xi")
+&"RESET": SubResource("Animation_1lprp"),
+&"new_animation": SubResource("Animation_q5vvo")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5n8x3"]
-radius = 86.023254
+[sub_resource type="CircleShape2D" id="CircleShape2D_nbup2"]
+radius = 29.017237
 
 [sub_resource type="Animation" id="Animation_scdjc"]
 loop_mode = 2
@@ -79,7 +79,7 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -107,43 +107,42 @@ _data = {
 &"default": SubResource("Animation_i7ijm")
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Objective" type="Node2D"]
 script = ExtResource("1_objective")
 
 [node name="Glow" type="Sprite2D" parent="."]
-position = Vector2(0, 1.9073486e-06)
-scale = Vector2(0.07360843, 0.07360843)
+scale = Vector2(0.04980469, 0.049804688)
 texture = ExtResource("2_lu82n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Glow"]
 libraries = {
-&"": SubResource("AnimationLibrary_sl2in")
+&"": SubResource("AnimationLibrary_m4jf3")
 }
-autoplay = "default"
+autoplay = "new_animation"
 
-[node name="Item" type="Sprite2D" parent="."]
-position = Vector2(9.536743e-07, 1.9073486e-06)
-scale = Vector2(0.021604937, 0.021604938)
-texture = ExtResource("3_ijijc")
+[node name="Main Item" type="Sprite2D" parent="."]
+position = Vector2(51.000004, 27)
+scale = Vector2(0.15995263, 0.15995261)
+texture = ExtResource("3_lu82n")
 
 [node name="Grab Area" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grab Area"]
-shape = SubResource("CircleShape2D_5n8x3")
+shape = SubResource("CircleShape2D_nbup2")
 metadata/_edit_lock_ = true
 
 [node name="Button" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(54, -36.000008)
-rotation = -0.012678309
-scale = Vector2(0.014833501, 0.014833501)
-texture = ExtResource("2_scdjc")
+position = Vector2(0, -85)
+scale = Vector2(0.027777772, 0.027777772)
+texture = ExtResource("4_ijijc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Button"]
 libraries = {
 &"": SubResource("AnimationLibrary_nbup2")
 }
-autoplay = "RESET"
+autoplay = "default"
 
 [connection signal="body_entered" from="Grab Area" to="." method="_on_grab_area_body_entered"]
 [connection signal="body_exited" from="Grab Area" to="." method="_on_grab_area_body_exited"]
