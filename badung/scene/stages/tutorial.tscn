@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://d1261hhkmm05o"]
 
 [ext_resource type="PackedScene" uid="uid://chpkhdookufrq" path="res://scene/game_manager.tscn" id="1_w2nxe"]
-[ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_wwbp6"]
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/objective.tscn" id="2_n3n2a"]
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player.tscn" id="2_nxvai"]
+[ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/background.tscn" id="2_w2nxe"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="3_n3n2a"]
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/finish_zone.tscn" id="5_n3n2a"]
 
@@ -12,20 +12,7 @@ metadata/_edit_lock_ = true
 
 [node name="Game Manager" parent="." instance=ExtResource("1_w2nxe")]
 
-[node name="BG" type="StaticBody2D" parent="."]
-metadata/_edit_lock_ = true
-
-[node name="background" type="Sprite2D" parent="BG"]
-texture = ExtResource("1_wwbp6")
-metadata/_edit_lock_ = true
-
-[node name="OuterWall" type="CollisionPolygon2D" parent="BG"]
-polygon = PackedVector2Array(-811, 832, -978, 650, -975, 456, -924, 459, -920, 334, -975, 325, -975, 224, -843, 225, -839, 103, -900, 100, -902, -49, -1000, -50, -1136, -184, -1134, -569, -960, -735, -649, -736, -464, -571, -463, -438, -406, -438, -405, -496, -6, -499, 0, -657, 582, -658, 580, -296, 287, -300, 19, -52, 21, 139, 483, 140, 487, 303, 879, 319, 876, 39, 822, 39, 821, 98, 542, 98, 542, -69, 820, -69, 824, -29, 877, -26, 882, -199, 633, -198, 631, -662, 964, -660, 1135, -482, 1136, -170, 1005, -42, 980, -42, 981, 306, 1058, 314, 1058, 606, 917, 748, 798, 751, 799, 430, 445, 429, 443, 548, 738, 551, 744, 766, 686, 821, 311, 824, 309, 551, 365, 548, 370, 432, 314, 425, 310, 263, -42, 266, -39, 393, 254, 392, 254, 587, 152, 591, 153, 768, 210, 773, 213, 707, 252, 708, 256, 819, -171, 825, -169, 393, -112, 397, -113, 267, -230, 266, -231, 426, -307, 426, -302, 554, -234, 561, -234, 827, -401, 826, -401, 722, -353, 727, -355, 326, -844, 327, -843, 461, -417, 458, -417, 593, -468, 599, -463, 823, -801, 826, -801, 874, 715, 875, 791, 797, 937, 804, 1109, 630, 1102, 186, 1189, -151, 1189, -613, 996, -790, -1016, -868, -1188, -705, -1183, -170, -1030, 660, -840, 876, -807, 875)
-metadata/_edit_lock_ = true
-
-[node name="InnerWall" type="CollisionPolygon2D" parent="BG"]
-polygon = PackedVector2Array(-752, 226, -487, 228, -53, -197, -49, -297, -459, -301, -459, -190, -599, -48, -703, -47, -705, 99, -759, 105)
-metadata/_edit_lock_ = true
+[node name="Background" parent="." instance=ExtResource("2_w2nxe")]
 
 [node name="Player" parent="." instance=ExtResource("2_nxvai")]
 position = Vector2(-81, 29)
