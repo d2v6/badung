@@ -11,9 +11,9 @@ const MUSIC_BUS = "Music"
 const SFX_BUS = "SFX"
 
 # Volume ranges (0-1 for UI, converted to db)
-var master_volume: float = 0.7
-var music_volume: float = 0.4
-var sfx_volume: float = 0.6
+var master_volume: float = 0.5
+var music_volume: float = 0.3
+var sfx_volume: float = 0.4
 
 # Mute states
 var master_muted: bool = false
@@ -30,16 +30,17 @@ func _ready() -> void:
 func linear_to_db(value: float) -> float:
 	if value <= 0:
 		return -80.0  # Effectively mute
-	# Convert 0-1 range to -50 to -5 db range for better quality and safer volume
-	return lerp(-50.0, -5.0, value)
+	# Convert 0-1 range to -40 to 0 db range for wider volume range
+	# This allows for quieter and louder volumes to suit different systems
+	return lerp(-40.0, 0.0, value)
 
 
 # Convert decibels to slider value (0-1)
 func db_to_linear(db: float) -> float:
 	if db <= -80.0:
 		return 0.0
-	# Convert -50 to -5 db range to 0-1 range
-	return (db + 50.0) / 45.0
+	# Convert -40 to 0 db range to 0-1 range
+	return (db + 40.0) / 40.0
 
 
 # Set master volume (0-1)
@@ -71,9 +72,8 @@ func apply_bus_volume(bus_name: String, volume: float, muted: bool) -> void:
 			AudioServer.set_bus_mute(bus_idx, true)
 		else:
 			AudioServer.set_bus_mute(bus_idx, false)
-			# Divide by 10 to make effective volume much lower
-			var effective_volume = volume / 10.0
-			AudioServer.set_bus_volume_db(bus_idx, linear_to_db(effective_volume))
+			# Use volume directly for full range control
+			AudioServer.set_bus_volume_db(bus_idx, linear_to_db(volume))
 
 
 # Toggle mute for buses
@@ -132,9 +132,9 @@ func load_settings() -> void:
 		return
 	
 	# Load volumes with defaults
-	master_volume = config.get_value("audio", "master_volume", 0.7)
-	music_volume = config.get_value("audio", "music_volume", 0.4)
-	sfx_volume = config.get_value("audio", "sfx_volume", 0.6)
+	master_volume = config.get_value("audio", "master_volume", 0.5)
+	music_volume = config.get_value("audio", "music_volume", 0.3)
+	sfx_volume = config.get_value("audio", "sfx_volume", 0.4)
 	
 	# Load mute states
 	master_muted = config.get_value("audio", "master_muted", false)
@@ -146,9 +146,9 @@ func load_settings() -> void:
 
 # Reset to defaults
 func reset_to_defaults() -> void:
-	master_volume = 0.7
-	music_volume = 0.4
-	sfx_volume = 0.6
+	master_volume = 0.5
+	music_volume = 0.3
+	sfx_volume = 0.4
 	master_muted = false
 	music_muted = false
 	sfx_muted = false
