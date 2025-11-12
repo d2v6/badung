@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://vwbu5dk0lbyp" path="res://assets/sprites/Aset Button/Home button/mulai_hover.png" id="4_dbghu"]
 [ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="5_o0k0e"]
 [ext_resource type="Texture2D" uid="uid://bybvnw6iqqjbv" path="res://assets/sprites/Aset Button/Home button/setting button.png" id="6_qims6"]
-[ext_resource type="Texture2D" uid="uid://ywy504lgdxql" path="res://assets/sprites/logo/si_badung_logo.png" id="8_acbhw"]
+[ext_resource type="Texture2D" uid="uid://bcysgmekrssj8" path="res://assets/sprites/logo/logo.PNG" id="8_acbhw"]
 [ext_resource type="Texture2D" uid="uid://b4kuc3arrvswp" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button.png" id="8_p7ily"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qims6"]
@@ -76,13 +76,9 @@ texture_normal = ExtResource("8_p7ily")
 texture_pressed = SubResource("CompressedTexture2D_xnsce")
 texture_hover = SubResource("CompressedTexture2D_xnsce")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(579.00006, 180.00002)
-scale = Vector2(1.545, 1.545)
-texture = ExtResource("8_acbhw")
-
-[node name="SiBadungLogo" type="Sprite2D" parent="."]
-position = Vector2(487, -118)
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(575, 241)
+scale = Vector2(0.18974517, 0.19021524)
 texture = ExtResource("8_acbhw")
 
 [connection signal="pressed" from="start" to="." method="_on_start_button_pressed"]
