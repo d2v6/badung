@@ -405,38 +405,47 @@ texture = ExtResource("13_2y26r")
 
 [node name="Patrol Points" type="Node2D" parent="."]
 
-[node name="1st" type="Marker2D" parent="Patrol Points"]
+[node name="a" type="Marker2D" parent="Patrol Points"]
 position = Vector2(-501, -362)
 
-[node name="2" type="Marker2D" parent="Patrol Points"]
+[node name="b" type="Marker2D" parent="Patrol Points"]
 position = Vector2(173, -341)
 
-[node name="3" type="Marker2D" parent="Patrol Points"]
-position = Vector2(945, -220)
+[node name="c" type="Marker2D" parent="Patrol Points"]
+position = Vector2(620, -477)
 
-[node name="4" type="Marker2D" parent="Patrol Points"]
-position = Vector2(748, 29)
+[node name="d" type="Marker2D" parent="Patrol Points"]
+position = Vector2(967, -138)
 
-[node name="5" type="Marker2D" parent="Patrol Points"]
-position = Vector2(896, 393)
+[node name="e" type="Marker2D" parent="Patrol Points"]
+position = Vector2(936, 315)
 
-[node name="6" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-37, 200)
+[node name="f" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-63, 202)
 
-[node name="7" type="Marker2D" parent="Patrol Points"]
+[node name="f2" type="Marker2D" parent="Patrol Points"]
+position = Vector2(536, 365)
+
+[node name="g" type="Marker2D" parent="Patrol Points"]
 position = Vector2(-58, 621)
 
-[node name="8" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-311, 681)
+[node name="h" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-318, 719)
 
-[node name="9" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-332, 270)
+[node name="i" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-867, 657)
 
-[node name="10" type="Marker2D" parent="Patrol Points"]
+[node name="j" type="Marker2D" parent="Patrol Points"]
 position = Vector2(-843, 291)
 
-[node name="11" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-798, 646)
+[node name="k" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-833, -90)
 
-[node name="12" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-814, -114)
+[node name="l" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-378, -349)
+
+[node name="m" type="Marker2D" parent="Patrol Points"]
+position = Vector2(58, -309)
+
+[node name="n" type="Marker2D" parent="Patrol Points"]
+position = Vector2(-126, 9)

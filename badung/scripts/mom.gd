@@ -242,9 +242,13 @@ func _on_vision_body_exited(body: Node2D) -> void:
 		print("Mom: Player left vision!")
 
 func chase_player(player: Node, delta: float) -> void:
-	# Direct chase towards player
+	# Direct chase towards player with wall avoidance
 	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * CHASE_SPEED
+	var avoidance = calculate_wall_avoidance()
+	
+	# Combine chase direction with wall avoidance
+	var final_direction = (direction * CHASE_SPEED + avoidance).normalized()
+	velocity = final_direction * CHASE_SPEED
 
 func wander(delta: float) -> void:
 	if patrol_mode and patrol_markers.size() > 0:
@@ -274,9 +278,13 @@ func patrol_with_markers(delta: float) -> void:
 			choose_new_wander_target()
 			wander_timer = wander_interval
 		
-		# Move towards local wander target
+		# Move towards local wander target with wall avoidance
 		var direction = (wander_target - global_position).normalized()
-		velocity = direction * SPEED
+		var avoidance = calculate_wall_avoidance()
+		
+		# Combine wander direction with wall avoidance
+		var final_direction = (direction * SPEED + avoidance).normalized()
+		velocity = final_direction * SPEED
 		
 		# After patrol time, move to next marker
 		if patrol_timer <= 0:
@@ -284,9 +292,13 @@ func patrol_with_markers(delta: float) -> void:
 			current_marker_index = (current_marker_index + 1) % patrol_markers.size()
 			print("[Mom] Moving to next marker: ", patrol_markers[current_marker_index].name)
 	else:
-		# Move towards the current marker
+		# Move towards the current marker with wall avoidance
 		var direction = (current_marker.global_position - global_position).normalized()
-		velocity = direction * SPEED
+		var avoidance = calculate_wall_avoidance()
+		
+		# Combine marker direction with wall avoidance
+		var final_direction = (direction * SPEED + avoidance).normalized()
+		velocity = final_direction * SPEED
 
 func free_wander(delta: float) -> void:
 	wander_timer -= delta
@@ -298,9 +310,13 @@ func free_wander(delta: float) -> void:
 		choose_new_wander_target()
 		wander_timer = wander_interval
 	
-	# Move towards wander target
+	# Move towards wander target with wall avoidance
 	var direction = (wander_target - global_position).normalized()
-	velocity = direction * SPEED
+	var avoidance = calculate_wall_avoidance()
+	
+	# Combine wander direction with wall avoidance
+	var final_direction = (direction * SPEED + avoidance).normalized()
+	velocity = final_direction * SPEED
 
 func choose_new_wander_target() -> void:
 	# Try multiple times to find a valid wander target that doesn't hit walls
