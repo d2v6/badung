@@ -2,22 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://qv3y81u126ip" path="res://assets/sprites/charater_example.png" id="1_xo3ru"]
+[ext_resource type="Texture2D" uid="uid://b0i3qb3j3b01j" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
+[ext_resource type="Texture2D" uid="uid://dh1ygpqsnm4u1" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9825.PNG" id="3_s4jxa"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hjaqi"]
-atlas = ExtResource("1_xo3ru")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk4ol"]
+atlas = ExtResource("2_ct4mp")
+region = Rect2(0, 0, 2388, 1668)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fvtld"]
-atlas = ExtResource("1_xo3ru")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ct4mp"]
-atlas = ExtResource("1_xo3ru")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s4jxa"]
-atlas = ExtResource("1_xo3ru")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4reak"]
+atlas = ExtResource("3_s4jxa")
+region = Rect2(0, 0, 2388, 1668)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oh5ij"]
 atlas = ExtResource("1_xo3ru")
@@ -87,16 +81,10 @@ region = Rect2(224, 96, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hjaqi")
+"texture": SubResource("AtlasTexture_kk4ol")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fvtld")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ct4mp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s4jxa")
+"texture": SubResource("AtlasTexture_4reak")
 }],
 "loop": true,
 "name": &"idle",
@@ -164,8 +152,8 @@ collision_layer = 3
 script = ExtResource("1_hjaqi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(7.1525574e-07, -48)
-scale = Vector2(4.4279175, 3.977865)
+position = Vector2(1.999999, -55.999992)
+scale = Vector2(0.09460993, 0.08499377)
 sprite_frames = SubResource("SpriteFrames_hjaqi")
 animation = &"idle"
 autoplay = "idle"
