@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ckcfmgsvevyhk"]
+[gd_scene load_steps=34 format=3 uid="uid://ckcfmgsvevyhk"]
 
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_jirmm"]
 [ext_resource type="Texture2D" uid="uid://c8kh25c48fa7f" path="res://assets/sprites/Aset Furnitur/Kamar Main Chara/Untitled_Artwork-1.png" id="2_xpwal"]
@@ -29,6 +29,46 @@
 vertices = PackedVector2Array(-1100, -550, -1100, 900, 1300, 900, 1300, -950, -1200, -950, -1200, -550)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1100, -550, -1200, -550, -1200, -950, 1300, -950, 1300, 900, -1100, 900)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ow7i6"]
+vertices = PackedVector2Array(-717.5625, 78.17969, -851.0078, 95.90625, -888.15625, 91.171875, -891.21094, -68.140625, -710.5, -60, -997.3828, -56.453125, -1131.0234, -187.21875, -1132.9688, -566.53906, -961.03906, -720.1172, -655.72656, -729.8828, -479.79688, -570.3828, -475, -463.85156, -471.0625, -203.85156, -604.3594, -60)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 5, 6, 7, 8, 9, 10, 11), PackedInt32Array(4, 3, 11, 12, 13)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-851, 106, -898, 100, -901, -57, -1001, -46, -1141, -183, -1143, -571, -965, -730, -652, -740, -470, -575, -465, -464, -461, -200, -600, -50, -701, -50, -708, 87)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_a3gv3"]
+vertices = PackedVector2Array(-449.40625, -305.09375, -454.4375, -424.8828, -398.85156, -410.25, 574.8828, -526.46094, 568.28906, -314.89844, 8.9296875, -483.96875, -393.65625, -485.95313, 488.32813, -628.0625, 64.89844, -633.89844)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 0, 2, 5), PackedInt32Array(2, 6, 5), PackedInt32Array(7, 3, 5, 8)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-459, -295, -465, -438, -408, -423, -403, -496, 2, -494, 58, -644, 493, -638, 585, -530, 578, -305)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_sh5gf"]
+vertices = PackedVector2Array(889, -203.75781, 645.9531, -209.75781, 644.03906, -659.71875, 966.71094, -651.10156, 1129.9688, -485.92188, 1128.0234, -179.11719, 1000.9375, -50.117188, 889, -53.679688)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(0, 4, 5, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(636, -200, 634, -670, 971, -661, 1140, -490, 1138, -175, 1005, -40, 879, -44, 879, -194)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qhdn6"]
+vertices = PackedVector2Array(826.28125, 92.21875, 547.5703, 86.21875, 556.4219, -66.75, 812.52344, -60.179688, 825.6406, -16.789063, 965.22656, -20.710938, 973.22656, 326, 914.78125, 740.85156, 808.27344, 737.3281, 1046.9063, 599.14844, 1041.2031, 326)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 5, 6, 0), PackedInt32Array(7, 8, 0, 6, 9), PackedInt32Array(9, 6, 10)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(975, -31, 833, -27, 820, -70, 547, -77, 537, 96, 816, 102, 798, 747, 919, 751, 1057, 603, 1051, 316, 983, 316)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_aly4q"]
+vertices = PackedVector2Array(324, 260.89063, -29.5625, 264.8125, 33.039063, 142.15625, 476.46875, 153.75, 484.47656, 312.82813, 324, 419.0625, 797.85156, 421.9375, 807.0781, 318.79688)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 5, 4, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(807, 432, 314, 429, 314, 271, -46, 275, 27, 132, 486, 144, 494, 303, 818, 309)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_stadm"]
+vertices = PackedVector2Array(-35.78125, -283.0625, 247.50781, -284.82813, -3.328125, -50.023438, -33.90625, -194.8125, -472.96875, 224.97656, 9.828125, 123.203125, -50.351563, 256.75, -240, 249.61719, -240, 690.2422, -343, 673.4922, -343, 329.35938, -965.7969, 306.3672, -964.1875, 226.96094)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5, 6, 7), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(4, 7, 10, 11, 12)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-44, 267, 20, 125, 7, -46, 273, -295, -46, -293, -44, -199, -477, 215, -974, 217, -976, 316, -353, 339, -353, 682, -230, 702, -230, 260)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_6lede"]
+vertices = PackedVector2Array(-52, 399.28906, 267.7422, 390.28906, 257.22656, 824.8828, -164.07813, 820.03906, -214.32813, 774.28125, -219.89844, 700.9531, -109.328125, 289, -52, 289)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(0, 5, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-117, 279, -42, 279, -42, 389, 278, 380, 267, 835, -168, 830, -224, 779, -230, 700)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_t82x3"]
+vertices = PackedVector2Array(-962.10156, 645.90625, -970.6875, 345.29688, -851, 348.71875, -851, 476, -475.82813, 476, -471.8203, 705.1719, -789.71875, 828.9375, -240.5, 758.75, -457.53125, 825.0078, -244.34375, 701.15625)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5, 6), PackedInt32Array(7, 8, 6, 5, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-230, 766, -456, 835, -794, 839, -972, 650, -981, 335, -841, 339, -841, 466, -466, 466, -462, 695, -235, 691)])
 
 [node name="Background" type="StaticBody2D"]
 
@@ -405,47 +445,26 @@ texture = ExtResource("13_2y26r")
 
 [node name="Patrol Points" type="Node2D" parent="."]
 
-[node name="a" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-501, -362)
+[node name="a" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_ow7i6")
 
-[node name="b" type="Marker2D" parent="Patrol Points"]
-position = Vector2(173, -341)
+[node name="b" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_a3gv3")
 
-[node name="c" type="Marker2D" parent="Patrol Points"]
-position = Vector2(620, -477)
+[node name="c" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_sh5gf")
 
-[node name="d" type="Marker2D" parent="Patrol Points"]
-position = Vector2(967, -138)
+[node name="d" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_qhdn6")
 
-[node name="e" type="Marker2D" parent="Patrol Points"]
-position = Vector2(936, 315)
+[node name="e" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_aly4q")
 
-[node name="f" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-63, 202)
+[node name="f" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_stadm")
 
-[node name="f2" type="Marker2D" parent="Patrol Points"]
-position = Vector2(536, 365)
+[node name="g" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_6lede")
 
-[node name="g" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-58, 621)
-
-[node name="h" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-318, 719)
-
-[node name="i" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-867, 657)
-
-[node name="j" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-843, 291)
-
-[node name="k" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-833, -90)
-
-[node name="l" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-378, -349)
-
-[node name="m" type="Marker2D" parent="Patrol Points"]
-position = Vector2(58, -309)
-
-[node name="n" type="Marker2D" parent="Patrol Points"]
-position = Vector2(-126, 9)
+[node name="h" type="NavigationRegion2D" parent="Patrol Points"]
+navigation_polygon = SubResource("NavigationPolygon_t82x3")
