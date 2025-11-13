@@ -82,24 +82,13 @@ func _setup_navigation() -> void:
 		print("[Mom] Connected to GameManager.player_reported signal")
 
 func _physics_process(delta: float) -> void:
-	# Continuously check line of sight if player is in vision area
-	if player_in_sight and player_reference:
-		# Verify line of sight is still clear
-		if not is_path_clear(global_position, player_reference.global_position):
-			# Wall is blocking, lose sight
-			player_in_sight = false
-			print("Mom: Lost sight - wall blocking!")
-	
 	# Check if stuck (not moving much)
 	check_if_stuck(delta)
 
 	# Check for active decoys
 	check_for_decoys()
 
-	# Priority: Player > Decoy > Wander
-	if player_in_sight and player_reference:
-		# Highest priority: chase player
-	
+	# Priority: Hunt mode > Player vision > Decoy > Wander
 	# Hunt mode: chase player regardless of vision (never cancels)
 	if hunt_mode:
 		var player = get_tree().get_first_node_in_group("player")
@@ -107,6 +96,7 @@ func _physics_process(delta: float) -> void:
 			if not is_chasing:
 				print("[Mom] Hunt mode active - chasing player!")
 			is_chasing = true
+			investigating_decoy = false
 			chase_player(player, delta)
 		else:
 			# No player found, wander
@@ -348,16 +338,14 @@ func investigate_decoy(delta: float) -> void:
 		target_decoy = null
 		return
 
-	# Move towards the decoy with wall avoidance
-	var direction = (target_decoy.global_position - global_position).normalized()
+	# Move towards the decoy using navigation
 	var distance_to_decoy = global_position.distance_to(target_decoy.global_position)
-	var avoidance = calculate_wall_avoidance()
+	
+	# Set navigation target
+	navigation_agent.target_position = target_decoy.global_position
 
-	# If close enough to the decoy, slow down and investigate
-	if distance_to_decoy < 50.0:
-		var final_direction = (direction * SPEED * 0.3 + avoidance).normalized()
-		velocity = final_direction * (SPEED * 0.3)  # Slow down when close
-		print("[Mom] Close to decoy, investigating carefully...")
-	else:
-		var final_direction = (direction * SPEED + avoidance).normalized()
-		velocity = final_direction * SPEED  # Normal speed when far
+	# If close enough to the decoy, we've finished investigating
+	if distance_to_decoy < 30.0:
+		print("[Mom] Reached decoy location, resuming patrol")
+		investigating_decoy = false
+		target_decoy = null
