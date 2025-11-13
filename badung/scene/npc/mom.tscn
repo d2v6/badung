@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://es0hoh0nd4yw"]
+[gd_scene load_steps=27 format=3 uid="uid://es0hoh0nd4yw"]
 
 [ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/mom.gd" id="1_pnctf"]
 [ext_resource type="Texture2D" uid="uid://nkg3ul8qskg8" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9799.PNG" id="2_ptdu4"]
@@ -109,7 +109,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
-radius = 15.033297
+radius = 16.03122
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t8aoe"]
+radius = 51.009804
 
 [node name="Mom" type="CharacterBody2D"]
 script = ExtResource("1_pnctf")
@@ -125,6 +128,11 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 27)
 shape = SubResource("CircleShape2D_4reak")
+
+[node name="CatchArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
+shape = SubResource("CircleShape2D_t8aoe")
 
 [node name="Vision" type="Area2D" parent="."]
 position = Vector2(0, -17)

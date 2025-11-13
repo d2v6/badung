@@ -30,6 +30,7 @@ var current_marker_index: int = 0
 var is_at_marker: bool = false
 var patrol_timer: float = 0.0
 var patrol_mode: bool = true  # True = following markers, False = free wander
+var hunt_mode: bool = false  # True when kaka reports player
 
 # Vision detection
 var player_in_sight: bool = false
@@ -45,6 +46,7 @@ var wall_raycasts = []
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var vision_area: Area2D = $Vision
 @onready var vision_shape: Polygon2D = $Vision/VisionPolygon
+@onready var catch_area: Area2D = $CatchArea
 
 func _ready() -> void:
 	# Wait for first physics frame for scene to initialize
@@ -81,6 +83,14 @@ func _setup_navigation() -> void:
 	if vision_area:
 		vision_area.body_entered.connect(_on_vision_body_entered)
 		vision_area.body_exited.connect(_on_vision_body_exited)
+	
+	# Connect catch area signals
+	if catch_area:
+		catch_area.body_entered.connect(_on_catch_area_body_entered)
+	
+	# Connect to GameManager signal for when kaka reports player
+	if GameManager:
+		GameManager.player_reported.connect(_on_player_reported)
 
 func find_patrol_markers() -> void:
 	# Find all Marker2D nodes in the scene
@@ -122,7 +132,7 @@ func create_wall_raycasts() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Check for collision with player
-	check_player_collision()
+	# check_player_collision()
 
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
@@ -257,7 +267,18 @@ func _on_vision_body_exited(body: Node2D) -> void:
 		player_reference = null
 		print("Mom: Player left vision!")
 
-		print("Mom: Player left vision!")
+func _on_catch_area_body_entered(body: Node2D) -> void:
+	# Check if it's the player
+	if body.is_in_group("player"):
+		# Show game over overlay
+		show_game_over()
+		print("[Mom] Player caught!")
+
+func _on_player_reported() -> void:
+	# Kaka has reported the player - switch to hunt mode
+	hunt_mode = true
+	patrol_mode = false
+	print("[Mom] Player reported! Switching to hunt mode - ignoring markers")
 
 func chase_player(player: Node, delta: float) -> void:
 	# Direct chase towards player with wall avoidance
@@ -269,7 +290,10 @@ func chase_player(player: Node, delta: float) -> void:
 	velocity = final_direction * CHASE_SPEED
 
 func wander(delta: float) -> void:
-	if patrol_mode and patrol_markers.size() > 0:
+	if hunt_mode:
+		# When in hunt mode, actively search for player
+		hunt_player(delta)
+	elif patrol_mode and patrol_markers.size() > 0:
 		patrol_with_markers(delta)
 	else:
 		free_wander(delta)
@@ -317,6 +341,21 @@ func patrol_with_markers(delta: float) -> void:
 		# Combine marker direction with wall avoidance
 		var final_direction = (direction * SPEED + avoidance).normalized()
 		velocity = final_direction * SPEED
+
+func hunt_player(delta: float) -> void:
+	# Actively search for player by moving towards last known position
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		# Move directly towards player with wall avoidance
+		var direction = (player.global_position - global_position).normalized()
+		var avoidance = calculate_wall_avoidance()
+		
+		# Combine hunt direction with wall avoidance (use chase speed)
+		var final_direction = (direction * CHASE_SPEED + avoidance).normalized()
+		velocity = final_direction * CHASE_SPEED
+	else:
+		# No player found, free wander
+		free_wander(delta)
 
 func free_wander(delta: float) -> void:
 	wander_timer -= delta
@@ -372,16 +411,6 @@ func is_path_clear(from: Vector2, to: Vector2) -> bool:
 	
 	var result = space_state.intersect_ray(query)
 	return result.is_empty()  # True if path is clear
-
-func check_player_collision() -> void:
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		
-		# Check if collided with player
-		if collider and (collider.is_in_group("player") or collider.name == "CharacterBody2D"):
-			# Show game over overlay
-			show_game_over()
 
 func update_animation() -> void:
 	if not animated_sprite:
