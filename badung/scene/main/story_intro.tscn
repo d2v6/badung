@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh5k2iooaxir5"]
+
+[ext_resource type="Script" uid="uid://cp7xm3q8wl25k" path="res://scripts/story_intro.gd" id="1_intro"]
+[ext_resource type="Texture2D" uid="uid://dcdm7ysytvar2" path="res://assets/sprites/story.PNG" id="2_story"]
+
+[node name="StoryIntro" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_intro")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StoryImage" type="Sprite2D" parent="Control/CenterContainer"]
+position = Vector2(575.6098, 323.5)
+scale = Vector2(0.48780492, 0.39817074)
+texture = ExtResource("2_story")
+
+[node name="FadeRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
