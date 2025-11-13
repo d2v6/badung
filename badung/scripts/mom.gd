@@ -35,6 +35,10 @@ var patrol_mode: bool = true  # True = following markers, False = free wander
 var player_in_sight: bool = false
 var player_reference: CharacterBody2D = null
 
+# Decoy detection
+var investigating_decoy: bool = false
+var target_decoy: Node2D = null
+
 # Raycasts for wall detection
 var wall_raycasts = []
 
@@ -119,7 +123,7 @@ func create_wall_raycasts() -> void:
 func _physics_process(delta: float) -> void:
 	# Check for collision with player
 	check_player_collision()
-	
+
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
 		# Verify line of sight is still clear
@@ -127,26 +131,37 @@ func _physics_process(delta: float) -> void:
 			# Wall is blocking, lose sight
 			player_in_sight = false
 			print("Mom: Lost sight - wall blocking!")
-	
+
 	# Check if stuck (not moving much)
 	check_if_stuck(delta)
-	
-	# Check if should chase based on vision
+
+	# Check for active decoys
+	check_for_decoys()
+
+	# Priority: Player > Decoy > Wander
 	if player_in_sight and player_reference:
+		# Highest priority: chase player
 		is_chasing = true
+		investigating_decoy = false
 		chase_player(player_reference, delta)
-	else:
+	elif investigating_decoy and target_decoy:
+		# Medium priority: investigate decoy
 		is_chasing = false
+		investigate_decoy(delta)
+	else:
+		# Lowest priority: normal wander/patrol
+		is_chasing = false
+		investigating_decoy = false
 		wander(delta)
-	
+
 	move_and_slide()
-	
+
 	# Update vision direction and color
 	update_vision()
-	
+
 	# Update animation based on movement
 	update_animation()
-	
+
 	# Update last position for stuck detection
 	last_position = global_position
 
@@ -161,8 +176,11 @@ func update_vision() -> void:
 	
 	# Update vision color based on state
 	if is_chasing:
-		# Darker red when chasing (more opaque and saturated)
+		# Darker red when chasing player (more opaque and saturated)
 		vision_shape.modulate = Color(1, 0, 0, 0.5)  # Brighter/more opaque red
+	elif investigating_decoy:
+		# Orange/yellow when investigating decoy
+		vision_shape.modulate = Color(1, 0.7, 0, 0.4)  # Orange color
 	else:
 		# Normal red when wandering
 		vision_shape.modulate = Color(1, 0, 0, 0.3)  # Lighter/more transparent red
@@ -393,12 +411,12 @@ func show_game_over() -> void:
 	if not player:
 		print("[Mom] Error: Player not found!")
 		return
-	
+
 	var camera = player.get_node_or_null("Camera")
 	if not camera:
 		print("[Mom] Error: Camera not found on player!")
 		return
-	
+
 	# Instance the game over overlay
 	var overlay = GAME_OVER_OVERLAY.instantiate()
 	# Add it to the player's camera so it follows the camera view
@@ -406,3 +424,68 @@ func show_game_over() -> void:
 	# Show the game over screen (FAILURE - caught by mom)
 	overlay.show_game_over(overlay.GameOverType.FAILURE)
 	print("[Mom] Game Over - Player caught!")
+
+# Decoy detection and investigation functions
+func check_for_decoys() -> void:
+	# If already investigating a valid active decoy, keep investigating
+	if investigating_decoy and target_decoy and is_instance_valid(target_decoy):
+		if target_decoy.has_method("get_is_active") and target_decoy.get_is_active():
+			return  # Continue investigating current decoy
+		else:
+			# Decoy is no longer active, stop investigating
+			investigating_decoy = false
+			target_decoy = null
+			print("[Mom] Decoy no longer active, resuming patrol")
+	elif investigating_decoy:
+		# Target decoy was deleted, stop investigating
+		investigating_decoy = false
+		target_decoy = null
+
+	# Look for active decoys in the scene
+	var decoys = get_tree().get_nodes_in_group("decoy")
+	var closest_decoy: Node2D = null
+	var closest_distance: float = INF
+
+	for decoy in decoys:
+		# Check if decoy is thrown and active
+		if decoy.has_method("get_is_active") and decoy.has_method("get_is_thrown"):
+			if decoy.get_is_active() and decoy.get_is_thrown():
+				var distance = global_position.distance_to(decoy.global_position)
+
+				# Find the closest active decoy
+				if distance < closest_distance:
+					closest_distance = distance
+					closest_decoy = decoy
+
+	# If found a decoy, start investigating
+	if closest_decoy:
+		investigating_decoy = true
+		target_decoy = closest_decoy
+		print("[Mom] Detected decoy at ", closest_decoy.global_position, "! Investigating...")
+
+func investigate_decoy(delta: float) -> void:
+	if not target_decoy or not is_instance_valid(target_decoy):
+		investigating_decoy = false
+		target_decoy = null
+		return
+
+	# Check if decoy is still active
+	if target_decoy.has_method("get_is_active") and not target_decoy.get_is_active():
+		print("[Mom] Decoy disappeared/deactivated, resuming patrol")
+		investigating_decoy = false
+		target_decoy = null
+		return
+
+	# Move towards the decoy with wall avoidance
+	var direction = (target_decoy.global_position - global_position).normalized()
+	var distance_to_decoy = global_position.distance_to(target_decoy.global_position)
+	var avoidance = calculate_wall_avoidance()
+
+	# If close enough to the decoy, slow down and investigate
+	if distance_to_decoy < 50.0:
+		var final_direction = (direction * SPEED * 0.3 + avoidance).normalized()
+		velocity = final_direction * (SPEED * 0.3)  # Slow down when close
+		print("[Mom] Close to decoy, investigating carefully...")
+	else:
+		var final_direction = (direction * SPEED + avoidance).normalized()
+		velocity = final_direction * SPEED  # Normal speed when far
