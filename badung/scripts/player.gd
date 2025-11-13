@@ -6,12 +6,14 @@ const SPEED = 300.0
 @onready var run: AnimatedSprite2D = $run
 
 var held_objective: Node2D = null
+var held_decoy: Node2D = null
+var last_direction: Vector2 = Vector2.RIGHT  # Track facing direction for throwing
 
 func _ready() -> void:
 	# Set process mode to pausable (default, but explicit)
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var direction = Vector2(
 		Input.get_axis("left", "right"),
 		Input.get_axis("up", "down")
@@ -20,8 +22,17 @@ func _physics_process(delta: float) -> void:
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
 		velocity = direction * SPEED
+		last_direction = direction  # Update facing direction
 	else:
 		velocity = Vector2.ZERO
+
+	# Check for decoy pickup (J key)
+	if Input.is_action_just_pressed("pickup_decoy"):
+		try_pickup_decoy()
+
+	# Check for decoy throw (K key)
+	if Input.is_action_just_pressed("throw_decoy"):
+		try_throw_decoy()
 
 	move_and_slide()
 	_update_animation(direction, velocity)
@@ -32,7 +43,7 @@ func on_objective_grabbed(objective: Node2D) -> void:
 	print("Player is now holding: ", objective.name)
 
 # update funtcion pas udh ada sprite direction y
-func _update_animation(direction: Vector2, velocity: Vector2) -> void:
+func _update_animation(direction: Vector2, current_velocity: Vector2) -> void:
 	if (direction.x > 0) :
 		idle.flip_h = false
 		run.flip_h = false
@@ -40,9 +51,31 @@ func _update_animation(direction: Vector2, velocity: Vector2) -> void:
 		idle.flip_h = true;
 		run.flip_h = true;
 
-	if velocity == Vector2.ZERO:
+	if current_velocity == Vector2.ZERO:
 		idle.visible = true
 		run.visible = false
 	else:
 		idle.visible = false
 		run.visible = true
+
+# Decoy handling functions
+func try_pickup_decoy() -> void:
+	# Find all decoys in the scene
+	var decoys = get_tree().get_nodes_in_group("decoy")
+	for decoy in decoys:
+		if decoy.has_method("can_pickup") and decoy.can_pickup():
+			decoy.pickup_decoy()
+			break
+
+func try_throw_decoy() -> void:
+	if held_decoy:
+		# Throw in the direction the player is facing
+		held_decoy.throw_decoy(last_direction)
+		held_decoy = null
+
+func on_decoy_picked_up(decoy: Node2D) -> void:
+	held_decoy = decoy
+	print("Player picked up decoy!")
+
+func on_decoy_thrown() -> void:
+	print("Player threw decoy!")
