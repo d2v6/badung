@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bh5k2iooaxir5"]
 
-[ext_resource type="Script" uid="uid://cp7xm3q8wl25k" path="res://scripts/story_intro.gd" id="1_intro"]
+[ext_resource type="Script" path="res://scripts/story_intro.gd" id="1_intro"]
 [ext_resource type="Texture2D" uid="uid://dcdm7ysytvar2" path="res://assets/sprites/story.PNG" id="2_story"]
 
 [node name="StoryIntro" type="CanvasLayer"]
@@ -26,8 +26,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="StoryImage" type="Sprite2D" parent="Control/CenterContainer"]
-position = Vector2(575.6098, 323.5)
-scale = Vector2(0.48780492, 0.39817074)
+position = Vector2(799.99994, 449)
+scale = Vector2(0.6779661, 0.5512195)
 texture = ExtResource("2_story")
 
 [node name="FadeRect" type="ColorRect" parent="Control"]
