@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://8no6klrt2tee"]
+[gd_scene load_steps=21 format=3 uid="uid://8no6klrt2tee"]
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
@@ -15,6 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://wuxasq2bjqyy" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-6.png" id="13_iuf2t"]
 [ext_resource type="Texture2D" uid="uid://cntoriky76htf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-7.png" id="14_jrjdb"]
 [ext_resource type="Texture2D" uid="uid://crsnleljbches" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-8.png" id="15_kk4ol"]
+
+[sub_resource type="Gradient" id="Gradient_j4wxg"]
+offsets = PackedFloat32Array(0.31333333, 0.56)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bup7g"]
+gradient = SubResource("Gradient_j4wxg")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hjaqi"]
 animations = [{
@@ -79,8 +88,18 @@ radius = 19.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 10
-collision_layer = 3
+collision_layer = 2
 script = ExtResource("1_hjaqi")
+
+[node name="LineOfSight" type="PointLight2D" parent="."]
+light_mask = 0
+position = Vector2(1, -31)
+scale = Vector2(2.3125, 2.3125)
+energy = 0.5
+shadow_enabled = true
+shadow_filter = 1
+texture = SubResource("GradientTexture2D_bup7g")
+texture_scale = 5.0
 
 [node name="idle" type="AnimatedSprite2D" parent="."]
 position = Vector2(2.0000038, -32.999996)

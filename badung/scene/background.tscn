@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ckcfmgsvevyhk"]
+[gd_scene load_steps=27 format=3 uid="uid://ckcfmgsvevyhk"]
 
 [ext_resource type="Texture2D" uid="uid://cqrkpvdo4dy23" path="res://assets/sprites/floorplan.svg" id="1_jirmm"]
 [ext_resource type="Texture2D" uid="uid://c8kh25c48fa7f" path="res://assets/sprites/Aset Furnitur/Kamar Main Chara/Untitled_Artwork-1.png" id="2_xpwal"]
@@ -30,47 +30,11 @@ vertices = PackedVector2Array(-1100, -550, -1100, 900, 1300, 900, 1300, -950, -1
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1100, -550, -1200, -550, -1200, -950, 1300, -950, 1300, 900, -1100, 900)])
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_ow7i6"]
-vertices = PackedVector2Array(-717.5625, 78.17969, -851.0078, 95.90625, -888.15625, 91.171875, -891.21094, -68.140625, -710.5, -60, -997.3828, -56.453125, -1131.0234, -187.21875, -1132.9688, -566.53906, -961.03906, -720.1172, -655.72656, -729.8828, -479.79688, -570.3828, -475, -463.85156, -471.0625, -203.85156, -604.3594, -60)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 5, 6, 7, 8, 9, 10, 11), PackedInt32Array(4, 3, 11, 12, 13)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-851, 106, -898, 100, -901, -57, -1001, -46, -1141, -183, -1143, -571, -965, -730, -652, -740, -470, -575, -465, -464, -461, -200, -600, -50, -701, -50, -708, 87)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_a3gv3"]
-vertices = PackedVector2Array(-449.40625, -305.09375, -454.4375, -424.8828, -398.85156, -410.25, 574.8828, -526.46094, 568.28906, -314.89844, 8.9296875, -483.96875, -393.65625, -485.95313, 488.32813, -628.0625, 64.89844, -633.89844)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 0, 2, 5), PackedInt32Array(2, 6, 5), PackedInt32Array(7, 3, 5, 8)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-459, -295, -465, -438, -408, -423, -403, -496, 2, -494, 58, -644, 493, -638, 585, -530, 578, -305)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_sh5gf"]
-vertices = PackedVector2Array(889, -203.75781, 645.9531, -209.75781, 644.03906, -659.71875, 966.71094, -651.10156, 1129.9688, -485.92188, 1128.0234, -179.11719, 1000.9375, -50.117188, 889, -53.679688)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(0, 4, 5, 6, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(636, -200, 634, -670, 971, -661, 1140, -490, 1138, -175, 1005, -40, 879, -44, 879, -194)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_qhdn6"]
-vertices = PackedVector2Array(826.28125, 92.21875, 547.5703, 86.21875, 556.4219, -66.75, 812.52344, -60.179688, 825.6406, -16.789063, 965.22656, -20.710938, 973.22656, 326, 914.78125, 740.85156, 808.27344, 737.3281, 1046.9063, 599.14844, 1041.2031, 326)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 5, 6, 0), PackedInt32Array(7, 8, 0, 6, 9), PackedInt32Array(9, 6, 10)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(975, -31, 833, -27, 820, -70, 547, -77, 537, 96, 816, 102, 798, 747, 919, 751, 1057, 603, 1051, 316, 983, 316)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_aly4q"]
-vertices = PackedVector2Array(324, 260.89063, -29.5625, 264.8125, 33.039063, 142.15625, 476.46875, 153.75, 484.47656, 312.82813, 324, 419.0625, 797.85156, 421.9375, 807.0781, 318.79688)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 5, 4, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(807, 432, 314, 429, 314, 271, -46, 275, 27, 132, 486, 144, 494, 303, 818, 309)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_stadm"]
-vertices = PackedVector2Array(-35.78125, -283.0625, 247.50781, -284.82813, -3.328125, -50.023438, -33.90625, -194.8125, -472.96875, 224.97656, 9.828125, 123.203125, -50.351563, 256.75, -240, 249.61719, -240, 690.2422, -343, 673.4922, -343, 329.35938, -965.7969, 306.3672, -964.1875, 226.96094)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5, 6, 7), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(4, 7, 10, 11, 12)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-44, 267, 20, 125, 7, -46, 273, -295, -46, -293, -44, -199, -477, 215, -974, 217, -976, 316, -353, 339, -353, 682, -230, 702, -230, 260)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_6lede"]
-vertices = PackedVector2Array(-52, 399.28906, 267.7422, 390.28906, 257.22656, 824.8828, -164.07813, 820.03906, -214.32813, 774.28125, -219.89844, 700.9531, -109.328125, 289, -52, 289)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(0, 5, 6, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-117, 279, -42, 279, -42, 389, 278, 380, 267, 835, -168, 830, -224, 779, -230, 700)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_t82x3"]
-vertices = PackedVector2Array(-962.10156, 645.90625, -970.6875, 345.29688, -851, 348.71875, -851, 476, -475.82813, 476, -471.8203, 705.1719, -789.71875, 828.9375, -240.5, 758.75, -457.53125, 825.0078, -244.34375, 701.15625)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5, 6), PackedInt32Array(7, 8, 6, 5, 9)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-230, 766, -456, 835, -794, 839, -972, 650, -981, 335, -841, 339, -841, 466, -466, 466, -462, 695, -235, 691)])
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ow7i6"]
+polygon = PackedVector2Array(366, 427, 262, 432, 258, 870, 798, 880, 796, 427, 444, 435, 445, 488, 738, 485, 758, 854, 310, 831, 315, 479, 363, 483)
 
 [node name="Background" type="StaticBody2D"]
+collision_mask = 3
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
@@ -100,6 +64,7 @@ polygon = PackedVector2Array(-1135, -576, -962, -737, -644, -735, -466, -575, -4
 [node name="kamar-mc" type="Node" parent="Furniture"]
 
 [node name="kasur" type="StaticBody2D" parent="Furniture/kamar-mc"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mc/kasur"]
 position = Vector2(-638, 641.00006)
@@ -111,6 +76,7 @@ position = Vector2(-656, 611)
 polygon = PackedVector2Array(19, 160, 93, 160, 92, 217, -158, 218, -158, 161, -84, 159, -92, -43, -70, -44, -70, -29, 5, -28, 5, -47, 27, -45)
 
 [node name="meja" type="StaticBody2D" parent="Furniture/kamar-mc"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mc/meja"]
 z_index = 2
@@ -124,6 +90,7 @@ position = Vector2(-587, 291)
 polygon = PackedVector2Array(-9, 216, -162, 217, -159, 120, -11, 119)
 
 [node name="lemari" type="StaticBody2D" parent="Furniture/kamar-mc"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mc/lemari"]
 z_index = 2
@@ -144,6 +111,7 @@ scale = Vector2(0.06733358, 0.06733354)
 texture = ExtResource("5_hehlj")
 
 [node name="toilet" type="StaticBody2D" parent="Furniture/kamar-mandi"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi/toilet"]
 position = Vector2(-382, 673)
@@ -155,6 +123,7 @@ position = Vector2(-281, 529)
 polygon = PackedVector2Array(-97, 127, -82, 131, -78, 136, -80, 148, -87, 155, -97, 162, -123, 163, -124, 127)
 
 [node name="bakmandi" type="StaticBody2D" parent="Furniture/kamar-mandi"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi/bakmandi"]
 position = Vector2(-252, 632)
@@ -166,6 +135,7 @@ position = Vector2(-137, 463)
 polygon = PackedVector2Array(-95, 217, -162, 217, -162, 123, -96, 123)
 
 [node name="bathup" type="StaticBody2D" parent="Furniture/kamar-mandi"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi/bathup"]
 position = Vector2(-315.28638, 801.4403)
@@ -179,6 +149,7 @@ polygon = PackedVector2Array(12, 218, -162, 217, -163, 157, 12, 158)
 [node name="kamar-kakak" type="Node" parent="Furniture"]
 
 [node name="kasur" type="StaticBody2D" parent="Furniture/kamar-kakak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-kakak/kasur"]
 z_index = 2
@@ -191,6 +162,7 @@ position = Vector2(184, 342)
 polygon = PackedVector2Array(74, 159, 73, 244, 50, 241, 44, 183, -139, 191, -140, 29, 75, 27)
 
 [node name="meja" type="StaticBody2D" parent="Furniture/kamar-kakak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-kakak/meja"]
 position = Vector2(21, 872)
@@ -202,6 +174,7 @@ position = Vector2(41, 610)
 polygon = PackedVector2Array(8, 217, -162, 217, -163, 149, -77, 148, -77, 109, -28, 109, -28, 148, 8, 149)
 
 [node name="lemari" type="StaticBody2D" parent="Furniture/kamar-kakak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-kakak/lemari"]
 z_index = 2
@@ -214,6 +187,7 @@ position = Vector2(-218, 476)
 polygon = PackedVector2Array(46, -144, 49, 67, 95, 71, 94, -145)
 
 [node name="lemari2" type="StaticBody2D" parent="Furniture/kamar-kakak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-kakak/lemari2"]
 z_index = 2
@@ -228,6 +202,7 @@ polygon = PackedVector2Array(48, -110, 50, 72, 92, 72, 93, -111)
 [node name="kamar-guest" type="Node" parent="Furniture"]
 
 [node name="kasur" type="StaticBody2D" parent="Furniture/kamar-guest"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-guest/kasur"]
 position = Vector2(419, 687)
@@ -239,6 +214,7 @@ position = Vector2(478, 570)
 polygon = PackedVector2Array(35, 137, 34, 257, -169, 256, -166, 137, -166, 94, -140, 96, -140, 157, 14, 157, 15, 137)
 
 [node name="meja" type="StaticBody2D" parent="Furniture/kamar-guest"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-guest/meja"]
 z_index = 2
@@ -251,6 +227,7 @@ position = Vector2(687, 397)
 polygon = PackedVector2Array(-12, 215, -162, 217, -162, 105, -12, 104)
 
 [node name="lemari" type="StaticBody2D" parent="Furniture/kamar-guest"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-guest/lemari"]
 z_index = 2
@@ -266,6 +243,7 @@ polygon = PackedVector2Array(47, -62, 49, 67, 95, 71, 95, -63)
 [node name="kamar-knn-bwh" type="Node" parent="Furniture"]
 
 [node name="sofa1" type="StaticBody2D" parent="Furniture/kamar-knn-bwh"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-knn-bwh/sofa1"]
 position = Vector2(951.6464, 470.35367)
@@ -277,6 +255,7 @@ position = Vector2(1046, 287)
 polygon = PackedVector2Array(-51, 128, -54, 235, -134, 235, -139, 141)
 
 [node name="sofa2" type="StaticBody2D" parent="Furniture/kamar-knn-bwh"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-knn-bwh/sofa2"]
 position = Vector2(886, 616)
@@ -296,6 +275,7 @@ scale = Vector2(0.06733358, 0.06733354)
 texture = ExtResource("5_hehlj")
 
 [node name="toilet" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/toilet"]
 z_index = 2
@@ -310,6 +290,7 @@ rotation = 1.5707964
 polygon = PackedVector2Array(-95, 123, -82, 131, -78, 136, -78.99999, 151, -84.99999, 158, -97, 162, -123, 163, -124, 124)
 
 [node name="wastafel" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/wastafel"]
 z_index = 2
@@ -323,6 +304,7 @@ position = Vector2(814, -253)
 polygon = PackedVector2Array(-86, 217, -162, 217, -163, 147, -85, 147)
 
 [node name="bathup" type="StaticBody2D" parent="Furniture/kamar-mandi2"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-mandi2/bathup"]
 z_index = 2
@@ -340,6 +322,7 @@ polygon = PackedVector2Array(34.000008, 223, -162, 217, -163, 157, 31.000008, 15
 [node name="kamar-emak" type="Node" parent="Furniture"]
 
 [node name="kasur" type="StaticBody2D" parent="Furniture/kamar-emak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/kasur"]
 z_index = 2
@@ -353,6 +336,7 @@ position = Vector2(808, -783)
 polygon = PackedVector2Array(-97, 338, -90, 156, -165, 152, -166, 94, 145, 94, 145, 156, 70, 157, 79, 337)
 
 [node name="meja" type="StaticBody2D" parent="Furniture/kamar-emak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/meja"]
 z_index = 2
@@ -366,6 +350,7 @@ position = Vector2(1151, -446)
 polygon = PackedVector2Array(-12, 215, -69, 219, -76, 147, -115, 148, -115, 69, -107, 69, -108, 98, -76, 99, -73, 18, -13, 18)
 
 [node name="sofa" type="StaticBody2D" parent="Furniture/kamar-emak"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/kamar-emak/sofa"]
 z_index = 2
@@ -381,6 +366,7 @@ polygon = PackedVector2Array(-14, -44, -18.984009, -15.472809, -31, -7, -30, 40,
 [node name="dapur" type="Node" parent="Furniture"]
 
 [node name="dapur" type="StaticBody2D" parent="Furniture/dapur"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/dapur"]
 z_index = 2
@@ -394,6 +380,7 @@ position = Vector2(166, -807)
 polygon = PackedVector2Array(-109, 166, -111, 283, -167, 285, -166, 94, 414, 93, 414, 238, 331, 238, 326, 164)
 
 [node name="meja" type="StaticBody2D" parent="Furniture/dapur"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/meja"]
 z_index = 2
@@ -407,6 +394,7 @@ position = Vector2(302, -580)
 polygon = PackedVector2Array(35, 207, -76, 208, -103, 148, -104, 76, -83, 47, 39, 46, 63, 77, 62, 145)
 
 [node name="oven" type="StaticBody2D" parent="Furniture/dapur"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/dapur/oven"]
 z_index = 2
@@ -422,6 +410,7 @@ polygon = PackedVector2Array(20, -79, 21, 32, 106, 32, 106, -79)
 [node name="living" type="Node" parent="Furniture"]
 
 [node name="sofa" type="StaticBody2D" parent="Furniture/living"]
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Furniture/living/sofa"]
 z_index = 2
@@ -443,28 +432,10 @@ polygon = PackedVector2Array(-145, 269, -145, 30, -89, 28, -84, 269)
 z_index = 1
 texture = ExtResource("13_2y26r")
 
-[node name="Patrol Points" type="Node2D" parent="."]
+[node name="LightOcclusions" type="Node" parent="."]
 
-[node name="a" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_ow7i6")
+[node name="LightOccluder2D" type="LightOccluder2D" parent="LightOcclusions"]
+occluder = SubResource("OccluderPolygon2D_ow7i6")
 
-[node name="b" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_a3gv3")
-
-[node name="c" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_sh5gf")
-
-[node name="d" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_qhdn6")
-
-[node name="e" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_aly4q")
-
-[node name="f" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_stadm")
-
-[node name="g" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_6lede")
-
-[node name="h" type="NavigationRegion2D" parent="Patrol Points"]
-navigation_polygon = SubResource("NavigationPolygon_t82x3")
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.060530342, 0.06053035, 0.060530327, 1)

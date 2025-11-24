@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://d1261hhkmm05o"]
 
 [ext_resource type="PackedScene" uid="uid://chpkhdookufrq" path="res://scene/game_manager.tscn" id="1_w2nxe"]
-[ext_resource type="PackedScene" uid="uid://bn70kgvjs5jw5" path="res://scene/objective.tscn" id="2_n3n2a"]
+[ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/objective.tscn" id="2_n3n2a"]
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player.tscn" id="2_nxvai"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/background.tscn" id="2_w2nxe"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="3_n3n2a"]
@@ -30,7 +30,8 @@ position = Vector2(-531, -371)
 position = Vector2(600, 675)
 
 [node name="Camera" type="Camera2D" parent="Player"]
-position = Vector2(70, 0)
+position = Vector2(1, -19)
+zoom = Vector2(2, 2)
 limit_left = -1340
 limit_top = -990
 limit_right = 1340

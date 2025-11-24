@@ -32,7 +32,6 @@ script = ExtResource("1_rxfpd")
 position = Vector2(575.2222, 324)
 scale = Vector2(0.59814817, 0.59814817)
 texture = ExtResource("1_lgni4")
-metadata/_edit_lock_ = true
 
 [node name="start" type="TextureButton" parent="."]
 layout_mode = 1

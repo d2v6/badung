@@ -40,10 +40,19 @@ var hunt_mode: bool = false  # True when player is reported - chase never cancel
 func _ready() -> void:
 	# Create and setup navigation agent
 	navigation_agent = NavigationAgent2D.new()
-	navigation_agent.path_desired_distance = 10.0
-	navigation_agent.target_desired_distance = 15.0
+	navigation_agent.path_desired_distance = 20.0
+	navigation_agent.target_desired_distance = 30.0
+	navigation_agent.path_postprocessing = NavigationPathQueryParameters2D.PATH_POSTPROCESSING_EDGECENTERED
 	navigation_agent.avoidance_enabled = true
-	navigation_agent.radius = 20.0
+	navigation_agent.radius = 30.0
+	navigation_agent.neighbor_distance = 100.0
+	navigation_agent.max_neighbors = 10
+	navigation_agent.time_horizon_agents = 0.5
+	navigation_agent.time_horizon_obstacles = 0.5
+	navigation_agent.max_speed = CHASE_SPEED
+	navigation_agent.set_avoidance_layer_value(2, true)  # Mom is on avoidance layer 2
+	navigation_agent.set_avoidance_mask_value(1, true)   # Avoid layer 1 (walls/items)
+	navigation_agent.set_avoidance_mask_value(2, true)   # Avoid layer 2 (other agents)
 	add_child(navigation_agent)
 	
 	# Wait for first physics frame for scene to initialize
@@ -80,6 +89,9 @@ func _setup_navigation() -> void:
 	if GameManager:
 		GameManager.player_reported.connect(_on_player_reported)
 		print("[Mom] Connected to GameManager.player_reported signal")
+
+	# Connect velocity computed signal for avoidance
+	navigation_agent.velocity_computed.connect(_on_velocity_computed)
 
 func _physics_process(delta: float) -> void:
 	# Check if stuck (not moving much)
@@ -122,13 +134,19 @@ func _physics_process(delta: float) -> void:
 		wander(delta)
 	
 	# Move along path if we have one
-	if navigation_agent.is_navigation_finished():
-		velocity = Vector2.ZERO
-	else:
+	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var direction = (next_position - global_position).normalized()
 		var current_speed = CHASE_SPEED if is_chasing else SPEED
-		velocity = direction * current_speed
+		
+		# Use velocity for smoother movement
+		var desired_velocity = direction * current_speed
+		navigation_agent.set_velocity(desired_velocity)
+		
+		# Apply velocity (will be adjusted by avoidance)
+		velocity = desired_velocity
+	else:
+		velocity = Vector2.ZERO
 	
 	move_and_slide()
 
@@ -215,6 +233,10 @@ func _on_player_reported() -> void:
 	# Kaka has reported the player - activate hunt mode (never cancels)
 	hunt_mode = true
 	print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
+
+func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	# Use the safe velocity computed by the navigation agent (includes avoidance)
+	velocity = safe_velocity
 
 func chase_player(player: Node, delta: float) -> void:
 	# Use A* pathfinding to chase player - update every frame for dynamic chase
