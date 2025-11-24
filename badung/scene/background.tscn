@@ -438,4 +438,5 @@ texture = ExtResource("13_2y26r")
 occluder = SubResource("OccluderPolygon2D_ow7i6")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 color = Color(0.060530342, 0.06053035, 0.060530327, 1)

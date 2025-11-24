@@ -71,17 +71,17 @@ z_index = 3
 position = Vector2(689, 773)
 texture = ExtResource("10_5rfpf")
 
-[node name="Sprite2D5" type="Sprite2D" parent="."]
+[node name="J" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(505, 362)
 texture = ExtResource("11_j0dn6")
 
-[node name="Sprite2D7" type="Sprite2D" parent="."]
+[node name="shift" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(403, -17)
 texture = ExtResource("12_wkhna")
 
-[node name="Sprite2D6" type="Sprite2D" parent="."]
+[node name="K" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(596, 362.5)
 texture = ExtResource("13_3ihpg")
