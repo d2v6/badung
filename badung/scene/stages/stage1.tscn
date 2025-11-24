@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=14 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="Script" path="res://scripts/stage_loader.gd" id="1_loader"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/background.tscn" id="1_y11c3"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://chu86rmjep1a3" path="res://assets/sprites/Aset Furnitur/Kamar Kakak/Decoy.png" id="9_yiesw"]
 [ext_resource type="Texture2D" uid="uid://bi43ocsrewpyk" path="res://assets/sprites/Aset Furnitur/kamar mandi/gayung decoy.png" id="10_xl5nn"]
 [ext_resource type="Texture2D" uid="uid://8ko6reoqhlg6" path="res://assets/sprites/Aset Furnitur/ruang tamu/Decoy.png" id="10_yiesw"]
+[ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/pause_overlay.tscn" id="13_pause"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_loader")
@@ -72,3 +73,5 @@ position = Vector2(304, -316)
 position = Vector2(9.536743e-06, 6.67572e-06)
 scale = Vector2(0.011265435, 0.011265435)
 texture = ExtResource("9_obgyg")
+
+[node name="PauseOverlay" parent="." instance=ExtResource("13_pause")]

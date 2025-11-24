@@ -9,6 +9,9 @@ extends Node
 var last_sfx_volume: float = 0.0
 var last_music_volume: float = 0.0
 
+# Track if opened from pause menu
+var opened_from_pause: bool = false
+
 # Preload textures for music button
 var music_icon_normal = preload("res://assets/sprites/settings/icons/music/music_icon.png")
 var music_icon_hover = preload("res://assets/sprites/settings/icons/music/music_icon_hover.png")
@@ -22,7 +25,17 @@ var sfx_muted_icon_normal = preload("res://assets/sprites/settings/icons/sfx/sou
 var sfx_muted_icon_hover = preload("res://assets/sprites/settings/icons/sfx/sound_muted_icon_hover.png")
 
 
+func _input(event: InputEvent) -> void:
+	# Allow ESC to close settings when opened from pause menu
+	if opened_from_pause and event.is_action_pressed("ui_cancel"):
+		_close_from_pause()
+		get_viewport().set_input_as_handled()
+
+
 func _ready() -> void:
+	# Check if opened from pause menu (game is paused)
+	opened_from_pause = get_tree().paused
+	
 	# Wait a frame to ensure AudioManager is ready
 	await get_tree().process_frame
 	
@@ -114,8 +127,35 @@ func _update_sfx_button_texture(is_unmuted: bool) -> void:
 		sfx_btn.texture_pressed = sfx_muted_icon_hover
 
 
+func _close_from_pause() -> void:
+	# Find the pause overlay - it could be parent or grandparent depending on structure
+	var pause_overlay = _find_pause_overlay()
+	if pause_overlay and pause_overlay.has_method("close_settings"):
+		pause_overlay.close_settings()
+
+
+func _find_pause_overlay() -> Node:
+	# Check immediate parent
+	var parent = get_parent()
+	if parent and parent.has_method("close_settings"):
+		return parent
+	
+	# Check grandparent (in case we're wrapped in a CanvasLayer)
+	if parent:
+		var grandparent = parent.get_parent()
+		if grandparent and grandparent.has_method("close_settings"):
+			return grandparent
+	
+	return null
+
+
 func _on_quit_pressed() -> void:
-	get_tree().change_scene_to_file("res://scene/main/main_menu.tscn")
+	if opened_from_pause:
+		# If opened from pause menu, return to pause menu
+		_close_from_pause()
+	else:
+		# If opened from main menu, go back to main menu
+		get_tree().change_scene_to_file("res://scene/main/main_menu.tscn")
 
 
 func _on_music_btn_pressed() -> void:
