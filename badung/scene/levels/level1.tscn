@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://vliww4ddhpnd"]
+
+[ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/stage_loader.gd" id="1_fcruq"]
+[ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_k7kyu"]
+[ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player/player.tscn" id="3_j04vv"]
+[ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="4_6idcp"]
+[ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="5_abxrp"]
+[ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="6_pmu4x"]
+[ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="7_rtj1j"]
+[ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="8_k7kyu"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_fcruq")
+
+[node name="Background" parent="." instance=ExtResource("2_k7kyu")]
+
+[node name="Player" parent="." instance=ExtResource("3_j04vv")]
+position = Vector2(602, 694)
+
+[node name="Camera" type="Camera2D" parent="Player"]
+position = Vector2(70, 0)
+limit_left = -1340
+limit_top = -990
+limit_right = 1340
+limit_bottom = 990
+
+[node name="Mom" parent="." instance=ExtResource("4_6idcp")]
+position = Vector2(-107, 187)
+
+[node name="Finish Zone" parent="." instance=ExtResource("5_abxrp")]
+position = Vector2(421, 535)
+
+[node name="Objective" parent="." instance=ExtResource("6_pmu4x")]
+position = Vector2(-943, -382)
+
+[node name="PauseOverlay" parent="." instance=ExtResource("7_rtj1j")]
+visible = false
+
+[node name="Door" parent="." instance=ExtResource("8_k7kyu")]
+position = Vector2(367, 433)

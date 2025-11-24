@@ -53,7 +53,7 @@ func _on_tutorial_pressed() -> void:
 
 
 func _on_start_button_pressed() -> void:
-	SceneTransition.change_scene("res://scene/levels/stage1.tscn")
+	SceneTransition.change_scene("res://scene/levels/level1.tscn")
 
 
 func _on_quit_pressed() -> void:
