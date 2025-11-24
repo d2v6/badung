@@ -1,6 +1,6 @@
 extends Node2D
 
-const STORY_INTRO = preload("res://scene/main/story_intro.tscn")
+const STORY_INTRO = preload("res://scene/menus/story_intro.tscn")
 
 func _ready() -> void:
 	# Show story intro when stage loads

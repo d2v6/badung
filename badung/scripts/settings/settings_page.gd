@@ -155,7 +155,7 @@ func _on_quit_pressed() -> void:
 		_close_from_pause()
 	else:
 		# If opened from main menu, go back to main menu
-		get_tree().change_scene_to_file("res://scene/main/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scene/menus/main_menu.tscn")
 
 
 func _on_music_btn_pressed() -> void:

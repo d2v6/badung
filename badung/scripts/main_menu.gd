@@ -49,11 +49,11 @@ func _set_new_target() -> void:
 
 
 func _on_tutorial_pressed() -> void:
-	SceneTransition.change_scene("res://scene/stages/pre_tutorial.tscn")
+	SceneTransition.change_scene("res://scene/levels/pre_tutorial.tscn")
 
 
 func _on_start_button_pressed() -> void:
-	SceneTransition.change_scene("res://scene/stages/stage1.tscn")
+	SceneTransition.change_scene("res://scene/levels/stage1.tscn")
 
 
 func _on_quit_pressed() -> void:
@@ -61,4 +61,4 @@ func _on_quit_pressed() -> void:
 
 
 func _on_setting_pressed() -> void:
-	get_tree().change_scene_to_file("res://scene/settings/settingpage.tscn")
+	get_tree().change_scene_to_file("res://scene/menus/settings/settingpage.tscn")

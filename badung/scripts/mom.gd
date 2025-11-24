@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Preload game over overlay
-const GAME_OVER_OVERLAY = preload("res://scene/main/game_over.tscn")
+const GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
 
 # Movement settings
 const SPEED = 200.0

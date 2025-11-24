@@ -17,9 +17,9 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 [autoload]
 
 AudioManager="*res://scripts/audio_manager.gd"
-SceneTransition="*res://scene/main/scene_transition.tscn"
-Music="*res://scene/music.tscn"
-GameManager="*res://scene/game_manager.tscn"
+SceneTransition="*res://scene/ui/scene_transition.tscn"
+Music="*res://scene/systems/music.tscn"
+GameManager="*res://scene/systems/game_manager.tscn"
 
 [display]
 

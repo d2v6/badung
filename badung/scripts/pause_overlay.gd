@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var settings_button: Button = $Control/VBoxContainer/SettingsButton
 @onready var main_menu_button: Button = $Control/VBoxContainer/MainMenuButton
 
-var settings_scene = preload("res://scene/settings/settingpage.tscn")
+var settings_scene = preload("res://scene/menus/settings/settingpage.tscn")
 var settings_instance = null
 
 func _ready() -> void:

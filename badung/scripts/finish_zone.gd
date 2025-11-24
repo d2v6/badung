@@ -1,7 +1,7 @@
 extends Area2D
 
 # Preload game over overlay for success screen
-const GAME_OVER_OVERLAY = preload("res://scene/main/game_over.tscn")
+const GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
 
 var current_level: String = ""
 

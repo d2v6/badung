@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://hnldfnc1mcaw"]
 
-[ext_resource type="Texture2D" uid="uid://dmferreitr3ue" path="res://assets/sprites/Home bg.svg" id="1_lgni4"]
-[ext_resource type="Script" uid="uid://blknoil1m5sfa" path="res://scripts/main_menu.gd" id="1_rxfpd"]
-[ext_resource type="Texture2D" uid="uid://w1nub8i1eyi2" path="res://assets/sprites/Aset Button/Home button/mulai.png" id="3_ruq5w"]
-[ext_resource type="Texture2D" uid="uid://vwbu5dk0lbyp" path="res://assets/sprites/Aset Button/Home button/mulai_hover.png" id="4_dbghu"]
-[ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="5_o0k0e"]
-[ext_resource type="Texture2D" uid="uid://bybvnw6iqqjbv" path="res://assets/sprites/Aset Button/Home button/setting button.png" id="6_qims6"]
-[ext_resource type="Texture2D" uid="uid://bcysgmekrssj8" path="res://assets/sprites/logo/logo.PNG" id="8_acbhw"]
-[ext_resource type="Texture2D" uid="uid://b4kuc3arrvswp" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button.png" id="8_p7ily"]
+[ext_resource type="Script" uid="uid://blknoil1m5sfa" path="res://scripts/main_menu.gd" id="1_muahy"]
+[ext_resource type="Texture2D" uid="uid://dmferreitr3ue" path="res://assets/sprites/Home bg.svg" id="2_fdv2l"]
+[ext_resource type="Texture2D" uid="uid://w1nub8i1eyi2" path="res://assets/sprites/Aset Button/Home button/mulai.png" id="3_n02at"]
+[ext_resource type="Texture2D" uid="uid://vwbu5dk0lbyp" path="res://assets/sprites/Aset Button/Home button/mulai_hover.png" id="4_i3a2x"]
+[ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="5_vrtbl"]
+[ext_resource type="Texture2D" uid="uid://bybvnw6iqqjbv" path="res://assets/sprites/Aset Button/Home button/setting button.png" id="6_rt778"]
+[ext_resource type="Texture2D" uid="uid://b4kuc3arrvswp" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button.png" id="7_kasrd"]
+[ext_resource type="Texture2D" uid="uid://bcysgmekrssj8" path="res://assets/sprites/logo/logo.PNG" id="8_y3l4v"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qims6"]
 load_path = "res://.godot/imported/quit hover.png-cfeb18fc6e9445de9f91049003b7ce97.ctex"
@@ -26,12 +26,12 @@ offset_right = -0.30737305
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_rxfpd")
+script = ExtResource("1_muahy")
 
 [node name="HomeBg" type="Sprite2D" parent="."]
 position = Vector2(800.1111, 450.5)
 scale = Vector2(0.8324075, 0.8324075)
-texture = ExtResource("1_lgni4")
+texture = ExtResource("2_fdv2l")
 
 [node name="start" type="TextureButton" parent="."]
 layout_mode = 1
@@ -40,9 +40,9 @@ offset_left = 632.0
 offset_top = 578.0
 offset_right = 965.9612
 offset_bottom = 704.0
-texture_normal = ExtResource("3_ruq5w")
-texture_pressed = ExtResource("4_dbghu")
-texture_hover = ExtResource("4_dbghu")
+texture_normal = ExtResource("3_n02at")
+texture_pressed = ExtResource("4_i3a2x")
+texture_hover = ExtResource("4_i3a2x")
 stretch_mode = 0
 
 [node name="quit" type="TextureButton" parent="."]
@@ -51,7 +51,7 @@ offset_left = 47.0
 offset_top = 35.0
 offset_right = 206.0
 offset_bottom = 228.94505
-texture_normal = ExtResource("5_o0k0e")
+texture_normal = ExtResource("5_vrtbl")
 texture_pressed = SubResource("CompressedTexture2D_qims6")
 texture_hover = SubResource("CompressedTexture2D_qims6")
 stretch_mode = 0
@@ -62,7 +62,7 @@ offset_left = 1385.0
 offset_top = 45.0
 offset_right = 1552.0
 offset_bottom = 221.38202
-texture_normal = ExtResource("6_qims6")
+texture_normal = ExtResource("6_rt778")
 texture_pressed = SubResource("CompressedTexture2D_acbhw")
 texture_hover = SubResource("CompressedTexture2D_acbhw")
 stretch_mode = 0
@@ -74,14 +74,14 @@ offset_left = 478.0
 offset_top = 530.0
 offset_right = 687.0
 offset_bottom = 613.0
-texture_normal = ExtResource("8_p7ily")
+texture_normal = ExtResource("7_kasrd")
 texture_pressed = SubResource("CompressedTexture2D_xnsce")
 texture_hover = SubResource("CompressedTexture2D_xnsce")
 
 [node name="Logo" type="Sprite2D" parent="."]
 position = Vector2(815.00006, 320.00003)
 scale = Vector2(0.24418671, 0.24479166)
-texture = ExtResource("8_acbhw")
+texture = ExtResource("8_y3l4v")
 
 [connection signal="pressed" from="start" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl7fgry7ovtea"]
+
+[ext_resource type="Texture2D" uid="uid://d1a7707etewex" path="res://assets/sprites/Aset Button/slider -09.svg" id="1_6cmo3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xaq2l"]
+size = Vector2(318, 25)
+
+[node name="Door" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(159, 21)
+scale = Vector2(0.18310185, 0.18310185)
+texture = ExtResource("1_6cmo3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(159, 12.5)
+shape = SubResource("RectangleShape2D_xaq2l")
