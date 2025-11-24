@@ -1,64 +1,96 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
+const SNEAK_SPEED = 100.0
+const RUN_SPEED = 300.0
+const SPRINT_DURATION = 2.0
+const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 
 @onready var idle: AnimatedSprite2D = $idle
 @onready var run: AnimatedSprite2D = $run
+@onready var stamina_bar: TextureProgressBar = $StaminaBar
 
 var held_objective: Node2D = null
 var held_decoy: Node2D = null
-var last_direction: Vector2 = Vector2.RIGHT 
+var last_direction: Vector2 = Vector2.RIGHT
 
-# --- NEW: Track interactables (like doors) ---
+var stamina = SPRINT_DURATION
+var regen_cooldown_timer = 0.0 # Tracks the 1s delay
+
 var current_interactable: Node2D = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
+	stamina_bar.max_value = 100 # Ensure this is set to a known number
+	stamina_bar.value = stamina_bar.max_value
 
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2(
 		Input.get_axis("left", "right"),
 		Input.get_axis("up", "down")
 	)
+	
+	var speed = SNEAK_SPEED
+	var is_trying_to_run = Input.is_action_pressed("run")
+	var is_moving = direction != Vector2.ZERO
+	
+	# --- STAMINA LOGIC ---
+	
+	if is_trying_to_run and stamina > 0 and is_moving:
+		# 1. DRAINING
+		speed = RUN_SPEED
+		stamina -= _delta
+		regen_cooldown_timer = REGEN_COOLDOWN # Reset the cooldown timer
+	else:
+		# 2. REGENERATING (With Delay)
+		if regen_cooldown_timer > 0:
+			# Count down the delay
+			regen_cooldown_timer -= _delta
+		else:
+			# Actual regeneration
+			stamina += _delta / 4.0
 
-	if direction != Vector2.ZERO:
+	# Clamp logical stamina between 0 and Max
+	stamina = clamp(stamina, 0.0, SPRINT_DURATION)
+
+	# --- UI UPDATE ---
+	# Sync the bar visual to the actual stamina variable
+	# We calculate the percentage (0.0 to 1.0) and multiply by bar's max_value
+	var stamina_percent = stamina / SPRINT_DURATION
+	stamina_bar.value = stamina_percent * stamina_bar.max_value
+	
+	# ---------------------
+
+	if is_moving:
 		direction = direction.normalized()
-		velocity = direction * SPEED
-		last_direction = direction 
+		velocity = direction * speed
+		last_direction = direction
 	else:
 		velocity = Vector2.ZERO
 
-	# --- NEW: Check for Open Action ---
 	if Input.is_action_just_pressed("open"):
 		try_interact()
 
-	# Check for decoy pickup (J key)
 	if Input.is_action_just_pressed("pickup_decoy"):
 		try_pickup_decoy()
 
-	# Check for decoy throw (K key)
 	if Input.is_action_just_pressed("throw_decoy"):
 		try_throw_decoy()
 
 	move_and_slide()
 	_update_animation(direction, velocity)
 
-# --- NEW: Interaction Logic ---
+# --- Existing Logic Below ---
+
 func try_interact() -> void:
 	if current_interactable != null and current_interactable.has_method("interact"):
 		current_interactable.interact()
 
-# These functions are called by the Door script signals
 func register_interactable(obj: Node2D) -> void:
 	current_interactable = obj
-	# Optional: Show a "Press E to Open" UI prompt here
 
 func unregister_interactable(obj: Node2D) -> void:
 	if current_interactable == obj:
 		current_interactable = null
-		# Optional: Hide UI prompt here
-
-# --- Existing Logic Below ---
 
 func on_objective_grabbed(objective: Node2D) -> void:
 	held_objective = objective
