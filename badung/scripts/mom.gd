@@ -1,8 +1,5 @@
 extends CharacterBody2D
 
-# Preload game over overlay
-const GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
-
 # Movement settings
 const SPEED = 200.0
 const CHASE_SPEED = 315.0
@@ -74,10 +71,10 @@ func _setup_navigation() -> void:
 		catch_area.body_entered.connect(_on_catch_area_body_entered)
 		print("[Mom] Catch area configured - detecting layer 2 (player)")
 	
-	# Connect to GameManager for player reported signal
+	# Register with GameManager (call down pattern - Mom registers itself)
 	if GameManager:
-		GameManager.player_reported.connect(_on_player_reported)
-		print("[Mom] Connected to GameManager.player_reported signal")
+		GameManager.register_mom(self)
+		print("[Mom] Registered with GameManager")
 
 func _physics_process(delta: float) -> void:
 	# Check if stuck (not moving much)
@@ -208,11 +205,13 @@ func _on_vision_body_exited(body: Node2D) -> void:
 
 func _on_catch_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		show_game_over()
 		print("[Mom] Player caught!")
+		# Signal UP to GameManager
+		if GameManager:
+			GameManager.on_player_caught()
 
-func _on_player_reported() -> void:
-	# Kaka has reported the player - activate hunt mode (never cancels)
+func activate_hunt_mode() -> void:
+	"""Called by GameManager when player is reported - CALL DOWN pattern"""
 	hunt_mode = true
 	print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
 
@@ -301,23 +300,6 @@ func update_animation() -> void:
 	else:
 		if animated_sprite.animation != "idle":
 			animated_sprite.play("idle")
-
-func show_game_over() -> void:
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		print("[Mom] Error: Player not found!")
-		return
-
-	var camera = player.get_node_or_null("Camera")
-	if not camera:
-		print("[Mom] Error: Camera not found on player!")
-		return
-	
-	# Instance the game over overlay
-	var overlay = GAME_OVER_OVERLAY.instantiate()
-	camera.add_child(overlay)
-	overlay.show_game_over(overlay.GameOverType.FAILURE)
-	print("[Mom] Game Over - Player caught!")
 
 # Decoy detection and investigation functions
 func check_for_decoys() -> void:

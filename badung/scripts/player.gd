@@ -8,11 +8,9 @@ const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 @onready var idle: AnimatedSprite2D = $idle
 @onready var run: AnimatedSprite2D = $run
 
-var stamina_bar: ProgressBar = null
 var held_objective: Node2D = null
 var held_decoy: Node2D = null
 var last_direction: Vector2 = Vector2.RIGHT
-var player_ui: CanvasLayer = null 
 
 var stamina = SPRINT_DURATION
 var regen_cooldown_timer = 0.0 # Tracks the 1s delay
@@ -21,22 +19,7 @@ var current_interactable: Node2D = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
-	
-	# Find player UI in the scene
-	call_deferred("_find_player_ui")
-
-func _find_player_ui() -> void:
-	player_ui = get_tree().current_scene.get_node_or_null("PlayerUI")
-	if not player_ui:
-		print("Warning: PlayerUI not found in scene")
-	else:
-		# Find stamina bar in the UI
-		stamina_bar = player_ui.get_node_or_null("StaminaBar")
-		if stamina_bar:
-			stamina_bar.max_value = 100
-			stamina_bar.value = stamina_bar.max_value
-		else:
-			print("Warning: StaminaBar not found in PlayerUI")
+	print("[Player] Ready - UIManager should be autoloaded")
 
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2(
@@ -70,9 +53,9 @@ func _physics_process(_delta: float) -> void:
 	# --- UI UPDATE ---
 	# Sync the bar visual to the actual stamina variable
 	# We calculate the percentage (0.0 to 1.0) and multiply by bar's max_value
-	if stamina_bar:
+	if UIManager:
 		var stamina_percent = stamina / SPRINT_DURATION
-		stamina_bar.value = stamina_percent * stamina_bar.max_value
+		UIManager.update_stamina_bar(stamina_percent * 100)
 	
 	# ---------------------
 
@@ -113,8 +96,8 @@ func on_objective_grabbed(objective: Node2D) -> void:
 	print("Player is now holding: ", objective.name)
 	
 	# Update inventory UI
-	if player_ui and player_ui.has_method("update_objective_slot"):
-		player_ui.update_objective_slot(true)
+	if UIManager:
+		UIManager.update_objective_slot(true)
 
 func _update_animation(direction: Vector2, current_velocity: Vector2) -> void:
 	if (direction.x > 0) :
@@ -144,16 +127,16 @@ func try_throw_decoy() -> void:
 		held_decoy = null
 		
 		# Update inventory UI
-		if player_ui and player_ui.has_method("update_decoy_slot"):
-			player_ui.update_decoy_slot(false)
+		if UIManager:
+			UIManager.update_decoy_slot(false)
 
 func on_decoy_picked_up(decoy: Node2D) -> void:
 	held_decoy = decoy
 	print("Player picked up decoy!")
 
 	# Update inventory UI
-	if player_ui and player_ui.has_method("update_decoy_slot"):
-		player_ui.update_decoy_slot(true)
+	if UIManager:
+		UIManager.update_decoy_slot(true)
 
 func drop_current_decoy() -> void:
 	"""Drop the currently held decoy at player's position"""
@@ -182,8 +165,8 @@ func drop_current_decoy() -> void:
 	held_decoy = null
 
 	# Update inventory UI
-	if player_ui and player_ui.has_method("update_decoy_slot"):
-		player_ui.update_decoy_slot(false)
+	if UIManager:
+		UIManager.update_decoy_slot(false)
 
 func on_decoy_thrown() -> void:
 	print("Player threw decoy!")

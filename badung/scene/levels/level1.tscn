@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=11 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/stage_loader.gd" id="1_fcruq"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_k7kyu"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="8_k7kyu"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="9_6idcp"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="10_abxrp"]
-[ext_resource type="PackedScene" uid="uid://cejte3tcsq8o8" path="res://scene/ui/player_ui.tscn" id="11_player_ui"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_fcruq")
@@ -52,8 +51,6 @@ texture = ExtResource("10_abxrp")
 
 [node name="PauseOverlay" parent="UI" instance=ExtResource("7_rtj1j")]
 visible = false
-
-[node name="PlayerUI" parent="UI" instance=ExtResource("11_player_ui")]
 
 [node name="PatrolPoints" type="Node2D" parent="."]
 
