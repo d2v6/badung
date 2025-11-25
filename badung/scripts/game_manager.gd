@@ -4,9 +4,9 @@ extends Node
 var has_objective: bool = false
 var reported: bool = false
 
+var mom_reference: CharacterBody2D = null
+
 signal objective_collected()
-signal player_reported()
-signal stage_started()
 
 func _ready() -> void:
 	# Reset initial state
@@ -20,12 +20,25 @@ func _on_node_added(node: Node) -> void:
 	# When the root node changes, it means a new scene was loaded
 	if node == get_tree().current_scene:
 		reset()
+		# Try to find Mom in the new scene
+		call_deferred("_find_mom")
 		print("GameManager: New scene detected, resetting state")
+
+func _find_mom() -> void:
+	"""Find and register Mom node in the current scene"""
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		mom_reference = current_scene.get_node_or_null("Mom")
+		if mom_reference:
+			print("GameManager: Found and registered Mom from scene")
+		else:
+			print("GameManager: No Mom node found in scene")
 
 func reset() -> void:
 	# Reset all game state variables
 	has_objective = false
 	reported = false
+	mom_reference = null
 	print("GameManager: State reset - has_objective=false, reported=false")
 
 func collect_objective() -> void:
@@ -33,7 +46,26 @@ func collect_objective() -> void:
 	objective_collected.emit()
 	print("GameManager: Objective collected, has_objective = ", has_objective)
 
-func report_player() -> void:
+func register_mom(mom: CharacterBody2D) -> void:
+	"""Mom registers itself with the GameManager when ready"""
+	mom_reference = mom
+	print("GameManager: Mom registered")
+
+func on_player_reported() -> void:
+	"""Called by Kaka when player is spotted - signals UP from Kaka"""
 	reported = true
-	player_reported.emit()
 	print("GameManager: Player has been reported!")
+	
+	# Call DOWN to Mom to activate hunt mode
+	if mom_reference and mom_reference.has_method("activate_hunt_mode"):
+		mom_reference.activate_hunt_mode()
+		print("GameManager: Told Mom to activate hunt mode")
+
+func on_player_caught() -> void:
+	"""Called by Mom when player is caught - signals UP from Mom"""
+	print("GameManager: Player caught!")
+	
+	# Call DOWN to UIManager to show game over screen
+	if UIManager:
+		UIManager.show_game_over_failure()
+		print("GameManager: Told UIManager to show game over")

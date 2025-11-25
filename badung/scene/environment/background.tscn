@@ -67,6 +67,7 @@ polygon = PackedVector2Array(4466.6665, -1733.3333, 4440, -1780, 4420, -1873.333
 polygon = PackedVector2Array(5700, 3140, 5666.6665, 3093.3333, 5620, 3066.6665, 5620, 3006.6665, 5586.6665, 2946.6665, 5613.333, 2900, 5613.333, 2660, 5640, 2633.3333, 5613.333, 2566.6665, 5653.333, 2506.6665, 5953.333, 2506.6665, 5953.333, 2433.3333, 6000, 2406.6665, 6053.333, 2440, 6066.6665, 3060, 6033.333, 3086.6665, 6006.6665, 3140, 5973.333, 3086.6665, 5720, 3086.6665)
 
 [node name="Navigation" type="NavigationRegion2D" parent="."]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_3ot2u")
 
 [node name="InnerWall3Obstacle" type="NavigationObstacle2D" parent="Navigation"]

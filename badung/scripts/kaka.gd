@@ -211,8 +211,9 @@ func report_player() -> void:
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("tunjuk"):
 		animated_sprite.play("tunjuk")
 	
-	# Set reported in game manager
-	GameManager.report_player()
+	# Signal UP to GameManager (signal up, call down pattern)
+	if GameManager:
+		GameManager.on_player_reported()
 
 func check_if_stuck(delta: float) -> void:
 	# Check if mom hasn't moved much
