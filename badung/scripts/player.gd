@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const SNEAK_SPEED = 100.0
-const RUN_SPEED = 180.0
+const SNEAK_SPEED = 120.0
+const RUN_SPEED = 270.0
 const SPRINT_DURATION = 2.0
 const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 

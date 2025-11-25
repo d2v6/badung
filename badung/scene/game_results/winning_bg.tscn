@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://dg4oeem52i7f4"]
+
+[ext_resource type="Script" uid="uid://dwnsn84tu4oq4" path="res://scripts/winning_bg.gd" id="1_winning"]
+[ext_resource type="Texture2D" uid="uid://vok63in1bh8t" path="res://assets/sprites/game_results/winning_bg.png" id="2_tbuhg"]
+[ext_resource type="Texture2D" uid="uid://vg2oe11t2g2t" path="res://assets/sprites/game_results/winning_button/lanjut-button.png" id="3_ceoil"]
+[ext_resource type="Texture2D" uid="uid://oxvm1jxw3wa0" path="res://assets/sprites/game_results/winning_button/lanjut-button-hover.png" id="4_lhuun"]
+[ext_resource type="Texture2D" uid="uid://cd2apdoheomy4" path="res://assets/sprites/game_results/winning_button/keluar-button.png" id="5_ffme0"]
+[ext_resource type="Texture2D" uid="uid://dis5p2xsb7c18" path="res://assets/sprites/game_results/winning_button/keluar-button-hover.png" id="6_y4fhf"]
+[ext_resource type="Texture2D" uid="uid://cd1p46ywrwrv0" path="res://assets/sprites/game_results/winning_button/ulangi-button.png" id="7_bbq8i"]
+[ext_resource type="Texture2D" uid="uid://nixoemjtj8fc" path="res://assets/sprites/game_results/winning_button/ulangi-button-hover.png" id="8_6iqpq"]
+
+[node name="WinningBg" type="Node2D"]
+script = ExtResource("1_winning")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(800, 450)
+scale = Vector2(0.41666666, 0.4166667)
+texture = ExtResource("2_tbuhg")
+
+[node name="Lanjut" type="TextureButton" parent="."]
+offset_left = 626.0
+offset_top = 626.0
+offset_right = 957.0
+offset_bottom = 754.0
+texture_normal = ExtResource("3_ceoil")
+texture_pressed = ExtResource("4_lhuun")
+texture_hover = ExtResource("4_lhuun")
+
+[node name="Keluar" type="TextureButton" parent="."]
+offset_left = 624.0
+offset_top = 362.0
+offset_right = 959.0
+offset_bottom = 492.0
+texture_normal = ExtResource("5_ffme0")
+texture_pressed = ExtResource("6_y4fhf")
+texture_hover = ExtResource("6_y4fhf")
+
+[node name="Ulangi" type="TextureButton" parent="."]
+offset_left = 626.0
+offset_top = 496.0
+offset_right = 959.0
+offset_bottom = 625.0
+texture_normal = ExtResource("7_bbq8i")
+texture_pressed = ExtResource("8_6iqpq")
+texture_hover = ExtResource("8_6iqpq")
