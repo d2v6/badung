@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 # Movement settings
-const SPEED = 200.0
-const CHASE_SPEED = 315.0
+const SPEED = 150.0
+const CHASE_SPEED = 200.0
 const PATH_RECALC_DISTANCE = 50.0  # Recalculate path when this far from target
 
 var patrol_points: Array[Vector2] = []
@@ -17,6 +17,8 @@ var last_target_position: Vector2 = Vector2.ZERO
 # Vision detection
 var player_in_sight: bool = false
 var player_reference: CharacterBody2D = null
+var last_seen_position: Vector2 = Vector2.ZERO
+var investigating_last_position: bool = false
 
 # Decoy detection
 var investigating_decoy: bool = false
@@ -92,6 +94,7 @@ func _physics_process(delta: float) -> void:
 				print("[Mom] Hunt mode active - chasing player!")
 			is_chasing = true
 			investigating_decoy = false
+			investigating_last_position = false
 			chase_player(player, delta)
 		else:
 			# No player found, wander
@@ -103,7 +106,14 @@ func _physics_process(delta: float) -> void:
 			print("[Mom] Starting chase mode!")
 		is_chasing = true
 		investigating_decoy = false
+		investigating_last_position = false
+		# Update last seen position while we can see the player
+		last_seen_position = player_reference.global_position
 		chase_player(player_reference, delta)
+	elif investigating_last_position:
+		# Medium-high priority: investigate last seen position after losing sight
+		is_chasing = false
+		investigate_last_position(delta)
 	elif investigating_decoy and target_decoy:
 		# Medium priority: investigate decoy
 		is_chasing = false
@@ -114,6 +124,7 @@ func _physics_process(delta: float) -> void:
 			print("[Mom] Ending chase mode - back to patrol")
 		is_chasing = false
 		investigating_decoy = false
+		investigating_last_position = false
 		patrol(delta)
 	
 	# Move along path if we have one
@@ -201,7 +212,9 @@ func _on_vision_body_exited(body: Node2D) -> void:
 		if not is_path_clear(global_position, body.global_position):
 			player_in_sight = false
 			player_reference = null
-			print("[Mom] Player lost - wall blocking!")
+			# Start investigating last seen position
+			investigating_last_position = true
+			print("[Mom] Player lost - going to last seen position: ", last_seen_position)
 
 func _on_catch_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -363,3 +376,18 @@ func investigate_decoy(_delta: float) -> void:
 		print("[Mom] Reached decoy location, resuming patrol")
 		investigating_decoy = false
 		target_decoy = null
+
+func investigate_last_position(_delta: float) -> void:
+	"""Move to last seen position of player before returning to patrol"""
+	if last_seen_position == Vector2.ZERO:
+		investigating_last_position = false
+		return
+	
+	# Set navigation target to last seen position
+	navigation_agent.target_position = last_seen_position
+	
+	# Check if we've reached the last seen position
+	if global_position.distance_to(last_seen_position) < 0.0:
+		print("[Mom] Reached last seen position - resuming patrol")
+		investigating_last_position = false
+		last_seen_position = Vector2.ZERO

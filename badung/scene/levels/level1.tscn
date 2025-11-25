@@ -28,7 +28,7 @@ limit_right = 1200
 limit_bottom = 920
 
 [node name="Mom" parent="." instance=ExtResource("4_6idcp")]
-position = Vector2(-422, 244)
+position = Vector2(-292, 183)
 
 [node name="Finish Zone" parent="." instance=ExtResource("5_abxrp")]
 position = Vector2(387, 518)
@@ -55,4 +55,4 @@ visible = false
 [node name="PatrolPoints" type="Node2D" parent="."]
 
 [node name="A" type="Marker2D" parent="PatrolPoints"]
-position = Vector2(-415, 276)
+position = Vector2(-207, 199)
