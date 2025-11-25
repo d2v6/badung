@@ -23,32 +23,39 @@ position = Vector2(602, 694)
 [node name="Camera" type="Camera2D" parent="Player"]
 position = Vector2(70, 0)
 zoom = Vector2(1.51, 1.51)
-limit_left = -1339
-limit_top = -990
-limit_right = 1341
-limit_bottom = 990
+limit_left = -1200
+limit_top = -920
+limit_right = 1200
+limit_bottom = 920
 
 [node name="Mom" parent="." instance=ExtResource("4_6idcp")]
-position = Vector2(-107, 187)
+position = Vector2(-422, 244)
 
 [node name="Finish Zone" parent="." instance=ExtResource("5_abxrp")]
-position = Vector2(421, 535)
+position = Vector2(387, 518)
 
 [node name="Objective" parent="." instance=ExtResource("6_pmu4x")]
-position = Vector2(-943, -382)
-
-[node name="PauseOverlay" parent="." instance=ExtResource("7_rtj1j")]
-visible = false
-
-[node name="PlayerUI" parent="." instance=ExtResource("11_player_ui")]
+position = Vector2(-32, 572)
 
 [node name="Door" parent="." instance=ExtResource("8_k7kyu")]
-position = Vector2(367, 433)
+position = Vector2(322, 409)
 
 [node name="Decoy" parent="." instance=ExtResource("9_6idcp")]
-position = Vector2(488, 377)
+position = Vector2(580, 334)
 
 [node name="Sprite2D" type="Sprite2D" parent="Decoy"]
 position = Vector2(9.536743e-06, 6.67572e-06)
 scale = Vector2(0.011265435, 0.011265435)
 texture = ExtResource("10_abxrp")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="PauseOverlay" parent="UI" instance=ExtResource("7_rtj1j")]
+visible = false
+
+[node name="PlayerUI" parent="UI" instance=ExtResource("11_player_ui")]
+
+[node name="PatrolPoints" type="Node2D" parent="."]
+
+[node name="A" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(-415, 276)

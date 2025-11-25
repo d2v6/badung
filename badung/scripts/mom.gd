@@ -5,19 +5,16 @@ const GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
 
 # Movement settings
 const SPEED = 200.0
-const CHASE_SPEED = 350.0
-const WANDER_RADIUS = 150.0
+const CHASE_SPEED = 315.0
 const PATH_RECALC_DISTANCE = 50.0  # Recalculate path when this far from target
 
-var wander_target = Vector2.ZERO
-var wander_timer = 0.0
-var wander_interval = 2.0 
+var patrol_points: Array[Vector2] = []
+var current_patrol_index: int = 0
 var is_chasing = false
 var stuck_timer = 0.0
 var last_position = Vector2.ZERO
 
 # Pathfinding
-var navigation_agent: NavigationAgent2D
 var last_target_position: Vector2 = Vector2.ZERO
 
 # Vision detection
@@ -32,28 +29,15 @@ var target_decoy: Node2D = null
 var wall_raycasts = []
 var hunt_mode: bool = false  # True when player is reported - chase never cancels
 
+@onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var vision_area: Area2D = $Vision
 @onready var vision_shape: Polygon2D = $Vision/VisionPolygon
 @onready var catch_area: Area2D = $CatchArea
 
 func _ready() -> void:
-	# Create and setup navigation agent
-	navigation_agent = NavigationAgent2D.new()
-	navigation_agent.path_desired_distance = 20.0
-	navigation_agent.target_desired_distance = 30.0
-	navigation_agent.path_postprocessing = NavigationPathQueryParameters2D.PATH_POSTPROCESSING_EDGECENTERED
-	navigation_agent.avoidance_enabled = true
-	navigation_agent.radius = 30.0
-	navigation_agent.neighbor_distance = 100.0
-	navigation_agent.max_neighbors = 10
-	navigation_agent.time_horizon_agents = 0.5
-	navigation_agent.time_horizon_obstacles = 0.5
+	# Configure navigation agent
 	navigation_agent.max_speed = CHASE_SPEED
-	navigation_agent.set_avoidance_layer_value(2, true)  # Mom is on avoidance layer 2
-	navigation_agent.set_avoidance_mask_value(1, true)   # Avoid layer 1 (walls/items)
-	navigation_agent.set_avoidance_mask_value(2, true)   # Avoid layer 2 (other agents)
-	add_child(navigation_agent)
 	
 	# Wait for first physics frame for scene to initialize
 	call_deferred("_setup_navigation")
@@ -62,9 +46,14 @@ func _setup_navigation() -> void:
 	# Wait one more frame for NavigationServer to be ready
 	await get_tree().physics_frame
 	
-	# Set initial wander target
-	choose_new_wander_target()
+	# Wait for navigation map to be ready
+	await get_tree().physics_frame
+	
+	# Collect patrol points from scene
+	collect_patrol_points()
+	
 	last_position = global_position
+	print("[Mom] Setup complete at position: ", global_position)
 	
 	# Set initial vision color (red for wandering)
 	if vision_shape:
@@ -90,9 +79,6 @@ func _setup_navigation() -> void:
 		GameManager.player_reported.connect(_on_player_reported)
 		print("[Mom] Connected to GameManager.player_reported signal")
 
-	# Connect velocity computed signal for avoidance
-	navigation_agent.velocity_computed.connect(_on_velocity_computed)
-
 func _physics_process(delta: float) -> void:
 	# Check if stuck (not moving much)
 	check_if_stuck(delta)
@@ -113,7 +99,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			# No player found, wander
 			is_chasing = false
-			wander(delta)
+			patrol(delta)
 	# Normal mode: chase only when player in sight
 	elif player_in_sight and player_reference:
 		if not is_chasing:
@@ -126,12 +112,12 @@ func _physics_process(delta: float) -> void:
 		is_chasing = false
 		investigate_decoy(delta)
 	else:
-		# Lowest priority: normal wander/patrol
+		# Lowest priority: normal patrol
 		if is_chasing:
-			print("[Mom] Ending chase mode - back to wander")
+			print("[Mom] Ending chase mode - back to patrol")
 		is_chasing = false
 		investigating_decoy = false
-		wander(delta)
+		patrol(delta)
 	
 	# Move along path if we have one
 	if not navigation_agent.is_navigation_finished():
@@ -139,15 +125,12 @@ func _physics_process(delta: float) -> void:
 		var direction = (next_position - global_position).normalized()
 		var current_speed = CHASE_SPEED if is_chasing else SPEED
 		
-		# Use velocity for smoother movement
-		var desired_velocity = direction * current_speed
-		navigation_agent.set_velocity(desired_velocity)
-		
-		# Apply velocity (will be adjusted by avoidance)
-		velocity = desired_velocity
+		# Apply velocity directly without avoidance
+		velocity = direction * current_speed
 	else:
 		velocity = Vector2.ZERO
 	
+	# Always call move_and_slide with the velocity we set above
 	move_and_slide()
 
 	# Update vision direction and color
@@ -184,20 +167,19 @@ func check_if_stuck(delta: float) -> void:
 	if distance_moved < 5.0:
 		stuck_timer += delta
 		if stuck_timer > 2.0:  # Stuck for 2 seconds
-			if not is_chasing:
-				choose_new_wander_target()
-			else:
-				# Force path recalculation
-				last_target_position = Vector2.ZERO
+			# Force path recalculation
+			last_target_position = Vector2.ZERO
 			stuck_timer = 0.0
 	else:
 		stuck_timer = 0.0
 
 func set_navigation_target(target: Vector2) -> void:
-	# Only recalculate if target moved significantly
-	if last_target_position.distance_to(target) > PATH_RECALC_DISTANCE:
+	# Always set target on first call (when last_target_position is zero)
+	# Otherwise only recalculate if target moved significantly
+	if last_target_position == Vector2.ZERO or last_target_position.distance_to(target) > PATH_RECALC_DISTANCE:
 		navigation_agent.target_position = target
 		last_target_position = target
+		print("[Mom] Set navigation target to ", target)
 
 func _on_vision_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -234,36 +216,64 @@ func _on_player_reported() -> void:
 	hunt_mode = true
 	print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
 
-func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	# Use the safe velocity computed by the navigation agent (includes avoidance)
-	velocity = safe_velocity
-
-func chase_player(player: Node, delta: float) -> void:
+func chase_player(player: Node, _delta: float) -> void:
 	# Use A* pathfinding to chase player - update every frame for dynamic chase
 	navigation_agent.target_position = player.global_position
 
-func wander(delta: float) -> void:
-	wander_timer -= delta
+func collect_patrol_points() -> void:
+	# Find patrol points in PatrolPoints node
+	var patrol_points_node = get_tree().get_first_node_in_group("patrol_points")
+	if not patrol_points_node:
+		# Try to find by name in current scene
+		var root = get_tree().current_scene
+		patrol_points_node = root.get_node_or_null("PatrolPoints")
 	
-	if global_position.distance_to(wander_target) < 20.0 or wander_timer <= 0:
-		choose_new_wander_target()
-		wander_timer = wander_interval
+	if not patrol_points_node:
+		print("[Mom] No PatrolPoints node found!")
+		return
 	
-	set_navigation_target(wander_target)
+	# Get all Marker2D children and sort them alphabetically by name
+	var markers: Array[Node] = []
+	for child in patrol_points_node.get_children():
+		if child is Marker2D:
+			markers.append(child)
+	
+	# Sort markers alphabetically by name
+	markers.sort_custom(func(a, b): return a.name < b.name)
+	
+	# Store positions in alphabetical order
+	for marker in markers:
+		patrol_points.append(marker.global_position)
+	
+	if patrol_points.size() > 0:
+		print("[Mom] Collected ", patrol_points.size(), " patrol points in alphabetical order")
+	else:
+		print("[Mom] No patrol markers found!")
 
-func choose_new_wander_target() -> void:
-	# Pick a random point within wander radius from current position
-	var random_angle = randf() * TAU
-	var random_distance = randf() * WANDER_RADIUS
+func patrol(_delta: float) -> void:
+	if patrol_points.size() == 0:
+		print("[Mom] No patrol points available!")
+		return
 	
-	var offset = Vector2(
-		cos(random_angle) * random_distance,
-		sin(random_angle) * random_distance
-	)
+	# Patrol mode: cycle through patrol points
+	var target = patrol_points[current_patrol_index]
 	
-	wander_target = global_position + offset
-	# Force immediate path calculation
-	last_target_position = Vector2.ZERO
+	# Check if we've reached the current patrol point
+	if global_position.distance_to(target) < 50.0:
+		# Move to next patrol point
+		current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
+		print("[Mom] Reached patrol point! Moving to next: ", current_patrol_index)
+	
+	# NavigationAgent will find path through the navigation mesh to this point
+	set_navigation_target(target)
+	
+	# Debug: Check if path is being calculated
+	# if not navigation_agent.is_navigation_finished():
+	# 	var path = navigation_agent.get_current_navigation_path()
+	# 	if path.size() == 0:
+	# 		print("[Mom] WARNING: No navigation path found! Nav mesh might not be baked properly")
+	# 	else:
+	# 		print("[Mom] Path found with ", path.size(), " points")
 
 func is_path_clear(from: Vector2, to: Vector2) -> bool:
 	var space_state = get_world_2d().direct_space_state
@@ -347,7 +357,7 @@ func check_for_decoys() -> void:
 		target_decoy = closest_decoy
 		print("[Mom] Detected decoy at ", closest_decoy.global_position, "! Investigating...")
 
-func investigate_decoy(delta: float) -> void:
+func investigate_decoy(_delta: float) -> void:
 	if not target_decoy or not is_instance_valid(target_decoy):
 		investigating_decoy = false
 		target_decoy = null

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://8no6klrt2tee"]
+[gd_scene load_steps=21 format=3 uid="uid://8no6klrt2tee"]
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
@@ -85,22 +85,6 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
 radius = 19.0
-
-[sub_resource type="Gradient" id="Gradient_oen5c"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5g408"]
-gradient = SubResource("Gradient_oen5c")
-width = 60
-height = 5
-
-[sub_resource type="Gradient" id="Gradient_5g408"]
-colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sc4n2"]
-gradient = SubResource("Gradient_5g408")
-width = 60
-height = 5
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 10

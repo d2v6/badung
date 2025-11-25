@@ -129,6 +129,11 @@ autoplay = "idle"
 position = Vector2(1, 27)
 shape = SubResource("CircleShape2D_4reak")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 100000.0
+path_postprocessing = 1
+avoidance_enabled = true
+
 [node name="CatchArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
@@ -139,7 +144,7 @@ position = Vector2(0, -17)
 
 [node name="VisionPolygon" type="Polygon2D" parent="Vision"]
 color = Color(1, 0, 0, 0.3)
-polygon = PackedVector2Array(0, 0, 700, -120, 700, 120)
+polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision"]
-polygon = PackedVector2Array(0, 0, 700, -120, 700, 120)
+polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
