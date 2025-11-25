@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=14 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/stage_loader.gd" id="1_fcruq"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_k7kyu"]
@@ -7,16 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="5_abxrp"]
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="6_pmu4x"]
 [ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="7_rtj1j"]
-[ext_resource type="Texture2D" uid="uid://fw6vtwodump1" path="res://assets/sprites/door-and-key/key_orange.png" id="8_5yu4h"]
 [ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="8_k7kyu"]
 [ext_resource type="Texture2D" uid="uid://c3cdbtulh75mj" path="res://assets/sprites/door-and-key/horizontal-orange.png" id="8_pmu4x"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="9_6idcp"]
 [ext_resource type="Texture2D" uid="uid://dwqhfo4pxn0at" path="res://assets/sprites/door-and-key/horizontal-opened-orange.png" id="9_rtj1j"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="10_abxrp"]
-[ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="10_rtj1j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmu4x"]
-size = Vector2(86, 90)
+size = Vector2(75, 90)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_fcruq")
@@ -43,39 +41,26 @@ position = Vector2(387, 518)
 [node name="Objective" parent="." instance=ExtResource("6_pmu4x")]
 position = Vector2(-32, 572)
 
-[node name="Keys" type="Node" parent="."]
-
-[node name="Key" parent="Keys" instance=ExtResource("10_rtj1j")]
-position = Vector2(541, 603)
-script = ExtResource("10_rtj1j")
-key_id = "key_orange"
-
-[node name="Sprite2D" type="Sprite2D" parent="Keys/Key"]
-position = Vector2(-2.9999998, 2.9999995)
-scale = Vector2(0.19631882, 0.19631882)
-texture = ExtResource("8_5yu4h")
-
 [node name="Doors" type="Node" parent="."]
 
 [node name="DoorA" parent="Doors" instance=ExtResource("8_k7kyu")]
-position = Vector2(359, 464)
-door_id = "DoorA"
+position = Vector2(321, 463)
 
 [node name="Close" type="Sprite2D" parent="Doors/DoorA"]
-position = Vector2(-0.9999962, 1.4424324e-05)
+position = Vector2(36.177406, -0.7566385)
 scale = Vector2(0.66780543, 0.6678055)
 texture = ExtResource("8_pmu4x")
 
 [node name="Open" type="Sprite2D" parent="Doors/DoorA"]
 visible = false
-position = Vector2(-31, -4.0000076)
+position = Vector2(4.999999, -4.0000076)
 scale = Vector2(0.65486777, 0.65486777)
 texture = ExtResource("9_rtj1j")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorA"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorA/StaticBody2D"]
-position = Vector2(2, 1)
+position = Vector2(39.5, -1)
 shape = SubResource("RectangleShape2D_pmu4x")
 
 [node name="Decoy" parent="." instance=ExtResource("9_6idcp")]
