@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cejte3tcsq8o8"]
+[gd_scene load_steps=14 format=3 uid="uid://cejte3tcsq8o8"]
 
 [ext_resource type="Script" uid="uid://cj4qk5ndx1wud" path="res://scripts/player_ui.gd" id="1_wbjh4"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="2"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://2gyapyksy6cu" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]
 [ext_resource type="Texture2D" uid="uid://bbulft4v67mb2" path="res://assets/sprites/ipad.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://l6prb2xn7vcw" path="res://assets/sprites/Aset Inventory/stamina_text.png" id="3_66m5t"]
+[ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="4_quitbtn"]
+[ext_resource type="Texture2D" uid="uid://bdr10nmvwn8eo" path="res://assets/sprites/Aset Button/Home button/quit hover.png" id="5_quithvr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqrmp"]
 bg_color = Color(1, 1, 0.91764706, 1)
@@ -127,3 +129,13 @@ grow_vertical = 0
 text = "Decoy"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="."]
+z_index = 4096
+offset_left = 57.0
+offset_top = 57.0
+offset_right = 148.0
+offset_bottom = 168.0
+texture_normal = ExtResource("4_quitbtn")
+texture_pressed = ExtResource("5_quithvr")
+texture_hover = ExtResource("5_quithvr")

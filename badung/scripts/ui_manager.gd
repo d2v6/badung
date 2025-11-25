@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var stamina_bar: ProgressBar = $PlayerUI/StaminaBar
 @onready var objective_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/ObjectiveSlot/ItemIcon
 @onready var decoy_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/DecoySlot/ItemIcon
+@onready var quit_button: TextureButton = $PlayerUI/QuitButton
 
 func _ready() -> void:
 	# Initialize UI
