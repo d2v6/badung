@@ -7,6 +7,8 @@ var reported: bool = false
 var mom_reference: CharacterBody2D = null
 
 signal objective_collected()
+signal player_reported()
+signal stage_started()
 
 func _ready() -> void:
 	# Reset initial state

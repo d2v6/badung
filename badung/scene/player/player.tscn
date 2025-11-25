@@ -91,7 +91,6 @@ radius = 19.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 10
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("1_hjaqi")
 
 [node name="LineOfSight" type="PointLight2D" parent="."]
@@ -128,10 +127,10 @@ shape = SubResource("CircleShape2D_4reak")
 
 [node name="WalkingSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_walking")
-volume_db = -14.653
+volume_db = 24.0
 bus = &"SFX"
 
 [node name="RunningSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_running")
-volume_db = -8.057
+volume_db = 24.0
 bus = &"SFX"
