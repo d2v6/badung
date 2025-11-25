@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://es0hoh0nd4yw"]
+[gd_scene load_steps=36 format=3 uid="uid://es0hoh0nd4yw"]
 
 [ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/mom.gd" id="1_pnctf"]
 [ext_resource type="Texture2D" uid="uid://nkg3ul8qskg8" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9799.PNG" id="2_ptdu4"]
@@ -23,6 +23,14 @@
 [ext_resource type="Texture2D" uid="uid://b1hv2pjkxtd80" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Super Marah/m9.PNG" id="15_dxgf1"]
 [ext_resource type="Texture2D" uid="uid://m3euy74q6gor" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Normal/j9.PNG" id="15_h8i23"]
 [ext_resource type="Texture2D" uid="uid://bnol1vrtotjoi" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/Jalan Super Marah/m10.PNG" id="16_28q4t"]
+[ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="24_dy2h7"]
+[ext_resource type="Texture2D" uid="uid://8cwdilfjtck8" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-2.png" id="25_l0l4h"]
+[ext_resource type="Texture2D" uid="uid://tsushypt8hhv" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-3.png" id="26_duy8p"]
+[ext_resource type="Texture2D" uid="uid://cpg1tv0p4aav" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-4.png" id="27_56ygi"]
+[ext_resource type="Texture2D" uid="uid://drv3lcu03mlwt" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-5.png" id="28_xret2"]
+[ext_resource type="Texture2D" uid="uid://c0jdqdu5wruvm" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-6.png" id="29_4ob6j"]
+[ext_resource type="Texture2D" uid="uid://ctmyww0ba2koi" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-7.png" id="30_b51pr"]
+[ext_resource type="Texture2D" uid="uid://bw0q345kcwr1x" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-8.png" id="31_dy4wb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
 animations = [{
@@ -114,6 +122,38 @@ radius = 16.03122
 [sub_resource type="CircleShape2D" id="CircleShape2D_t8aoe"]
 radius = 51.009804
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_3guxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_dy2h7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_l0l4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_duy8p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_56ygi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_xret2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_4ob6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_b51pr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_dy4wb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Mom" type="CharacterBody2D"]
 script = ExtResource("1_pnctf")
 
@@ -126,6 +166,7 @@ animation = &"run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(1, 27)
 shape = SubResource("CircleShape2D_4reak")
 
@@ -135,8 +176,10 @@ path_postprocessing = 1
 avoidance_enabled = true
 
 [node name="CatchArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
+visible = false
 shape = SubResource("CircleShape2D_t8aoe")
 
 [node name="Vision" type="Area2D" parent="."]
@@ -148,3 +191,10 @@ polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision"]
 polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
+
+[node name="shadow" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.99999976, 22)
+scale = Vector2(0.054052733, 0.05338542)
+sprite_frames = SubResource("SpriteFrames_3guxr")
+autoplay = "default"
+frame_progress = 0.028770985

@@ -1,22 +1,65 @@
-[gd_scene load_steps=23 format=3 uid="uid://8no6klrt2tee"]
+[gd_scene load_steps=67 format=3 uid="uid://8no6klrt2tee"]
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
+[ext_resource type="Texture2D" uid="uid://j0lwekpd8h7a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0137.PNG" id="2_2rx5w"]
 [ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
+[ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="2_qbdsv"]
+[ext_resource type="Texture2D" uid="uid://8cwdilfjtck8" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-2.png" id="3_br0cu"]
+[ext_resource type="Texture2D" uid="uid://dtmax7nns0brx" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0138.PNG" id="3_i4afv"]
 [ext_resource type="Texture2D" uid="uid://chadamr5a2mov" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9825.PNG" id="3_s4jxa"]
 [ext_resource type="Texture2D" uid="uid://nrlofc8y4dlm" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9826.PNG" id="4_bup7g"]
+[ext_resource type="Texture2D" uid="uid://dyo6y1uw5gxrx" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0139.PNG" id="4_sxxrj"]
+[ext_resource type="Texture2D" uid="uid://tsushypt8hhv" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-3.png" id="4_umxvx"]
+[ext_resource type="Texture2D" uid="uid://cru0wwwoywhda" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0140.PNG" id="5_4fvns"]
 [ext_resource type="Texture2D" uid="uid://b1mmvq5hu31qf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9827.PNG" id="5_4ja17"]
+[ext_resource type="Texture2D" uid="uid://cpg1tv0p4aav" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-4.png" id="5_pdq76"]
+[ext_resource type="Texture2D" uid="uid://mbds2lsopx27" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0141.PNG" id="6_kosee"]
+[ext_resource type="Texture2D" uid="uid://drv3lcu03mlwt" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-5.png" id="6_much0"]
 [ext_resource type="Texture2D" uid="uid://b0xpg0l7knr4v" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9828.PNG" id="6_v4iqv"]
 [ext_resource type="Texture2D" uid="uid://b21iyvbxcrnqn" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9829.PNG" id="7_42h83"]
+[ext_resource type="Texture2D" uid="uid://cq1py1mjdompg" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0142.PNG" id="7_tukw2"]
+[ext_resource type="Texture2D" uid="uid://c0jdqdu5wruvm" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-6.png" id="7_vrb5n"]
+[ext_resource type="Texture2D" uid="uid://u2makod36u5b" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0143.PNG" id="8_8sf0u"]
 [ext_resource type="Texture2D" uid="uid://drdnq8c8gbjuq" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-1.png" id="8_j4wxg"]
+[ext_resource type="Texture2D" uid="uid://ctmyww0ba2koi" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-7.png" id="8_r7a6o"]
+[ext_resource type="Texture2D" uid="uid://bw0q345kcwr1x" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-8.png" id="9_0sxp5"]
 [ext_resource type="Texture2D" uid="uid://dpwy5skagph4q" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-2.png" id="9_bup7g"]
+[ext_resource type="Texture2D" uid="uid://dr1roqe6g4dj3" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0144.PNG" id="9_uskpg"]
 [ext_resource type="Texture2D" uid="uid://c664vwcgddy8h" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-3.png" id="10_4ja17"]
+[ext_resource type="Texture2D" uid="uid://cva4hwcj6jhjr" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0145.PNG" id="10_qbdsv"]
+[ext_resource type="Texture2D" uid="uid://c5nviyumal610" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0146.PNG" id="11_br0cu"]
 [ext_resource type="Texture2D" uid="uid://bw3plin37lsn5" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-4.png" id="11_v4iqv"]
 [ext_resource type="Texture2D" uid="uid://ot55fvkt4f81" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-5.png" id="12_42h83"]
+[ext_resource type="Texture2D" uid="uid://cm5wsf05qf4ig" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0147.PNG" id="12_umxvx"]
 [ext_resource type="Texture2D" uid="uid://wuxasq2bjqyy" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-6.png" id="13_iuf2t"]
+[ext_resource type="Texture2D" uid="uid://c0v7xdbnu322j" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0148.PNG" id="13_pdq76"]
 [ext_resource type="Texture2D" uid="uid://cntoriky76htf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-7.png" id="14_jrjdb"]
+[ext_resource type="Texture2D" uid="uid://bqqtpv7r1oecp" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0149.PNG" id="14_much0"]
 [ext_resource type="Texture2D" uid="uid://crsnleljbches" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-8.png" id="15_kk4ol"]
+[ext_resource type="Texture2D" uid="uid://bqu3nxmtf2an7" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0150.PNG" id="15_vrb5n"]
+[ext_resource type="Texture2D" uid="uid://dfprq3xcbfv2f" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0116.PNG" id="16_hjdkc"]
+[ext_resource type="Texture2D" uid="uid://d1ujoihfkortv" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0151.PNG" id="16_r7a6o"]
 [ext_resource type="AudioStream" uid="uid://cacuiomwl1rj5" path="res://assets/sfx/sfx-walking.mp3" id="16_walking"]
+[ext_resource type="Texture2D" uid="uid://dxymmeyc42g5v" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0152.PNG" id="17_0sxp5"]
+[ext_resource type="Texture2D" uid="uid://djlgmfxguv1kn" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0117.PNG" id="17_41ak2"]
 [ext_resource type="AudioStream" uid="uid://beu66foseatgj" path="res://assets/sfx/sfx-running.mp3" id="17_running"]
+[ext_resource type="Texture2D" uid="uid://1x6bkv8j4d0w" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0153.PNG" id="18_krynt"]
+[ext_resource type="Texture2D" uid="uid://dgdqdrgf6o304" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0118.PNG" id="18_xflo2"]
+[ext_resource type="Texture2D" uid="uid://dg1lm7gf83c46" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0119.PNG" id="19_lfqc2"]
+[ext_resource type="Texture2D" uid="uid://ce8m5pttl4w01" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0120.PNG" id="20_yw1hm"]
+[ext_resource type="Texture2D" uid="uid://durcjhku4ql1o" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0121.PNG" id="21_ibwp6"]
+[ext_resource type="Texture2D" uid="uid://dh1ybtpshilbc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0122.PNG" id="22_8yg4a"]
+[ext_resource type="Texture2D" uid="uid://d1dn1ct44kymi" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0123.PNG" id="23_nrjwp"]
+[ext_resource type="Texture2D" uid="uid://k76px3trvd0a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0124.PNG" id="24_0oa35"]
+[ext_resource type="Texture2D" uid="uid://dkhx7745hj02t" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0125.PNG" id="25_j1wnj"]
+[ext_resource type="Texture2D" uid="uid://dhlonbab1bpwf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0126.PNG" id="26_0kitm"]
+[ext_resource type="Texture2D" uid="uid://dmkve8jpbxewt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0127.PNG" id="27_j5tvc"]
+[ext_resource type="Texture2D" uid="uid://ch84p2selgpns" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0128.PNG" id="28_1pcg1"]
+[ext_resource type="Texture2D" uid="uid://k6g3cxif3vsm" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0129.PNG" id="29_08eh7"]
+[ext_resource type="Texture2D" uid="uid://ckdkvc8tlmfxp" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0130.PNG" id="30_mwak4"]
+[ext_resource type="Texture2D" uid="uid://bj63hdivwa7jl" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0131.PNG" id="31_4xt4w"]
+[ext_resource type="Texture2D" uid="uid://bd8fpysuv3nva" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0132.PNG" id="32_qehiv"]
+[ext_resource type="Texture2D" uid="uid://bpwu3wht7nfsw" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/NGENDAP SNEAKING/IMG_0133.PNG" id="33_2rx5w"]
 
 [sub_resource type="Gradient" id="Gradient_j4wxg"]
 offsets = PackedFloat32Array(0.31333333, 0.56)
@@ -27,8 +70,96 @@ gradient = SubResource("Gradient_j4wxg")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_krynt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qbdsv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_br0cu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_umxvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_pdq76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_much0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vrb5n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r7a6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0sxp5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_hjaqi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2rx5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i4afv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sxxrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4fvns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kosee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_tukw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8sf0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_uskpg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qbdsv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_br0cu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_umxvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_pdq76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_much0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_vrb5n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_r7a6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_0sxp5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_krynt")
+}],
+"loop": true,
+"name": &"dizzy",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_ct4mp")
@@ -83,6 +214,65 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_hjdkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_41ak2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_xflo2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_lfqc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_yw1hm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ibwp6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_8yg4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_nrjwp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_0oa35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_j1wnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_0kitm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_j5tvc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_1pcg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_08eh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_mwak4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_4xt4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_qehiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_2rx5w")
+}],
+"loop": true,
+"name": &"sneak",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4reak"]
@@ -104,22 +294,28 @@ shadow_filter = 1
 texture = SubResource("GradientTexture2D_bup7g")
 texture_scale = 5.0
 
+[node name="shadow" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -10)
+scale = Vector2(0.029003909, 0.028645834)
+sprite_frames = SubResource("SpriteFrames_krynt")
+autoplay = "default"
+frame_progress = 0.44457915
+
 [node name="idle" type="AnimatedSprite2D" parent="."]
-position = Vector2(2.0000038, -32.999996)
+position = Vector2(1.999999, -31.999998)
 scale = Vector2(0.056902528, 0.05111896)
 sprite_frames = SubResource("SpriteFrames_hjaqi")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.46546978
 
-[node name="run" type="AnimatedSprite2D" parent="."]
+[node name="moving" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(2, -32)
 scale = Vector2(0.07161464, 0.07161458)
 sprite_frames = SubResource("SpriteFrames_4reak")
-animation = &"run"
-autoplay = "run"
-frame_progress = 0.40984592
+animation = &"sneak"
+autoplay = "sneak"
+frame_progress = 0.50523245
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -19)

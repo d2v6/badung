@@ -1,14 +1,22 @@
-[gd_scene load_steps=32 format=3 uid="uid://bcf7cy8kf5xwn"]
+[gd_scene load_steps=41 format=3 uid="uid://bcf7cy8kf5xwn"]
 
 [ext_resource type="Script" uid="uid://yhlwosddjacr" path="res://scripts/kaka.gd" id="1_d4s0l"]
+[ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="2_3ki67"]
 [ext_resource type="Texture2D" uid="uid://bym643byqtdxs" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9807.PNG" id="2_ywwko"]
+[ext_resource type="Texture2D" uid="uid://8cwdilfjtck8" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-2.png" id="3_6s68g"]
 [ext_resource type="Texture2D" uid="uid://djwhf70vmq8fk" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9808.PNG" id="3_qa6aw"]
 [ext_resource type="Texture2D" uid="uid://eiimqfs8dhou" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9809.PNG" id="4_kbtae"]
+[ext_resource type="Texture2D" uid="uid://tsushypt8hhv" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-3.png" id="4_msick"]
 [ext_resource type="Texture2D" uid="uid://7njh3lb3ucbb" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9810.PNG" id="5_nsimo"]
+[ext_resource type="Texture2D" uid="uid://cpg1tv0p4aav" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-4.png" id="5_rnafh"]
+[ext_resource type="Texture2D" uid="uid://drv3lcu03mlwt" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-5.png" id="6_4cl2f"]
 [ext_resource type="Texture2D" uid="uid://br2vrghwt0ooj" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9811.PNG" id="6_icalr"]
+[ext_resource type="Texture2D" uid="uid://c0jdqdu5wruvm" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-6.png" id="7_ajdh7"]
 [ext_resource type="Texture2D" uid="uid://cuwkryujyibrd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9812.PNG" id="7_b1jlh"]
 [ext_resource type="Texture2D" uid="uid://dyvaaaixe8wxt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9813.PNG" id="8_61jnk"]
+[ext_resource type="Texture2D" uid="uid://ctmyww0ba2koi" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-7.png" id="8_i2ol4"]
 [ext_resource type="Texture2D" uid="uid://da2kmlxjsgknd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j1.PNG" id="9_krio1"]
+[ext_resource type="Texture2D" uid="uid://bw0q345kcwr1x" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-8.png" id="9_va341"]
 [ext_resource type="Texture2D" uid="uid://buamwnb52visp" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j2.PNG" id="10_3ki67"]
 [ext_resource type="Texture2D" uid="uid://dsru6kd1foy2a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j3.PNG" id="11_6s68g"]
 [ext_resource type="Texture2D" uid="uid://c6r43s6qqpcrv" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j4.PNG" id="12_msick"]
@@ -29,6 +37,38 @@
 [ext_resource type="Texture2D" uid="uid://byff2g3u04lxj" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9795.PNG" id="27_ggfsp"]
 [ext_resource type="Texture2D" uid="uid://dnpiwkus5flvv" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9796.PNG" id="28_rpfuu"]
 [ext_resource type="Texture2D" uid="uid://em0xuymrbq5h" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9797.PNG" id="29_33ktb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wiqie"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3ki67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6s68g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_msick")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rnafh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4cl2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ajdh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_i2ol4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_va341")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kk4ol"]
 animations = [{
@@ -138,6 +178,13 @@ radius = 15.033297
 [node name="Kaka" type="CharacterBody2D"]
 z_index = 4
 script = ExtResource("1_d4s0l")
+
+[node name="shadow" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3, 23)
+scale = Vector2(0.040869143, 0.040364582)
+sprite_frames = SubResource("SpriteFrames_wiqie")
+autoplay = "default"
+frame_progress = 0.69430345
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-0.99999976, -7.0000076)

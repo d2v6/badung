@@ -5,8 +5,8 @@ const RUN_SPEED = 180.0
 const SPRINT_DURATION = 2.0
 const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 
-@onready var idle: AnimatedSprite2D = $idle
-@onready var run: AnimatedSprite2D = $run
+@onready var idle_sprite: AnimatedSprite2D = $idle
+@onready var movement_sprite: AnimatedSprite2D = $moving
 @onready var walking_sfx: AudioStreamPlayer = $WalkingSFX
 @onready var running_sfx: AudioStreamPlayer = $RunningSFX
 
@@ -85,7 +85,7 @@ func _physics_process(_delta: float) -> void:
 		try_throw_decoy()
 
 	move_and_slide()
-	_update_animation(direction, velocity)
+	_update_animation(direction, velocity, is_running)
 
 # --- Existing Logic Below ---
 
@@ -108,20 +108,30 @@ func on_objective_grabbed(objective: Node2D) -> void:
 	if UIManager:
 		UIManager.update_objective_slot(true)
 
-func _update_animation(direction: Vector2, current_velocity: Vector2) -> void:
+func _update_animation(direction: Vector2, current_velocity: Vector2, is_running: bool) -> void:
+	# Update sprite facing direction
 	if (direction.x > 0) :
-		idle.flip_h = false
-		run.flip_h = false
+		idle_sprite.flip_h = false
+		movement_sprite.flip_h = false
 	elif (direction.x < 0):
-		idle.flip_h = true
-		run.flip_h = true
+		idle_sprite.flip_h = true
+		movement_sprite.flip_h = true
 
+	# Update sprite visibility and animation
 	if current_velocity == Vector2.ZERO:
-		idle.visible = true
-		run.visible = false
+		idle_sprite.visible = true
+		movement_sprite.visible = false
 	else:
-		idle.visible = false
-		run.visible = true
+		idle_sprite.visible = false
+		movement_sprite.visible = true
+		
+		# Play appropriate animation based on movement speed
+		if is_running:
+			if movement_sprite.animation != "run":
+				movement_sprite.play("run")
+		else:
+			if movement_sprite.animation != "sneak":
+				movement_sprite.play("sneak")
 
 func _update_movement_sounds(is_moving: bool, is_running: bool) -> void:
 	"""Update movement sound effects based on player state"""
