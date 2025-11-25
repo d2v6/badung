@@ -52,7 +52,7 @@ func _setup_navigation() -> void:
 	collect_patrol_points()
 	
 	last_position = global_position
-	print("[Mom] Setup complete at position: ", global_position)
+	# print("[Mom] Setup complete at position: ", global_position)
 	
 	# Set initial vision color (red for wandering)
 	if vision_shape:
@@ -64,19 +64,19 @@ func _setup_navigation() -> void:
 		vision_area.collision_mask = 2   # Detect player on layer 2
 		vision_area.body_entered.connect(_on_vision_body_entered)
 		vision_area.body_exited.connect(_on_vision_body_exited)
-		print("[Mom] Vision area configured - detecting layer 2 (player)")
+		# print("[Mom] Vision area configured - detecting layer 2 (player)")
 	
 	# Connect catch area signals
 	if catch_area:
 		catch_area.collision_layer = 0  # Catch area doesn't need to be on any layer
 		catch_area.collision_mask = 2   # Detect player on layer 2
 		catch_area.body_entered.connect(_on_catch_area_body_entered)
-		print("[Mom] Catch area configured - detecting layer 2 (player)")
+		# print("[Mom] Catch area configured - detecting layer 2 (player)")
 	
 	# Register with GameManager (call down pattern - Mom registers itself)
 	if GameManager:
 		GameManager.register_mom(self)
-		print("[Mom] Registered with GameManager")
+		# print("[Mom] Registered with GameManager")
 
 func _physics_process(delta: float) -> void:
 	# Check if stuck (not moving much)
@@ -90,8 +90,8 @@ func _physics_process(delta: float) -> void:
 	if hunt_mode:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
-			if not is_chasing:
-				print("[Mom] Hunt mode active - chasing player!")
+			#if not is_chasing:
+				# print("[Mom] Hunt mode active - chasing player!")
 			is_chasing = true
 			investigating_decoy = false
 			investigating_last_position = false
@@ -102,8 +102,8 @@ func _physics_process(delta: float) -> void:
 			patrol(delta)
 	# Normal mode: chase only when player in sight
 	elif player_in_sight and player_reference:
-		if not is_chasing:
-			print("[Mom] Starting chase mode!")
+		#if not is_chasing:
+			# print("[Mom] Starting chase mode!")
 		is_chasing = true
 		investigating_decoy = false
 		investigating_last_position = false
@@ -120,8 +120,8 @@ func _physics_process(delta: float) -> void:
 		investigate_decoy(delta)
 	else:
 		# Lowest priority: normal patrol
-		if is_chasing:
-			print("[Mom] Ending chase mode - back to patrol")
+		#if is_chasing:
+			# print("[Mom] Ending chase mode - back to patrol")
 		is_chasing = false
 		investigating_decoy = false
 		investigating_last_position = false
@@ -187,38 +187,38 @@ func set_navigation_target(target: Vector2) -> void:
 	if last_target_position == Vector2.ZERO or last_target_position.distance_to(target) > PATH_RECALC_DISTANCE:
 		navigation_agent.target_position = target
 		last_target_position = target
-		print("[Mom] Set navigation target to ", target)
+		# print("[Mom] Set navigation target to ", target)
 
 func _on_vision_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("[Mom] Player detected in vision area!")
+		# print("[Mom] Player detected in vision area!")
 		if is_path_clear(global_position, body.global_position):
 			player_in_sight = true
 			player_reference = body
-			print("[Mom] Player entered vision - starting chase!")
-		else:
-			print("[Mom] Player in area but blocked by wall")
+			# print("[Mom] Player entered vision - starting chase!")
+		#else:
+			# print("[Mom] Player in area but blocked by wall")
 
 func _on_vision_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and body == player_reference:
 		# Don't lose sight if in hunt mode - hunt never cancels
 		if hunt_mode:
-			print("[Mom] Player exited vision but hunt mode active - continuing chase")
+			# print("[Mom] Player exited vision but hunt mode active - continuing chase")
 			return
 		
 		# Don't immediately lose sight - vision cone rotates and player might still be visible
-		print("[Mom] Player exited vision cone polygon")
+		# print("[Mom] Player exited vision cone polygon")
 		# Vision will be lost only if we can't see player through walls anymore
 		if not is_path_clear(global_position, body.global_position):
 			player_in_sight = false
 			player_reference = null
 			# Start investigating last seen position
 			investigating_last_position = true
-			print("[Mom] Player lost - going to last seen position: ", last_seen_position)
+			# print("[Mom] Player lost - going to last seen position: ", last_seen_position)
 
 func _on_catch_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("[Mom] Player caught!")
+		# print("[Mom] Player caught!")
 		# Signal UP to GameManager
 		if GameManager:
 			GameManager.on_player_caught()
@@ -226,7 +226,7 @@ func _on_catch_area_body_entered(body: Node2D) -> void:
 func activate_hunt_mode() -> void:
 	"""Called by GameManager when player is reported - CALL DOWN pattern"""
 	hunt_mode = true
-	print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
+	# print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
 
 func chase_player(player: Node, _delta: float) -> void:
 	# Use A* pathfinding to chase player - update every frame for dynamic chase
@@ -241,7 +241,7 @@ func collect_patrol_points() -> void:
 		patrol_points_node = root.get_node_or_null("PatrolPoints")
 	
 	if not patrol_points_node:
-		print("[Mom] No PatrolPoints node found!")
+		# print("[Mom] No PatrolPoints node found!")
 		return
 	
 	# Get all Marker2D children and sort them alphabetically by name
@@ -257,14 +257,14 @@ func collect_patrol_points() -> void:
 	for marker in markers:
 		patrol_points.append(marker.global_position)
 	
-	if patrol_points.size() > 0:
-		print("[Mom] Collected ", patrol_points.size(), " patrol points in alphabetical order")
-	else:
-		print("[Mom] No patrol markers found!")
+	#if patrol_points.size() > 0:
+		# print("[Mom] Collected ", patrol_points.size(), " patrol points in alphabetical order")
+	#else:
+		# print("[Mom] No patrol markers found!")
 
 func patrol(_delta: float) -> void:
 	if patrol_points.size() == 0:
-		print("[Mom] No patrol points available!")
+		# print("[Mom] No patrol points available!")
 		return
 	
 	# Patrol mode: cycle through patrol points
@@ -274,7 +274,7 @@ func patrol(_delta: float) -> void:
 	if global_position.distance_to(target) < 50.0:
 		# Move to next patrol point
 		current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
-		print("[Mom] Reached patrol point! Moving to next: ", current_patrol_index)
+		# print("[Mom] Reached patrol point! Moving to next: ", current_patrol_index)
 	
 	# NavigationAgent will find path through the navigation mesh to this point
 	set_navigation_target(target)
@@ -283,9 +283,9 @@ func patrol(_delta: float) -> void:
 	# if not navigation_agent.is_navigation_finished():
 	# 	var path = navigation_agent.get_current_navigation_path()
 	# 	if path.size() == 0:
-	# 		print("[Mom] WARNING: No navigation path found! Nav mesh might not be baked properly")
+			#print("[Mom] WARNING: No navigation path found! Nav mesh might not be baked properly")
 	# 	else:
-	# 		print("[Mom] Path found with ", path.size(), " points")
+			#print("[Mom] Path found with ", path.size(), " points")
 
 func is_path_clear(from: Vector2, to: Vector2) -> bool:
 	var space_state = get_world_2d().direct_space_state
@@ -324,7 +324,7 @@ func check_for_decoys() -> void:
 			# Decoy is no longer active, stop investigating
 			investigating_decoy = false
 			target_decoy = null
-			print("[Mom] Decoy no longer active, resuming patrol")
+			# print("[Mom] Decoy no longer active, resuming patrol")
 	elif investigating_decoy:
 		# Target decoy was deleted, stop investigating
 		investigating_decoy = false
@@ -350,7 +350,7 @@ func check_for_decoys() -> void:
 	if closest_decoy:
 		investigating_decoy = true
 		target_decoy = closest_decoy
-		print("[Mom] Detected decoy at ", closest_decoy.global_position, "! Investigating...")
+		# print("[Mom] Detected decoy at ", closest_decoy.global_position, "! Investigating...")
 
 func investigate_decoy(_delta: float) -> void:
 	if not target_decoy or not is_instance_valid(target_decoy):
@@ -360,7 +360,7 @@ func investigate_decoy(_delta: float) -> void:
 
 	# Check if decoy is still active
 	if target_decoy.has_method("get_is_active") and not target_decoy.get_is_active():
-		print("[Mom] Decoy disappeared/deactivated, resuming patrol")
+		# print("[Mom] Decoy disappeared/deactivated, resuming patrol")
 		investigating_decoy = false
 		target_decoy = null
 		return
@@ -373,7 +373,7 @@ func investigate_decoy(_delta: float) -> void:
 
 	# If close enough to the decoy, we've finished investigating
 	if distance_to_decoy < 30.0:
-		print("[Mom] Reached decoy location, resuming patrol")
+		# print("[Mom] Reached decoy location, resuming patrol")
 		investigating_decoy = false
 		target_decoy = null
 
@@ -388,6 +388,6 @@ func investigate_last_position(_delta: float) -> void:
 	
 	# Check if we've reached the last seen position
 	if global_position.distance_to(last_seen_position) < 0.0:
-		print("[Mom] Reached last seen position - resuming patrol")
+		# print("[Mom] Reached last seen position - resuming patrol")
 		investigating_last_position = false
 		last_seen_position = Vector2.ZERO

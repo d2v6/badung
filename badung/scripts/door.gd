@@ -1,44 +1,120 @@
 extends Node2D
 
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var body: StaticBody2D = $StaticBody2D
-# Make sure the node name matches your scene tree exactly
+@export var door_id: String = "default"  # ID to match with key
+
 @onready var interaction_area: Area2D = $Area2D
+@onready var lock_sprite: Sprite2D = $Lock
+
+var close_sprite: Sprite2D = null
+var open_sprite: Sprite2D = null
+var collision_body: StaticBody2D = null
 
 var is_open: bool = false
+var is_locked: bool = false  # Will be set by GameManager in _ready
+var required_key_id: String = ""  # Which key opens this door
 var tween: Tween
 
 func _ready() -> void:
+	# Find child nodes that might be added in level scenes
+	for child in get_children():
+		if child is Sprite2D:
+			if child.name == "Close":
+				close_sprite = child
+			elif child.name == "Open":
+				open_sprite = child
+		elif child is StaticBody2D:
+			collision_body = child
+	
 	# Connect signals via code for safety
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
+	
+	# Get door configuration from GameManager
+	if GameManager:
+		var config = GameManager.get_door_config(door_id)
+		is_locked = config.is_locked
+		required_key_id = config.required_key_id
+		print("Door ", door_id, " - locked: ", is_locked, ", requires key: ", required_key_id)
+	
+	# Set initial visibility
+	if close_sprite:
+		close_sprite.visible = true
+	if open_sprite:
+		open_sprite.visible = false
+	
+	# Show lock sprite if door is locked
+	update_lock_visibility()
+
+func update_lock_visibility() -> void:
+	"""Update lock sprite visibility based on locked state"""
+	if lock_sprite:
+		lock_sprite.visible = is_locked
 
 # Called by the Player script
 func interact() -> void:
+	if is_locked:
+		print("Door is locked! Find a key to unlock it.")
+		return
+	
 	toggle_door()
+
+func try_unlock_with_keys(player_keys: Array[String]) -> void:
+	"""Try to unlock door with player's keys, or toggle if already unlocked"""
+	if is_locked:
+		# Check if player has the required key
+		if required_key_id in player_keys:
+			unlock()
+			# Automatically open the door after unlocking
+			if not is_open:
+				toggle_door()
+		else:
+			print("Door is locked! You need the '", required_key_id, "' key.")
+	else:
+		# Door is already unlocked, just toggle it
+		toggle_door()
+
+func unlock() -> void:
+	"""Unlock the door (called when player uses a key)"""
+	if is_locked:
+		is_locked = false
+		update_lock_visibility()
+		print("Door unlocked!")
+
+func lock() -> void:
+	"""Lock the door"""
+	if not is_locked:
+		is_locked = true
+		# Close the door if it's open when locking
+		if is_open:
+			toggle_door()
+		update_lock_visibility()
+		print("Door locked!")
 
 func toggle_door() -> void:
 	is_open = !is_open
 	
-	var target_rotation = 0.0
-	
 	if is_open:
-		# Rotate -90 degrees (in radians)
-		target_rotation = deg_to_rad(-90)
 		print("Door Opened")
+		# Show open sprite, hide close sprite
+		if close_sprite:
+			close_sprite.visible = false
+		if open_sprite:
+			open_sprite.visible = true
+		# Disable collision when door is open
+		if collision_body:
+			collision_body.set_collision_layer_value(1, false)
+			collision_body.set_collision_mask_value(1, false)
 	else:
-		# Reset to 0
-		target_rotation = 0.0
 		print("Door Closed")
-
-	# Use a Tween for smooth animation
-	if tween:
-		tween.kill() # Stop any running animation
-	
-	tween = create_tween()
-	
-	# Rotate the entire Door node around (0,0)
-	tween.tween_property(self, "rotation", target_rotation, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		# Show close sprite, hide open sprite
+		if close_sprite:
+			close_sprite.visible = true
+		if open_sprite:
+			open_sprite.visible = false
+		# Enable collision when door is closed
+		if collision_body:
+			collision_body.set_collision_layer_value(1, true)
+			collision_body.set_collision_mask_value(1, true)
 
 # --- Signal Callbacks ---
 

@@ -3,8 +3,16 @@ extends Node
 # Track collected objectives
 var has_objective: bool = false
 var reported: bool = false
+var collected_keys: Array[String] = []  # Track which keys have been collected
 
 var mom_reference: CharacterBody2D = null
+
+# Door configuration: door_id -> {is_locked: bool, required_key_id: String}
+var door_configs: Dictionary = {
+	"DoorA": {"is_locked": true, "required_key_id": "key_orange"},
+	# Add more doors here as needed
+	# "DoorB": {"is_locked": false, "required_key_id": ""},
+}
 
 signal objective_collected()
 signal player_reported()
@@ -71,3 +79,17 @@ func on_player_caught() -> void:
 	if UIManager:
 		UIManager.show_game_over_failure()
 		print("GameManager: Told UIManager to show game over")
+
+func get_door_config(door_id: String) -> Dictionary:
+	"""Get configuration for a specific door"""
+	if door_id in door_configs:
+		return door_configs[door_id]
+	else:
+		# Return default config for unknown doors
+		return {"is_locked": false, "required_key_id": ""}
+
+func on_key_collected(key_id: String) -> void:
+	"""Called when player picks up a key - signals UP from Player"""
+	if key_id not in collected_keys:
+		collected_keys.append(key_id)
+		print("GameManager: Key collected - ", key_id)

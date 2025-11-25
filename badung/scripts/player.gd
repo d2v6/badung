@@ -12,6 +12,7 @@ const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 
 var held_objective: Node2D = null
 var held_decoy: Node2D = null
+var held_keys: Array[String] = []  # Array of key IDs player is holding
 var last_direction: Vector2 = Vector2.RIGHT
 
 var stamina = SPRINT_DURATION
@@ -91,7 +92,11 @@ func _physics_process(_delta: float) -> void:
 
 func try_interact() -> void:
 	if current_interactable != null and current_interactable.has_method("interact"):
-		current_interactable.interact()
+		# If it's a door, try to unlock it with our keys
+		if current_interactable.has_method("try_unlock_with_keys"):
+			current_interactable.try_unlock_with_keys(held_keys)
+		else:
+			current_interactable.interact()
 
 func register_interactable(obj: Node2D) -> void:
 	current_interactable = obj
@@ -213,3 +218,11 @@ func drop_current_decoy() -> void:
 
 func on_decoy_thrown() -> void:
 	print("Player threw decoy!")
+
+func on_key_picked_up(key_id: String) -> void:
+	"""Called when player picks up a key"""
+	held_keys.append(key_id)
+	print("Player now has keys: ", held_keys)
+	# Notify GameManager
+	if GameManager:
+		GameManager.on_key_collected(key_id)
