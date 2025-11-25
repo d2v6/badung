@@ -20,6 +20,7 @@ AudioManager="*res://scripts/audio_manager.gd"
 SceneTransition="*res://scene/ui/scene_transition.tscn"
 Music="*res://scene/systems/music.tscn"
 GameManager="*res://scene/systems/game_manager.tscn"
+NavigationManager="*res://scripts/navigation_manager.gd"
 
 [display]
 

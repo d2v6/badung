@@ -1,8 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwln7wsvpdgkn"]
+[gd_scene load_steps=4 format=3 uid="uid://bwln7wsvpdgkn"]
 
 [ext_resource type="AudioStream" uid="uid://du0atav3hltbe" path="res://assets/music/musicloop.mp3" id="1_ptm2x"]
+[ext_resource type="AudioStream" uid="uid://cw9ycgsqp6qe3" path="res://assets/music/game-background-music.mp3" id="2_bgmusic"]
+[ext_resource type="AudioStream" uid="uid://b4rgjqnl35l5w" path="res://assets/music/game-background-music-danger.mp3" id="3_danger"]
+[ext_resource type="Script" path="res://scripts/music_manager.gd" id="4_music"]
 
-[node name="Music" type="AudioStreamPlayer2D"]
+[node name="Music" type="Node" groups=["music_manager"]]
+script = ExtResource("4_music")
+
+[node name="LoopPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_ptm2x")
-autoplay = true
 bus = &"Music"
+
+[node name="GameMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bgmusic")
+bus = &"Music"
+
+[node name="DangerMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_danger")
+bus = &"Music"
+

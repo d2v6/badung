@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://8no6klrt2tee"]
+[gd_scene load_steps=23 format=3 uid="uid://8no6klrt2tee"]
 
 [ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://wuxasq2bjqyy" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-6.png" id="13_iuf2t"]
 [ext_resource type="Texture2D" uid="uid://cntoriky76htf" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-7.png" id="14_jrjdb"]
 [ext_resource type="Texture2D" uid="uid://crsnleljbches" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/JALAN BIASA/jalan-8.png" id="15_kk4ol"]
+[ext_resource type="AudioStream" uid="uid://cacuiomwl1rj5" path="res://assets/sfx/sfx-walking.mp3" id="16_walking"]
+[ext_resource type="AudioStream" uid="uid://beu66foseatgj" path="res://assets/sfx/sfx-running.mp3" id="17_running"]
 
 [sub_resource type="Gradient" id="Gradient_j4wxg"]
 offsets = PackedFloat32Array(0.31333333, 0.56)
@@ -89,6 +91,7 @@ radius = 19.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 10
 collision_layer = 2
+collision_mask = 1
 script = ExtResource("1_hjaqi")
 
 [node name="LineOfSight" type="PointLight2D" parent="."]
@@ -122,3 +125,13 @@ frame_progress = 0.40984592
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -19)
 shape = SubResource("CircleShape2D_4reak")
+
+[node name="WalkingSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_walking")
+volume_db = -14.653
+bus = &"SFX"
+
+[node name="RunningSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_running")
+volume_db = -8.057
+bus = &"SFX"

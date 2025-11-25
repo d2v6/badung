@@ -6,6 +6,7 @@ var reported: bool = false
 
 signal objective_collected()
 signal player_reported()
+signal stage_started()
 
 func _ready() -> void:
 	# Reset initial state

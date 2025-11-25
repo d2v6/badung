@@ -84,5 +84,11 @@ func close_settings() -> void:
 
 func _on_main_menu_pressed() -> void:
 	# Return to main menu
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scene/main/main_menu.tscn")
+	# Try to use NavigationManager if available, otherwise fallback
+	var nav_manager = get_node_or_null("/root/NavigationManager")
+	if nav_manager:
+		nav_manager.goto_main_menu()
+	else:
+		# Fallback if NavigationManager not available
+		get_tree().paused = false
+		get_tree().change_scene_to_file("res://scene/menus/main_menu.tscn")

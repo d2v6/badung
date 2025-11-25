@@ -7,6 +7,8 @@ const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 
 @onready var idle: AnimatedSprite2D = $idle
 @onready var run: AnimatedSprite2D = $run
+@onready var walking_sfx: AudioStreamPlayer = $WalkingSFX
+@onready var running_sfx: AudioStreamPlayer = $RunningSFX
 
 var stamina_bar: ProgressBar = null
 var held_objective: Node2D = null
@@ -18,6 +20,8 @@ var stamina = SPRINT_DURATION
 var regen_cooldown_timer = 0.0 # Tracks the 1s delay
 
 var current_interactable: Node2D = null
+var is_running_previously: bool = false
+var is_moving_previously: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -47,6 +51,7 @@ func _physics_process(_delta: float) -> void:
 	var speed = SNEAK_SPEED
 	var is_trying_to_run = Input.is_action_pressed("run")
 	var is_moving = direction != Vector2.ZERO
+	var is_running = false
 	
 	# --- STAMINA LOGIC ---
 	
@@ -55,6 +60,7 @@ func _physics_process(_delta: float) -> void:
 		speed = RUN_SPEED
 		stamina -= _delta
 		regen_cooldown_timer = REGEN_COOLDOWN # Reset the cooldown timer
+		is_running = true
 	else:
 		# 2. REGENERATING (With Delay)
 		if regen_cooldown_timer > 0:
@@ -73,6 +79,9 @@ func _physics_process(_delta: float) -> void:
 	if stamina_bar:
 		var stamina_percent = stamina / SPRINT_DURATION
 		stamina_bar.value = stamina_percent * stamina_bar.max_value
+	
+	# --- SOUND EFFECTS ---
+	_update_movement_sounds(is_moving, is_running)
 	
 	# ---------------------
 
@@ -130,6 +139,30 @@ func _update_animation(direction: Vector2, current_velocity: Vector2) -> void:
 	else:
 		idle.visible = false
 		run.visible = true
+
+func _update_movement_sounds(is_moving: bool, is_running: bool) -> void:
+	"""Update movement sound effects based on player state"""
+	if is_moving:
+		if is_running:
+			# Playing running sound
+			if not running_sfx.playing:
+				running_sfx.play()
+			# Stop walking sound if it's playing
+			if walking_sfx.playing:
+				walking_sfx.stop()
+		else:
+			# Playing walking sound
+			if not walking_sfx.playing:
+				walking_sfx.play()
+			# Stop running sound if it's playing
+			if running_sfx.playing:
+				running_sfx.stop()
+	else:
+		# Not moving - stop all movement sounds
+		if walking_sfx.playing:
+			walking_sfx.stop()
+		if running_sfx.playing:
+			running_sfx.stop()
 
 func try_pickup_decoy() -> void:
 	var decoys = get_tree().get_nodes_in_group("decoy")
