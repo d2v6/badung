@@ -36,14 +36,6 @@ func _ready() -> void:
 		#print("After setup - collision_mask: ", grab_area.collision_mask)
 
 func _process(delta: float) -> void:
-	# Debug: Check state every frame when grabbed
-	#if is_grabbed:
-		#print("DEBUG: is_grabbed = true, player_reference = ", player_reference)
-	
-	# If grabbed, follow the player
-	if is_grabbed and player_reference:
-		follow_player(delta)
-	
 	# Check if player presses grab key while in range
 	if player_in_range and not is_grabbed and Input.is_action_just_pressed("grab"):
 		grab_objective()
@@ -95,7 +87,11 @@ func grab_objective() -> void:
 	if player_reference and player_reference.has_method("on_objective_grabbed"):
 		player_reference.on_objective_grabbed(self)
 	
-	#print("Objective grabbed: ", name)
+	print("Objective grabbed: ", name)
+	
+	# Hide the objective visuals
+	if item:
+		item.visible = false
 	
 	# Disable collision, glow, and button
 	if grab_area:

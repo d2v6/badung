@@ -138,12 +138,3 @@ frame_progress = 0.40984592
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -19)
 shape = SubResource("CircleShape2D_4reak")
-
-[node name="StaminaBar" type="TextureProgressBar" parent="."]
-offset_left = 30.0
-offset_top = -27.000002
-offset_right = 90.0
-offset_bottom = -22.000002
-rotation = -1.5694854
-texture_under = SubResource("GradientTexture2D_5g408")
-texture_progress = SubResource("GradientTexture2D_sc4n2")

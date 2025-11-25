@@ -1,9 +1,9 @@
-extends Node2D
+extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var pickup_area: Area2D = $PickupArea
 @onready var detection_area: Area2D = $DetectionArea
-@onready var pickup_prompt: Label = $PickupPrompt
+@onready var pickup_prompt: Sprite2D = $PickupPrompt
 @onready var shiny_background: Sprite2D = $ShinyBackground
 
 var player_in_range: bool = false
@@ -11,18 +11,21 @@ var player_reference: Node2D = null
 var is_held: bool = false
 var is_thrown: bool = false
 
-# Follow settings (when held)
-const FOLLOW_DISTANCE = 60.0
-const FOLLOW_SMOOTHING = 0.05
-var target_position: Vector2 = Vector2.ZERO
-
 # Throw settings
-const THROW_SPEED = 1200.0  # Increased for farther throw
-const THROW_FRICTION = 0.97  # Less friction for longer travel
-const MIN_THROW_SPEED = 20.0  # Lower threshold so it travels further
-const THROW_ROTATION_SPEED = 10.0  # Rotation during flight
+const THROW_SPEED = 650.0  # Horizontal throw speed
+const UPWARD_ARC_FORCE = 200.0  # Upward force for parabolic arc
+const THROW_FRICTION = 0.98  # Friction for horizontal movement
+const MIN_THROW_SPEED = 50.0  # Threshold to stop
+const THROW_ROTATION_SPEED = 5.0  # Moderate spinning
+const BOUNCE_FACTOR = 0.35  # Bounce factor
+const THROW_GRAVITY = 450.0  # Gravity for parabolic arc
+const SPAWN_OFFSET = 50.0  # Distance from player when spawned
+const MAX_BOUNCES = 2  # Maximum number of bounces
+const MAX_FALL_DISTANCE = 50.0  # Auto-land after this fall distance
 var throw_velocity: Vector2 = Vector2.ZERO
 var is_landing: bool = false
+var bounce_count: int = 0
+var highest_y_position: float = 0.0
 
 # Detection settings
 const DETECTION_DURATION = 5.0  # How long the decoy attracts mom
@@ -56,16 +59,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# Skip all processing when held (node is hidden)
+	if is_held:
+		return
+
 	# Update breath timer
 	breath_timer += delta
 
-	if is_held and player_reference:
-		# Follow the player when held
-		follow_player(delta)
-		# Gentle breathing when held
-		apply_breathing_animation(BREATH_SPEED, BREATH_AMOUNT)
-
-	elif is_thrown:
+	if is_thrown:
 		# Handle thrown physics
 		handle_throw_physics(delta)
 
@@ -73,7 +74,7 @@ func _process(delta: float) -> void:
 		if throw_velocity.length() > MIN_THROW_SPEED and sprite:
 			# Scale slightly larger during flight
 			var speed_factor = throw_velocity.length() / THROW_SPEED
-			var flight_scale = 1.0 + (speed_factor * 0.3)
+			var flight_scale = 1.0 + (speed_factor * 0.2)
 			sprite.scale = base_scale * flight_scale
 
 		# Handle detection timer (only when stopped)
@@ -85,10 +86,9 @@ func _process(delta: float) -> void:
 			if detection_timer >= DETECTION_DURATION:
 				start_disappearing()
 
-	else:
+	elif not is_held and sprite:
 		# Idle state - gentle breathing
-		if not is_thrown and sprite:
-			apply_breathing_animation(BREATH_SPEED, BREATH_AMOUNT)
+		apply_breathing_animation(BREATH_SPEED, BREATH_AMOUNT)
 
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not is_held and not is_thrown:
@@ -110,16 +110,23 @@ func pickup_decoy() -> void:
 	if not player_reference:
 		return
 
+	# Check if player already has a decoy - drop it first
+	if player_reference.has_method("drop_current_decoy"):
+		player_reference.drop_current_decoy()
+
 	is_held = true
 	is_thrown = false
+	is_landing = false  # Reset landing state
 
-	# Hide pickup prompt
-	if pickup_prompt:
-		pickup_prompt.visible = false
-	
-	# Hide shiny background when picked up
-	if shiny_background:
-		shiny_background.visible = false
+	# Completely hide the entire decoy node
+	visible = false
+
+	# Move decoy far off-screen to ensure it's not visible
+	global_position = Vector2(-10000, -10000)
+
+	# Disable physics collision when held
+	set_collision_layer_value(5, false)
+	set_collision_mask_value(1, false)
 
 	# Disable pickup area
 	if pickup_area:
@@ -146,9 +153,48 @@ func throw_decoy(direction: Vector2) -> void:
 	is_active = true
 	detection_timer = 0.0
 	is_landing = false
+	bounce_count = 0
+	highest_y_position = 0.0
 
-	# Set throw velocity
+	# Make the entire decoy visible again
+	visible = true
+
+	# Show the decoy sprite when thrown
+	if sprite:
+		sprite.visible = true
+		sprite.scale = base_scale
+		sprite.rotation = 0.0
+
+	# Hide shiny background until landing
+	if shiny_background:
+		shiny_background.visible = false
+
+	# Re-enable physics collision
+	set_collision_layer_value(5, true)
+	set_collision_mask_value(1, true)
+
+	# Disable pickup area - decoy is now in use, not pickupable
+	if pickup_area:
+		pickup_area.monitoring = false
+		pickup_area.monitorable = false
+
+	# Hide pickup prompt
+	if pickup_prompt:
+		pickup_prompt.visible = false
+
+	# Position decoy offset from player's position to avoid collision
+	if player_reference:
+		var spawn_direction = direction.normalized()
+		# Spawn the decoy in front of the player
+		global_position = player_reference.global_position + (spawn_direction * SPAWN_OFFSET)
+
+	# Track starting position for fall distance measurement
+	highest_y_position = global_position.y
+
+	# Set throw velocity with parabolic arc
 	throw_velocity = direction.normalized() * THROW_SPEED
+	# Strong upward component for nice parabolic arc
+	throw_velocity.y -= UPWARD_ARC_FORCE
 
 	# Reset rotation
 	rotation = 0.0
@@ -164,62 +210,100 @@ func throw_decoy(direction: Vector2) -> void:
 
 	print("Decoy thrown in direction: ", direction)
 
-func follow_player(_delta: float) -> void:
-	if not player_reference:
+func handle_throw_physics(delta: float) -> void:
+	# If already landed, stop all physics processing
+	if is_landing:
+		throw_velocity = Vector2.ZERO
+		velocity = Vector2.ZERO
 		return
 
-	# Calculate position behind/above the player
-	var player_pos = player_reference.global_position
-	var player_velocity = Vector2.ZERO
+	# Apply gravity for arc trajectory
+	throw_velocity.y += THROW_GRAVITY * delta
 
-	# Get player's velocity if available
-	if player_reference.has_method("get_velocity"):
-		player_velocity = player_reference.velocity
+	# Apply friction (more friction if bounced multiple times)
+	var friction = THROW_FRICTION
+	if bounce_count > 0:
+		friction = THROW_FRICTION - (bounce_count * 0.03)
+	throw_velocity.x *= friction  # Only apply friction to horizontal movement
 
-	# Calculate target position
-	if player_velocity.length() > 0:
-		var direction = -player_velocity.normalized()
-		target_position = player_pos + direction * FOLLOW_DISTANCE
-		target_position.y -= 40  # Float above player
-	else:
-		# If player is stationary, maintain relative position
-		var offset = target_position - player_pos
-		if offset.length() > FOLLOW_DISTANCE * 1.5:
-			target_position = player_pos + Vector2(-FOLLOW_DISTANCE, -40)
-		else:
-			target_position = player_pos + offset.normalized() * FOLLOW_DISTANCE
-			target_position.y = player_pos.y - 40
+	# Track the highest point (lowest y value since y increases downward)
+	if throw_velocity.y > 0:  # Only track when falling
+		if highest_y_position == 0.0:
+			highest_y_position = global_position.y
+		elif global_position.y < highest_y_position:
+			highest_y_position = global_position.y
 
-	# Smoothly move to target
-	global_position = global_position.lerp(target_position, FOLLOW_SMOOTHING)
+	# Calculate how far the decoy has fallen from its highest point
+	var fall_distance = global_position.y - highest_y_position
 
-func handle_throw_physics(delta: float) -> void:
-	# Apply friction
-	throw_velocity *= THROW_FRICTION
+	# Force landing if fallen too far (simulates hitting invisible floor)
+	if fall_distance >= MAX_FALL_DISTANCE and throw_velocity.y > 0 and not is_landing:
+		print("Decoy auto-landed after falling ", fall_distance, " pixels")
+		force_landing()
+		return
 
 	# Add rotation during flight for visual effect
 	if throw_velocity.length() > MIN_THROW_SPEED:
-		rotation += THROW_ROTATION_SPEED * delta
+		rotation += THROW_ROTATION_SPEED * delta * (throw_velocity.length() / THROW_SPEED)
+	else:
+		# Slow down rotation as it stops
+		rotation = lerp_angle(rotation, 0.0, delta * 5.0)
 
-	# Stop if too slow
-	if throw_velocity.length() < MIN_THROW_SPEED and not is_landing:
-		is_landing = true
-		throw_velocity = Vector2.ZERO
-		rotation = 0.0  # Reset rotation when landing
-		
-		# Show shiny background when attracting mom (red/orange glow)
-		if shiny_background:
-			shiny_background.visible = true
-			shiny_background.modulate = Color(1, 0.4, 0.2, 0.5)  # Red-orange glow
+	# Stop if too slow or too many bounces
+	if (throw_velocity.length() < MIN_THROW_SPEED or bounce_count >= MAX_BOUNCES) and not is_landing:
+		force_landing()
 
-		# Add a little bounce effect when it lands
-		if sprite:
-			var tween = create_tween()
-			tween.tween_property(sprite, "scale", base_scale * 1.4, 0.15)
-			tween.tween_property(sprite, "scale", base_scale, 0.15)
+	# Use CharacterBody2D physics for collision
+	velocity = throw_velocity
+	var collision = move_and_collide(velocity * delta)
 
-	# Move the decoy
-	global_position += throw_velocity * delta
+	if collision:
+		bounce_count += 1
+
+		# Bounce off the wall with decreasing energy
+		var bounce_velocity = throw_velocity.bounce(collision.get_normal()) * BOUNCE_FACTOR
+
+		# Reduce vertical velocity more on bounce to simulate energy loss
+		bounce_velocity.y *= 0.5
+
+		# Apply extra dampening after multiple bounces
+		if bounce_count > 1:
+			bounce_velocity *= (1.0 - (bounce_count * 0.2))
+
+		throw_velocity = bounce_velocity
+
+		# Stop immediately if bounced too many times or too slow
+		if bounce_count >= MAX_BOUNCES or throw_velocity.length() < MIN_THROW_SPEED * 1.5:
+			throw_velocity = Vector2.ZERO
+
+func force_landing() -> void:
+	"""Force the decoy to land, showing landing animation"""
+	if is_landing:
+		return
+
+	is_landing = true
+	throw_velocity = Vector2.ZERO
+	velocity = Vector2.ZERO
+	rotation = 0.0
+
+	# Disable physics collision to prevent further wall collisions
+	set_collision_layer_value(5, false)
+	set_collision_mask_value(1, false)
+
+	# Keep pickup area DISABLED - decoy is now attracting mom
+
+	# Show shiny background when attracting mom (red/orange glow)
+	if shiny_background:
+		shiny_background.visible = true
+		shiny_background.modulate = Color(1, 0.4, 0.2, 0.5)
+
+	# Add a little bounce effect when it lands
+	if sprite:
+		var tween = create_tween()
+		tween.tween_property(sprite, "scale", base_scale * 1.3, 0.12)
+		tween.tween_property(sprite, "scale", base_scale, 0.12)
+
+	print("Decoy landed after ", bounce_count, " bounces")
 
 func apply_breathing_animation(speed: float, amount: float) -> void:
 	if not sprite:
@@ -231,14 +315,14 @@ func apply_breathing_animation(speed: float, amount: float) -> void:
 
 	# Apply breathing to the base scale
 	sprite.scale = base_scale * breath_scale
-	
+
 	# Animate shiny background with breathing
 	if shiny_background:
 		# Scale slightly larger than sprite for shiny effect
 		var bg_breath = sin(breath_timer * speed - 0.3) * (amount * 1.5)
-		var bg_scale = 0.8 + bg_breath  # Smaller base scale (0.8 instead of 1.2)
+		var bg_scale = 0.8 + bg_breath
 		shiny_background.scale = Vector2(bg_scale, bg_scale)
-		
+
 		# Pulse the opacity for shiny effect
 		var alpha = 0.4 + (sin(breath_timer * speed * 1.2) * 0.25)
 		shiny_background.modulate.a = alpha
@@ -264,7 +348,7 @@ func start_disappearing() -> void:
 
 	# Create fade-out and shrink animation
 	var tween = create_tween()
-	tween.set_parallel(true)  # Run animations in parallel
+	tween.set_parallel(true)
 
 	# Fade out sprite
 	if sprite:
@@ -290,8 +374,6 @@ func deactivate_decoy() -> void:
 	# Reset scale to base
 	if sprite:
 		sprite.scale = base_scale
-
-		# Fade out or change color to show it's inactive
 		sprite.modulate = Color(0.5, 0.5, 0.5, 0.6)
 
 	# Fade out shiny background

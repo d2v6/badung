@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1261hhkmm05o"]
+[gd_scene load_steps=17 format=3 uid="uid://d1261hhkmm05o"]
 
 [ext_resource type="PackedScene" uid="uid://chpkhdookufrq" path="res://scene/systems/game_manager.tscn" id="1_w2nxe"]
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="2_n3n2a"]
 [ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player/player.tscn" id="2_nxvai"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_w2nxe"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="3_n3n2a"]
-[ext_resource type="PackedScene" path="res://scene/interactables/decoy.tscn" id="4_decoy"]
+[ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="4_decoy"]
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="5_n3n2a"]
+[ext_resource type="PackedScene" uid="uid://cejte3tcsq8o8" path="res://scene/ui/player_ui.tscn" id="6_inventory"]
 [ext_resource type="Texture2D" uid="uid://0yfphshlf20s" path="res://assets/sprites/keybooard_inputs/w_key_icon.png" id="7_ev3wj"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="7_st82b"]
 [ext_resource type="Texture2D" uid="uid://cs84wjnckkw25" path="res://assets/sprites/keybooard_inputs/a_key_icon.png" id="8_arkmt"]
@@ -48,8 +49,18 @@ position = Vector2(9.536743e-06, 6.67572e-06)
 scale = Vector2(0.011265435, 0.011265435)
 texture = ExtResource("7_st82b")
 
+[node name="Decoy2" parent="." instance=ExtResource("4_decoy")]
+position = Vector2(269, 198)
+
+[node name="Sprite2D" type="Sprite2D" parent="Decoy2"]
+position = Vector2(9.536743e-06, 6.67572e-06)
+scale = Vector2(0.011265435, 0.011265435)
+texture = ExtResource("7_st82b")
+
 [node name="Finish Zone" parent="." instance=ExtResource("5_n3n2a")]
 position = Vector2(417, 545)
+
+[node name="PlayerUI" parent="." instance=ExtResource("6_inventory")]
 
 [node name="w" type="Sprite2D" parent="."]
 z_index = 3

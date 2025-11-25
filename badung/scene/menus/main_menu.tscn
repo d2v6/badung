@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="5_vrtbl"]
 [ext_resource type="Texture2D" uid="uid://bybvnw6iqqjbv" path="res://assets/sprites/Aset Button/Home button/setting button.png" id="6_rt778"]
 [ext_resource type="Texture2D" uid="uid://b4kuc3arrvswp" path="res://assets/sprites/Aset Button/Home button/homepage-tutorial-button.png" id="7_kasrd"]
-[ext_resource type="Texture2D" uid="uid://bcysgmekrssj8" path="res://assets/sprites/logo/logo.PNG" id="8_y3l4v"]
+[ext_resource type="Texture2D" uid="uid://dtfxjq1rjx2vn" path="res://assets/sprites/logo/logo.PNG" id="8_y3l4v"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qims6"]
 load_path = "res://.godot/imported/quit hover.png-cfeb18fc6e9445de9f91049003b7ce97.ctex"
@@ -79,8 +79,8 @@ texture_pressed = SubResource("CompressedTexture2D_xnsce")
 texture_hover = SubResource("CompressedTexture2D_xnsce")
 
 [node name="Logo" type="Sprite2D" parent="."]
-position = Vector2(815.00006, 320.00003)
-scale = Vector2(0.24418671, 0.24479166)
+position = Vector2(799, 361)
+scale = Vector2(0.44142926, 0.44252285)
 texture = ExtResource("8_y3l4v")
 
 [connection signal="pressed" from="start" to="." method="_on_start_button_pressed"]
