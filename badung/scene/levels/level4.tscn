@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://4kkxdmjjbtw"]
+[gd_scene load_steps=37 format=3 uid="uid://4kkxdmjjbtw"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_7hofv"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_3ipii"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="6_n1ycs"]
 [ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="7_d556p"]
 [ext_resource type="Texture2D" uid="uid://cfc2isuwhieiy" path="res://assets/sprites/door-and-key/key_green.png" id="7_r22nm"]
-[ext_resource type="Texture2D" uid="uid://fw6vtwodump1" path="res://assets/sprites/door-and-key/key_orange.png" id="8_cip8g"]
 [ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="9_w080d"]
 [ext_resource type="Texture2D" uid="uid://c3cdbtulh75mj" path="res://assets/sprites/door-and-key/horizontal-orange.png" id="10_jl67d"]
 [ext_resource type="Texture2D" uid="uid://dbsun50da5y1h" path="res://assets/sprites/door-and-key/horizontal-teal.png" id="11_2paki"]
@@ -85,7 +84,7 @@ key_id = "B"
 [node name="Sprite2D" type="Sprite2D" parent="Keys/B"]
 position = Vector2(-4, 6)
 scale = Vector2(0.2638037, 0.2638037)
-texture = ExtResource("8_cip8g")
+texture = ExtResource("7_r22nm")
 
 [node name="Doors" type="Node" parent="."]
 

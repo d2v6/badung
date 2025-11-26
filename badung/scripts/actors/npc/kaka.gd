@@ -28,6 +28,10 @@ var player_in_sight: bool = false
 var player_reference: CharacterBody2D = null
 var spot_timer: float = 0.0
 var has_reported: bool = false
+var report_duration_timer: float = 0.0
+const REPORT_DURATION: float = 5.0  # How long to stay in report pose
+var report_cooldown_timer: float = 0.0
+const REPORT_COOLDOWN: float = 5.0  # Cooldown before can report again
 
 # Stun throw settings
 const STUN_THROW_TIME = 0.5  # Time before throwing (shorter than report time)
@@ -92,6 +96,28 @@ func _physics_process(delta: float) -> void:
 	if stun_cooldown_timer > 0:
 		stun_cooldown_timer -= delta
 	
+	# Update report cooldown
+	if report_cooldown_timer > 0:
+		report_cooldown_timer -= delta
+	
+	# If currently reporting, increment report duration timer
+	if has_reported:
+		report_duration_timer += delta
+		
+		# After 5 seconds, stop reporting and return to normal
+		if report_duration_timer >= REPORT_DURATION:
+			has_reported = false
+			report_duration_timer = 0.0
+			report_cooldown_timer = REPORT_COOLDOWN
+			stun_cooldown_timer = STUN_COOLDOWN  # Reset stun cooldown too
+			print("[Kaka] Finished reporting, resuming patrol with cooldowns active")
+			# Reset vision color to green
+			if vision_shape:
+				vision_shape.modulate = Color(0, 1, 0, 0.3)
+			# Reset animation to idle
+			if animated_sprite:
+				animated_sprite.play("idle")
+	
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
 		# Verify line of sight is still clear
@@ -107,7 +133,7 @@ func _physics_process(delta: float) -> void:
 				vision_shape.modulate = Color(0, 1, 0, 0.3)  # Back to green
 	
 	# Update spot timer and stun throw timer if player is in sight
-	if player_in_sight and player_reference and not has_reported:
+	if player_in_sight and player_reference and not has_reported and report_cooldown_timer <= 0:
 		spot_timer += delta
 		stun_throw_timer += delta
 		
@@ -125,8 +151,14 @@ func _physics_process(delta: float) -> void:
 		# If spotted for long enough, report
 		if spot_timer >= REPORT_TIME:
 			has_reported = true
+			report_duration_timer = 0.0  # Start report duration timer
 			report_player()
 			vision_shape.modulate = Color(1, 0, 0, 0.5)  # Solid red when reported
+	
+	# If already reported and still tracking player, update position to Mom
+	if has_reported and player_in_sight and player_reference:
+		if GameManager:
+			GameManager.update_reported_player_position(player_reference.global_position)
 	
 	# If reporting, don't move
 	if has_reported:
@@ -209,8 +241,8 @@ func _on_vision_body_entered(body: Node2D) -> void:
 			stun_throw_timer = 0.0
 			has_thrown_stun = false
 			print("[Kaka] Player entered vision - starting timer!")
-			# Change vision color to yellow (warning)
-			if vision_shape:
+			# Change vision color to yellow (warning) only if not on cooldown
+			if vision_shape and report_cooldown_timer <= 0:
 				vision_shape.modulate = Color(1, 1, 0, 0.3)
 		else:
 			print("[Kaka] Player in area but blocked by wall")
@@ -223,6 +255,8 @@ func _on_vision_body_exited(body: Node2D) -> void:
 			player_in_sight = false
 			player_reference = null
 			spot_timer = 0.0
+			stun_throw_timer = 0.0
+			has_thrown_stun = false
 			print("[Kaka] Player left vision!")
 			# Change vision color back to green (safe)
 			if vision_shape and not has_reported:

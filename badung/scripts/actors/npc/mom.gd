@@ -276,6 +276,12 @@ func on_player_reported(player_position: Vector2) -> void:
 	report_investigation_timer = 0.0
 	print("[Mom] Player reported at position: ", player_position)
 
+func update_reported_position(player_position: Vector2) -> void:
+	"""Called by GameManager to update reported position while Kaka still sees player"""
+	if investigating_report:
+		reported_position = player_position
+		# Don't reset timer - let it keep counting while we update position
+
 func chase_player(player: Node, _delta: float) -> void:
 	# Use A* pathfinding to chase player - update every frame for dynamic chase
 	navigation_agent.target_position = player.global_position

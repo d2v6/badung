@@ -39,7 +39,7 @@ var level_door_configs: Dictionary = {
 		'DoorKakaV': {"is_locked": false, "required_key_id": ""},
 		'DoorTamuV': {"is_locked": true, "required_key_id": ""},
 		'DoorTamuH': {"is_locked": true, "required_key_id": "B"},
-		'DoorKamarMandi': {"is_locked": true, "required_key_id": "A"},
+		'DoorKamarMandi': {"is_locked": false, "required_key_id": ""},
 		'DoorLivingV': {"is_locked": true, "required_key_id": "A"},
 	},
 	"level5": {
@@ -201,6 +201,12 @@ func on_player_reported() -> void:
 			print("GameManager: Told Mom to investigate player at position: ", player_position)
 	else:
 		push_warning("GameManager: Player not found when trying to report position")
+
+func update_reported_player_position(player_position: Vector2) -> void:
+	"""Called by Kaka to update player position while still in sight after reporting"""
+	# Call DOWN to Mom to update the reported position
+	if mom_reference and mom_reference.has_method("update_reported_position"):
+		mom_reference.update_reported_position(player_position)
 
 func on_player_caught() -> void:
 	"""Called by Mom when player is caught - signals UP from Mom"""
