@@ -277,3 +277,11 @@ func apply_stun() -> void:
 		walking_sfx.stop()
 	if running_sfx and running_sfx.playing:
 		running_sfx.stop()
+	
+	# Play got hit and dizzy sound effects
+	var sound_manager = get_tree().get_first_node_in_group("sound_manager")
+	if sound_manager:
+		sound_manager.play_got_hit_sound()
+		sound_manager.play_dizzy_sound()
+	else:
+		push_warning("[Player] SoundManager not found in scene")
