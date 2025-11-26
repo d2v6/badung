@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://bcf7cy8kf5xwn"]
 
-[ext_resource type="Script" uid="uid://yhlwosddjacr" path="res://scripts/kaka.gd" id="1_d4s0l"]
+[ext_resource type="Script" uid="uid://yhlwosddjacr" path="res://scripts/actors/npc/kaka.gd" id="1_d4s0l"]
 [ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="2_3ki67"]
 [ext_resource type="Texture2D" uid="uid://bym643byqtdxs" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/STILL DIEM/IMG_9807.PNG" id="2_ywwko"]
 [ext_resource type="Texture2D" uid="uid://8cwdilfjtck8" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-2.png" id="3_6s68g"]

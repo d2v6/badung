@@ -1,6 +1,6 @@
 [gd_scene load_steps=67 format=3 uid="uid://8no6klrt2tee"]
 
-[ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/player.gd" id="1_hjaqi"]
+[ext_resource type="Script" uid="uid://dqrof5e0s8x1l" path="res://scripts/actors/player/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://j0lwekpd8h7a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/PUYENGG/IMG_0137.PNG" id="2_2rx5w"]
 [ext_resource type="Texture2D" uid="uid://dj6v0njrv72w0" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI ADIK/STILL DIEM/IMG_9824.PNG" id="2_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="2_qbdsv"]

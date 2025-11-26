@@ -9,7 +9,7 @@ var levels = {
 	6: "res://scene/levels/level6.tscn",
 }
 
-const ButtonSoundHandler = preload("res://scripts/ui/button_sound_handler.gd")
+const ButtonSoundHandler = preload("res://scripts/systems/ui/button_sound_handler.gd")
 
 
 func _ready() -> void:

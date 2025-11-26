@@ -16,11 +16,11 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
-AudioManager="*res://scripts/audio_manager.gd"
+AudioManager="*res://scripts/systems/audio/audio_manager.gd"
 SceneTransition="*res://scene/ui/scene_transition.tscn"
 Music="*res://scene/systems/music.tscn"
 GameManager="*res://scene/systems/game_manager.tscn"
-NavigationManager="*res://scripts/navigation_manager.gd"
+NavigationManager="*res://scripts/core/navigation_manager.gd"
 UIManager="*res://scene/systems/ui_manager.tscn"
 
 [display]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://es0hoh0nd4yw"]
 
-[ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/mom.gd" id="1_pnctf"]
+[ext_resource type="Script" uid="uid://ct5xdk1aspxa" path="res://scripts/actors/npc/mom.gd" id="1_pnctf"]
 [ext_resource type="Texture2D" uid="uid://nkg3ul8qskg8" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9799.PNG" id="2_ptdu4"]
 [ext_resource type="Texture2D" uid="uid://bnu0xfsh5h3ev" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9800.PNG" id="3_r74iw"]
 [ext_resource type="Texture2D" uid="uid://dofvydhyo5nom" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI EMAK/EMAK STILL DIEM/IMG_9801.PNG" id="4_or2se"]

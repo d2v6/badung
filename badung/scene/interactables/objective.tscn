@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://bljpmixwqyh0l"]
 
-[ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/objective.gd" id="1_objective"]
+[ext_resource type="Script" uid="uid://d2a1835kfex5n" path="res://scripts/actors/interactables/objective.gd" id="1_objective"]
 [ext_resource type="Texture2D" uid="uid://dn7j3e65apiud" path="res://assets/sprites/Aset Furnitur/shiny decoy template/Untitled_Artwork.png" id="2_lu82n"]
 [ext_resource type="Texture2D" uid="uid://bbulft4v67mb2" path="res://assets/sprites/ipad.png" id="3_lu82n"]
 [ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="4_ijijc"]

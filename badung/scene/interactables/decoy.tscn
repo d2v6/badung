@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dnjn40pg0kryr"]
 
-[ext_resource type="Script" uid="uid://cnj3wfbajgkj7" path="res://scripts/decoy.gd" id="1_decoy"]
+[ext_resource type="Script" uid="uid://cnj3wfbajgkj7" path="res://scripts/actors/interactables/decoy.gd" id="1_decoy"]
 [ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="1_mes40"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1"]

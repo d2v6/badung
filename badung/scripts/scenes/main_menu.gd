@@ -10,7 +10,7 @@ var move_interval: float = 5.0  # Longer intervals between direction changes
 var initial_position: Vector2
 var initial_scale: Vector2
 
-const ButtonSoundHandler = preload("res://scripts/ui/button_sound_handler.gd")
+const ButtonSoundHandler = preload("res://scripts/systems/ui/button_sound_handler.gd")
 
 
 func _ready() -> void:
