@@ -1,17 +1,22 @@
 extends Node2D
 
 func _ready() -> void:
+	# Detect which level this is FIRST
+	var level_name = get_level_name()
+	
+	# Load door configs BEFORE anything else initializes
+	if GameManager:
+		GameManager.load_door_configs(level_name)
+		print("[StageLoader] Loaded door configs for '", level_name, "'")
+	
 	# Show UI Manager's player UI (stamina bar and inventory)
 	if UIManager:
 		UIManager.show_ui()
 	
-	# Detect which level this is
-	var level_name = get_level_name()
-	
-	# Emit stage started signal after story completes
+	# Emit stage started signal and show dialogue
 	if GameManager:
 		GameManager.stage_started.emit()
-		GameManager.start_level_with_dialogue(level_name)
+		GameManager.show_level_dialogue(level_name)
 		print("[StageLoader] Stage '", level_name, "' officially started!")
 
 func get_level_name() -> String:

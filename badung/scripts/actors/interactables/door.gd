@@ -13,7 +13,7 @@ var sfx_locked_player: AudioStreamPlayer = null
 var interaction_hint: Sprite2D = null
 
 var is_open: bool = false
-var is_locked: bool = false  # Will be set by GameManager in _ready
+var is_locked: bool = true
 var required_key_id: String = ""  # Which key opens this door
 var tween: Tween
 

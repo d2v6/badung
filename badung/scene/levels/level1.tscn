@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=27 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_fcruq"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_k7kyu"]
@@ -6,22 +6,38 @@
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="4_6idcp"]
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="5_abxrp"]
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="6_pmu4x"]
-[ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="7_rtj1j"]
-[ext_resource type="Texture2D" uid="uid://fw6vtwodump1" path="res://assets/sprites/door-and-key/key_orange.png" id="8_5yu4h"]
 [ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="8_k7kyu"]
 [ext_resource type="Texture2D" uid="uid://c3cdbtulh75mj" path="res://assets/sprites/door-and-key/horizontal-orange.png" id="8_pmu4x"]
-[ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="9_6idcp"]
 [ext_resource type="Texture2D" uid="uid://dwqhfo4pxn0at" path="res://assets/sprites/door-and-key/horizontal-opened-orange.png" id="9_rtj1j"]
-[ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="10_abxrp"]
-[ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="10_rtj1j"]
+[ext_resource type="Texture2D" uid="uid://dbsun50da5y1h" path="res://assets/sprites/door-and-key/horizontal-teal.png" id="12_owoeh"]
+[ext_resource type="Texture2D" uid="uid://chxd8cv0bl1nj" path="res://assets/sprites/door-and-key/vertikal-teal.png" id="13_hyw8f"]
+[ext_resource type="Texture2D" uid="uid://codt2qj04bycq" path="res://assets/sprites/door-and-key/horizontal-opened-teal.png" id="13_y23hw"]
+[ext_resource type="Texture2D" uid="uid://bwgq5fp1sn0l4" path="res://assets/sprites/door-and-key/horizontal-green.png" id="14_sagf7"]
+[ext_resource type="Texture2D" uid="uid://btpv3d88wr0q5" path="res://assets/sprites/door-and-key/horizontal-opened-green.png" id="15_4lvwr"]
+[ext_resource type="Texture2D" uid="uid://mbbp8bj0payr" path="res://assets/sprites/door-and-key/vertikal-opened-teal.png" id="15_y8nr6"]
+[ext_resource type="Texture2D" uid="uid://b2or6yqokrb83" path="res://assets/sprites/door-and-key/vertikal-orange.png" id="16_0ml45"]
+[ext_resource type="Texture2D" uid="uid://b85cbla2q83ho" path="res://assets/sprites/door-and-key/horizontal-blue.png" id="16_60sqm"]
+[ext_resource type="Texture2D" uid="uid://di6xy0kfi6mva" path="res://assets/sprites/door-and-key/vertikal-opened-orange.png" id="17_1foc4"]
+[ext_resource type="Texture2D" uid="uid://curp8yvqwpjtu" path="res://assets/sprites/door-and-key/horizontal-opened-blue.png" id="17_4hhyr"]
+[ext_resource type="Texture2D" uid="uid://y5heanajbrfv" path="res://assets/sprites/door-and-key/vertikal-blue.png" id="22_w00qm"]
+[ext_resource type="Texture2D" uid="uid://nq8oiwyydqs0" path="res://assets/sprites/door-and-key/vertikal-opened-blue.png" id="23_2gb2b"]
+[ext_resource type="Texture2D" uid="uid://cpp6u402qn6m3" path="res://assets/sprites/door-and-key/vertikal-green.png" id="24_bbh2d"]
+[ext_resource type="Texture2D" uid="uid://blgjurw033rme" path="res://assets/sprites/door-and-key/vertikal-opened-green.png" id="25_tly2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ml45"]
+size = Vector2(66, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1foc4"]
+size = Vector2(68, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmu4x"]
-size = Vector2(86, 90)
+size = Vector2(20, 80)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_fcruq")
 
 [node name="Background" parent="." instance=ExtResource("2_k7kyu")]
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("3_j04vv")]
 position = Vector2(602, 694)
@@ -35,62 +51,210 @@ limit_right = 1200
 limit_bottom = 920
 
 [node name="Mom" parent="." instance=ExtResource("4_6idcp")]
-position = Vector2(-59, 189)
+position = Vector2(-152, 192)
 
 [node name="Finish Zone" parent="." instance=ExtResource("5_abxrp")]
+visible = false
 position = Vector2(387, 518)
+metadata/_edit_lock_ = true
 
 [node name="Objective" parent="." instance=ExtResource("6_pmu4x")]
-position = Vector2(-32, 572)
+position = Vector2(20, 583)
 
 [node name="Keys" type="Node" parent="."]
 
-[node name="Key" parent="Keys" instance=ExtResource("10_rtj1j")]
-position = Vector2(541, 603)
-key_id = "key_orange"
-
-[node name="Sprite2D" type="Sprite2D" parent="Keys/Key"]
-position = Vector2(-2.9999998, 2.9999995)
-scale = Vector2(0.19631882, 0.19631882)
-texture = ExtResource("8_5yu4h")
-
 [node name="Doors" type="Node" parent="."]
 
-[node name="DoorA" parent="Doors" instance=ExtResource("8_k7kyu")]
+[node name="DoorAnak" parent="Doors" instance=ExtResource("8_k7kyu")]
 position = Vector2(359, 464)
-door_id = "DoorA"
+door_id = "DoorAnak"
 
-[node name="Close" type="Sprite2D" parent="Doors/DoorA"]
+[node name="Close" type="Sprite2D" parent="Doors/DoorAnak"]
 position = Vector2(-0.9999962, 1.4424324e-05)
 scale = Vector2(0.66780543, 0.6678055)
 texture = ExtResource("8_pmu4x")
 
-[node name="Open" type="Sprite2D" parent="Doors/DoorA"]
+[node name="Open" type="Sprite2D" parent="Doors/DoorAnak"]
 visible = false
 position = Vector2(-31, -4.0000076)
 scale = Vector2(0.65486777, 0.65486777)
 texture = ExtResource("9_rtj1j")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorA"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorAnak"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorA/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorAnak/StaticBody2D"]
 position = Vector2(2, 1)
+shape = SubResource("RectangleShape2D_0ml45")
+
+[node name="DoorKakaH" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-81, 317)
+door_id = "DoorKakaH"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorKakaH"]
+position = Vector2(-0.9999962, 1.4424324e-05)
+scale = Vector2(0.66780543, 0.6678055)
+texture = ExtResource("12_owoeh")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorKakaH"]
+visible = false
+position = Vector2(-30.33976, -2.1267495)
+scale = Vector2(0.67857987, 0.67857987)
+texture = ExtResource("13_y23hw")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorKakaH"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorKakaH/StaticBody2D"]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_1foc4")
+
+[node name="DoorTamuH" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-817, 372)
+door_id = "DoorTamuH"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorTamuH"]
+position = Vector2(2.2024302, 2.6216931)
+scale = Vector2(0.7009912, 0.7009913)
+texture = ExtResource("14_sagf7")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorTamuH"]
+visible = false
+position = Vector2(-30.33976, -2.1267495)
+scale = Vector2(0.67857987, 0.67857987)
+texture = ExtResource("15_4lvwr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorTamuH"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorTamuH/StaticBody2D"]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_1foc4")
+
+[node name="DoorLivingH" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-742, 159)
+door_id = "DoorLivingH"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorLivingH"]
+position = Vector2(2.2024302, 2.6216931)
+scale = Vector2(0.7009912, 0.7009913)
+texture = ExtResource("16_60sqm")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorLivingH"]
+visible = false
+position = Vector2(-30.33976, -2.1267495)
+scale = Vector2(0.67857987, 0.67857987)
+texture = ExtResource("17_4hhyr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorLivingH"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorLivingH/StaticBody2D"]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_1foc4")
+
+[node name="DoorKakaV" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-180, 638)
+door_id = "DoorKakaV"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorKakaV"]
+position = Vector2(-2.9999928, 8.000015)
+scale = Vector2(0.6947274, 0.69472736)
+texture = ExtResource("13_hyw8f")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorKakaV"]
+visible = false
+position = Vector2(-1.9999924, 39.000008)
+scale = Vector2(0.7398049, 0.7398049)
+texture = ExtResource("15_y8nr6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorKakaV"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorKakaV/StaticBody2D"]
+position = Vector2(-1, 8)
 shape = SubResource("RectangleShape2D_pmu4x")
 
-[node name="Decoy" parent="." instance=ExtResource("9_6idcp")]
-position = Vector2(436, 318)
+[node name="DoorTamuV" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-416, 657)
+door_id = "DoorTamuV"
 
-[node name="Sprite2D" type="Sprite2D" parent="Decoy"]
-position = Vector2(9.536743e-06, 6.67572e-06)
-scale = Vector2(0.011265435, 0.011265435)
-texture = ExtResource("10_abxrp")
+[node name="Close" type="Sprite2D" parent="Doors/DoorTamuV"]
+position = Vector2(-3.9999928, 11.000015)
+scale = Vector2(0.6947274, 0.69472736)
+texture = ExtResource("16_0ml45")
 
-[node name="UI" type="Node" parent="."]
-
-[node name="PauseOverlay" parent="UI" instance=ExtResource("7_rtj1j")]
+[node name="Open" type="Sprite2D" parent="Doors/DoorTamuV"]
 visible = false
+position = Vector2(-1.9999924, 39.000008)
+scale = Vector2(0.7398049, 0.7398049)
+texture = ExtResource("17_1foc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorTamuV"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorTamuV/StaticBody2D"]
+position = Vector2(-1, 8)
+shape = SubResource("RectangleShape2D_pmu4x")
+
+[node name="DoorLivingV" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(-414, -329)
+door_id = "DoorLivingV"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorLivingV"]
+position = Vector2(-3.9999928, 11.000015)
+scale = Vector2(0.6947274, 0.69472736)
+texture = ExtResource("13_hyw8f")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorLivingV"]
+visible = false
+position = Vector2(-1.9999924, 39.000008)
+scale = Vector2(0.7398049, 0.7398049)
+texture = ExtResource("15_y8nr6")
+
+[node name="DoorLivingV2" type="StaticBody2D" parent="Doors/DoorLivingV"]
+
+[node name="DoorLivingV" type="CollisionShape2D" parent="Doors/DoorLivingV/DoorLivingV2"]
+position = Vector2(-1, 8)
+shape = SubResource("RectangleShape2D_pmu4x")
+
+[node name="DoorEmak" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(551, -455)
+door_id = "DoorEmak"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorEmak"]
+position = Vector2(-3.9999928, 11.000015)
+scale = Vector2(0.6947274, 0.69472736)
+texture = ExtResource("22_w00qm")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorEmak"]
+visible = false
+position = Vector2(-1.9999924, 39.000008)
+scale = Vector2(0.7398049, 0.7398049)
+texture = ExtResource("23_2gb2b")
+
+[node name="DoorLivingV2" type="StaticBody2D" parent="Doors/DoorEmak"]
+
+[node name="DoorLivingV" type="CollisionShape2D" parent="Doors/DoorEmak/DoorLivingV2"]
+position = Vector2(-1, 8)
+shape = SubResource("RectangleShape2D_pmu4x")
+
+[node name="DoorKamarMandi" parent="Doors" instance=ExtResource("8_k7kyu")]
+position = Vector2(755, -17)
+door_id = "DoorKamarMandi"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorKamarMandi"]
+position = Vector2(-3.9999928, 6)
+scale = Vector2(0.6947274, 0.69472736)
+texture = ExtResource("24_bbh2d")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorKamarMandi"]
+visible = false
+position = Vector2(-1.9999924, 39.000008)
+scale = Vector2(0.7398049, 0.7398049)
+texture = ExtResource("25_tly2w")
+
+[node name="DoorLivingV2" type="StaticBody2D" parent="Doors/DoorKamarMandi"]
+
+[node name="DoorLivingV" type="CollisionShape2D" parent="Doors/DoorKamarMandi/DoorLivingV2"]
+position = Vector2(-1, 8)
+shape = SubResource("RectangleShape2D_pmu4x")
 
 [node name="PatrolPoints" type="Node2D" parent="."]
 
 [node name="A" type="Marker2D" parent="PatrolPoints"]
-position = Vector2(-207, 199)
+position = Vector2(-275, 207)

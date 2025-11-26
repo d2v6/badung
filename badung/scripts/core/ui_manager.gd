@@ -7,6 +7,8 @@ extends CanvasLayer
 @onready var decoy_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/DecoySlot/ItemIcon
 @onready var quit_button: TextureButton = $PlayerUI/QuitButton
 
+var pause_overlay_instance: CanvasLayer = null
+
 func _ready() -> void:
 	# Initialize UI
 	update_objective_slot(false)
@@ -19,7 +21,18 @@ func _ready() -> void:
 	
 	# Hide UI by default (will be shown when entering levels)
 	hide_ui()
+	
+	# Create pause overlay instance after a frame to ensure everything is ready
+	call_deferred("_create_pause_overlay")
+	
 	print("[UIManager] Initialized successfully")
+
+func _create_pause_overlay() -> void:
+	"""Create the pause overlay after the scene tree is fully ready"""
+	var PAUSE_OVERLAY = preload("res://scene/ui/pause_overlay.tscn")
+	pause_overlay_instance = PAUSE_OVERLAY.instantiate()
+	get_tree().root.add_child(pause_overlay_instance)
+	print("[UIManager] Pause overlay created and added to scene")
 
 func show_dialogue(dialogues: Array) -> void:
 	"""Show dialogue overlay with the given dialogue sequence"""

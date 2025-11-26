@@ -10,6 +10,27 @@ var mom_reference: CharacterBody2D = null
 # Level progression tracking
 var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
 
+# Current level's door configuration
+var door_configs: Dictionary = {}
+
+# Door configurations per level
+var level_door_configs: Dictionary = {
+	"level1": {
+		'DoorAnak': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
+	},
+	"level2": {
+	},
+	"level3": {
+	},
+	"level4": {
+	},
+	"level5": {
+	},
+		"level6": {
+	},
+}
+
 # Level dialogue data
 var level_dialogues: Dictionary = {
 	"level1": [
@@ -41,13 +62,6 @@ var level_dialogues: Dictionary = {
 	],
 }
 
-# Door configuration: door_id -> {is_locked: bool, required_key_id: String}
-var door_configs: Dictionary = {
-	"DoorA": {"is_locked": true, "required_key_id": "key_orange"},
-	# Add more doors here as needed
-	# "DoorB": {"is_locked": false, "required_key_id": ""},
-}
-
 # Result manager state
 var is_processing_result: bool = false  # Flag to prevent multiple result handling
 
@@ -67,9 +81,35 @@ func _on_node_added(node: Node) -> void:
 	# When the root node changes, it means a new scene was loaded
 	if node == get_tree().current_scene:
 		reset()
+		# Load door configs immediately based on scene name
+		_load_configs_for_current_scene()
 		# Try to find Mom in the new scene
 		call_deferred("_find_mom")
 		print("GameManager: New scene detected, resetting state")
+
+func _load_configs_for_current_scene() -> void:
+	"""Detect and load door configs for the current scene"""
+	var scene_path = get_tree().current_scene.scene_file_path
+	var level_name = ""
+	
+	# Extract level name from scene path
+	if "level1" in scene_path:
+		level_name = "level1"
+	elif "level2" in scene_path:
+		level_name = "level2"
+	elif "level3" in scene_path:
+		level_name = "level3"
+	elif "level4" in scene_path:
+		level_name = "level4"
+	elif "level5" in scene_path:
+		level_name = "level5"
+	elif "level6" in scene_path:
+		level_name = "level6"
+	elif "tutorial" in scene_path:
+		level_name = "tutorial"
+	
+	if level_name != "":
+		load_door_configs(level_name)
 
 func _find_mom() -> void:
 	"""Find and register Mom node in the current scene"""
@@ -91,6 +131,23 @@ func reset() -> void:
 
 func start_level_with_dialogue(level_name: String) -> void:
 	"""Start a level by showing its intro dialogue first"""
+	# Load the door configuration for this level
+	load_door_configs(level_name)
+	
+	# Show dialogue
+	show_level_dialogue(level_name)
+
+func load_door_configs(level_name: String) -> void:
+	"""Load door configuration for a specific level"""
+	if level_name in level_door_configs:
+		door_configs = level_door_configs[level_name]
+		print("[GameManager] Loaded door configs for level '", level_name, "': ", door_configs)
+	else:
+		door_configs = {}
+		print("[GameManager] No door configs for level '", level_name, "'")
+
+func show_level_dialogue(level_name: String) -> void:
+	"""Show the intro dialogue for a level"""
 	var dialogues = level_dialogues.get(level_name, [])
 	
 	if dialogues.size() > 0:
@@ -167,8 +224,9 @@ func get_door_config(door_id: String) -> Dictionary:
 	if door_id in door_configs:
 		return door_configs[door_id]
 	else:
-		# Return default config for unknown doors
-		return {"is_locked": false, "required_key_id": ""}
+		# Return default config for unknown doors - locked by default
+		print("[GameManager] Door '", door_id, "' not found in config, defaulting to locked")
+		return {"is_locked": true, "required_key_id": ""}
 
 func on_key_collected(key_id: String) -> void:
 	"""Called when player picks up a key - signals UP from Player"""
