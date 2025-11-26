@@ -10,6 +10,7 @@ var open_sprite: Sprite2D = null
 var collision_body: StaticBody2D = null
 var sfx_player: AudioStreamPlayer = null
 var sfx_locked_player: AudioStreamPlayer = null
+var interaction_hint: Sprite2D = null
 
 var is_open: bool = false
 var is_locked: bool = false  # Will be set by GameManager in _ready
@@ -24,6 +25,8 @@ func _ready() -> void:
 				close_sprite = child
 			elif child.name == "Open":
 				open_sprite = child
+			elif child.name == "InteractionHint":
+				interaction_hint = child
 		elif child is StaticBody2D:
 			collision_body = child
 	
@@ -46,6 +49,10 @@ func _ready() -> void:
 		close_sprite.visible = true
 	if open_sprite:
 		open_sprite.visible = false
+	
+	# Hide interaction hint initially
+	if interaction_hint:
+		interaction_hint.visible = false
 	
 	# Show lock sprite if door is locked
 	update_lock_visibility()
@@ -150,7 +157,13 @@ func _on_body_entered(body_node: Node2D) -> void:
 	print("entered")
 	if body_node.name == "Player" or body_node.has_method("register_interactable"):
 		body_node.register_interactable(self)
+		# Show interaction hint
+		if interaction_hint:
+			interaction_hint.visible = true
 
 func _on_body_exited(body_node: Node2D) -> void:
 	if body_node.name == "Player" or body_node.has_method("unregister_interactable"):
 		body_node.unregister_interactable(self)
+		# Hide interaction hint
+		if interaction_hint:
+			interaction_hint.visible = false
