@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://w2iooaxir5ac"]
 
 [ext_resource type="Script" uid="uid://dskxcjq7wl25h" path="res://scripts/systems/ui/game_over_overlay.gd" id="1_a3h4v"]
-[ext_resource type="Texture2D" uid="uid://donm8dbdt5o3e" path="res://assets/sprites/gagal.png" id="2_ssmgp"]
 [ext_resource type="Texture2D" uid="uid://vg2oe11t2g2t" path="res://assets/sprites/game_results/winning_button/lanjut-button.png" id="3_lanjut"]
+[ext_resource type="Texture2D" uid="uid://d0fw4lulw2r34" path="res://assets/sprites/game_results/losing_bg.png" id="3_si625"]
 [ext_resource type="Texture2D" uid="uid://oxvm1jxw3wa0" path="res://assets/sprites/game_results/winning_button/lanjut-button-hover.png" id="4_lanjut_hover"]
 [ext_resource type="Texture2D" uid="uid://cd2apdoheomy4" path="res://assets/sprites/game_results/winning_button/keluar-button.png" id="5_keluar"]
 [ext_resource type="Texture2D" uid="uid://dis5p2xsb7c18" path="res://assets/sprites/game_results/winning_button/keluar-button-hover.png" id="6_keluar_hover"]
@@ -42,38 +42,38 @@ color = Color(0, 0, 0, 0.7)
 [node name="Berhasil" type="Sprite2D" parent="Control"]
 visible = false
 position = Vector2(794, 443)
-scale = Vector2(0.41666666, 0.4166667)
+scale = Vector2(0.8333332, 0.83333325)
 texture = ExtResource("10_fb75m")
 
 [node name="Gagal" type="Sprite2D" parent="Control"]
 visible = false
-position = Vector2(560, 360)
-scale = Vector2(0.55, 0.55)
-texture = ExtResource("2_ssmgp")
+position = Vector2(793.94446, 442.5)
+scale = Vector2(0.8333912, 0.83240736)
+texture = ExtResource("3_si625")
 
 [node name="Keluar" type="TextureButton" parent="."]
-offset_left = 624.0
-offset_top = 362.0
-offset_right = 959.0
-offset_bottom = 492.0
+offset_left = 1104.0
+offset_top = 296.0
+offset_right = 1439.0
+offset_bottom = 426.0
 texture_normal = ExtResource("5_keluar")
 texture_pressed = ExtResource("6_keluar_hover")
 texture_hover = ExtResource("6_keluar_hover")
 
 [node name="Ulangi" type="TextureButton" parent="."]
-offset_left = 626.0
-offset_top = 496.0
-offset_right = 959.0
-offset_bottom = 625.0
+offset_left = 1106.0
+offset_top = 430.0
+offset_right = 1439.0
+offset_bottom = 559.0
 texture_normal = ExtResource("7_ulangi")
 texture_pressed = ExtResource("8_ulangi_hover")
 texture_hover = ExtResource("8_ulangi_hover")
 
 [node name="Lanjut" type="TextureButton" parent="."]
-offset_left = 626.0
-offset_top = 626.0
-offset_right = 957.0
-offset_bottom = 754.0
+offset_left = 1106.0
+offset_top = 560.0
+offset_right = 1437.0
+offset_bottom = 688.0
 texture_normal = ExtResource("3_lanjut")
 texture_pressed = ExtResource("4_lanjut_hover")
 texture_hover = ExtResource("4_lanjut_hover")

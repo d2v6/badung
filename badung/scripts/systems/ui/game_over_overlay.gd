@@ -101,9 +101,15 @@ func _on_lanjut_pressed() -> void:
 	_disable_all_buttons()
 	_reset_music_before_transition()
 	close_overlay()
-	print("[GameOverOverlay] Transitioning to winning screen...")
+	
+	# Get next level path from GameManager
+	var next_level_path = "res://scene/game_results/winning_bg.tscn"
+	if GameManager and GameManager.has_method("get_next_level_path"):
+		next_level_path = GameManager.get_next_level_path()
+	
+	print("[GameOverOverlay] Transitioning to: ", next_level_path)
 	# Keep game paused during transition
-	SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
+	SceneTransition.change_scene(next_level_path)
 	# Unpause will happen when scene changes
 	get_tree().paused = false
 

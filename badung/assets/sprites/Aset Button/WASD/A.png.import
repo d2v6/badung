@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf1si83u4rnl8"
-path="res://.godot/imported/A.svg-110e304b5f1f47683a32a4c917a82fc9.ctex"
+uid="uid://cvlrkdwmuvt21"
+path="res://.godot/imported/A.png-2dcaaa930cb350307eb2d0fcbee6a6e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/WASD/A.svg"
-dest_files=["res://.godot/imported/A.svg-110e304b5f1f47683a32a4c917a82fc9.ctex"]
+source_file="res://assets/sprites/Aset Button/WASD/A.png"
+dest_files=["res://.godot/imported/A.png-2dcaaa930cb350307eb2d0fcbee6a6e3.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

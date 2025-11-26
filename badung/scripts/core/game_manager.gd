@@ -20,6 +20,10 @@ var level_door_configs: Dictionary = {
 		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
 	},
 	"level2": {
+		'DoorAnak': {"is_locked": true, "required_key_id": "A"},
+		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaV': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuV': {"is_locked": true, "required_key_id": "B"},
 	},
 	"level3": {
 	},
@@ -256,6 +260,20 @@ func handle_game_result(is_success: bool) -> void:
 	is_processing_result = true
 	print("[GameManager] Handling game result: is_success=", is_success)
 	
+	# Unlock next level if success
+	if is_success:
+		var scene_path = get_tree().current_scene.scene_file_path
+		if "level1" in scene_path:
+			unlock_level(2)
+		elif "level2" in scene_path:
+			unlock_level(3)
+		elif "level3" in scene_path:
+			unlock_level(4)
+		elif "level4" in scene_path:
+			unlock_level(5)
+		elif "level5" in scene_path:
+			unlock_level(6)
+	
 	# Call DOWN to UIManager to show game over overlay
 	if UIManager and UIManager.has_method("show_game_over"):
 		UIManager.show_game_over(is_success)
@@ -316,3 +334,20 @@ func get_current_level() -> String:
 	if scene:
 		return scene.name.to_lower()
 	return ""
+
+func get_next_level_path() -> String:
+	"""Get the path to the next level based on current level"""
+	var scene_path = get_tree().current_scene.scene_file_path
+	
+	if "level1" in scene_path:
+		return "res://scene/levels/level2.tscn"
+	elif "level2" in scene_path:
+		return "res://scene/levels/level3.tscn"
+	elif "level3" in scene_path:
+		return "res://scene/levels/level4.tscn"
+	elif "level4" in scene_path:
+		return "res://scene/levels/level5.tscn"
+	elif "level5" in scene_path:
+		return "res://scene/levels/level6.tscn"
+	else:
+		return "res://scene/menu/main_menu.tscn"
