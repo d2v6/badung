@@ -25,25 +25,6 @@ func _ready() -> void:
 		GameManager.player_reported.connect(_on_player_reported)
 		GameManager.stage_started.connect(_on_stage_started)
 		print("[MusicManager] Connected to GameManager")
-	
-	# Connect to mom's chasing state through periodic checks
-	call_deferred("_setup_mom_monitoring")
-
-func _setup_mom_monitoring() -> void:
-	# Monitor mom's state for chasing
-	while is_inside_tree():
-		await get_tree().process_frame
-		_check_mom_state()
-
-func _check_mom_state() -> void:
-	var mom = get_tree().get_first_node_in_group("mom")
-	if mom:
-		if mom.is_chasing or mom.hunt_mode:
-			if current_state != "danger":
-				switch_to_danger_music()
-		else:
-			if current_state == "danger":
-				switch_to_game_music()
 
 func switch_to_game_music() -> void:
 	"""Switch from loop to game background music"""

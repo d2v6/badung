@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const ButtonSoundHandler = preload("res://scripts/systems/ui/button_sound_handler.gd")
+
 @onready var overlay_container: Control = $Control
 @onready var berhasil_sprite: Sprite2D = $Control/Berhasil
 @onready var gagal_sprite: Sprite2D = $Control/Gagal
@@ -13,7 +15,6 @@ enum GameOverType {
 }
 
 var game_over_type: GameOverType = GameOverType.FAILURE
-var can_close: bool = false  # Prevent immediate closing
 var is_success: bool = false
 
 func _ready() -> void:
@@ -23,21 +24,29 @@ func _ready() -> void:
 	# Add to group for easy access
 	add_to_group("game_over_overlay")
 	
-	# Connect button signals with ONE_SHOT to prevent multiple presses
+	# Add button sounds to all buttons
+	_add_button_sounds(keluar_button)
+	_add_button_sounds(ulangi_button)
+	_add_button_sounds(lanjut_button)
+	
+	# Connect button signals - removed ONE_SHOT to allow repeated use
 	if keluar_button:
-		keluar_button.pressed.connect(_on_keluar_pressed, CONNECT_ONE_SHOT)
+		keluar_button.pressed.connect(_on_keluar_pressed)
 	if ulangi_button:
-		ulangi_button.pressed.connect(_on_ulangi_pressed, CONNECT_ONE_SHOT)
+		ulangi_button.pressed.connect(_on_ulangi_pressed)
 	if lanjut_button:
-		lanjut_button.pressed.connect(_on_lanjut_pressed, CONNECT_ONE_SHOT)
+		lanjut_button.pressed.connect(_on_lanjut_pressed)
+
+func _add_button_sounds(button: Node) -> void:
+	"""Add sound effects to any button"""
+	if button:
+		var sound_handler = ButtonSoundHandler.new()
+		button.add_child(sound_handler)
 
 func show_game_over(type: GameOverType = GameOverType.FAILURE) -> void:
 	game_over_type = type
 	is_success = (type == GameOverType.SUCCESS)
 	visible = true
-	
-	# Wait for node to be added to tree (important when instantiated dynamically)
-	await tree_entered
 	
 	# Show appropriate sprite based on game over type
 	if type == GameOverType.SUCCESS:
@@ -50,77 +59,49 @@ func show_game_over(type: GameOverType = GameOverType.FAILURE) -> void:
 	# Ensure the game is paused
 	get_tree().paused = true
 	
-	# Keep music/audio playing by setting Music node to always process
+	# Keep music/audio playing by setting audio nodes to always process
 	var music_node = get_node_or_null("/root/Music")
 	if music_node:
 		music_node.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# Keep audio manager playing
 	var audio_manager = get_node_or_null("/root/AudioManager")
 	if audio_manager:
 		audio_manager.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# Immediately allow buttons to be clicked (no fade-in delay)
-	can_close = true
+	var sound_manager = get_node_or_null("/root/SoundManager")
+	if sound_manager:
+		sound_manager.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _on_keluar_pressed() -> void:
 	"""Handle Keluar (Exit) button - go to main menu"""
 	print("[GameOverOverlay] Keluar pressed - returning to main menu")
-	if not can_close:
-		print("[GameOverOverlay] Ignoring button press - already processing")
-		return
-	
-	can_close = false
+	_disable_all_buttons()
 	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame  # Give overlay time to hide
+	await get_tree().process_frame
 	SceneTransition.change_scene("res://scene/menus/main_menu.tscn")
 
 func _on_ulangi_pressed() -> void:
 	"""Handle Ulangi (Retry) button - restart level"""
 	print("[GameOverOverlay] Ulangi pressed - restarting level")
-	if not can_close:
-		print("[GameOverOverlay] Ignoring button press - already processing")
-		return
-	
-	can_close = false
+	_disable_all_buttons()
 	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame  # Give overlay time to hide
+	await get_tree().process_frame
 	get_tree().reload_current_scene()
 
 func _on_lanjut_pressed() -> void:
-	"""Handle Lanjut (Continue) button - proceed based on result type"""
-	print("[GameOverOverlay] Lanjut pressed - is_success=", is_success)
-	if not can_close:
-		print("[GameOverOverlay] Ignoring button press - already processing")
-		return
-	
-	can_close = false
+	"""Handle Lanjut (Continue/Next) button - go to next level or winning screen"""
+	print("[GameOverOverlay] Lanjut pressed - going to next level")
+	_disable_all_buttons()
 	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame  # Give overlay time to hide
-	
-	if is_success:
-		# On success, go to winning screen
-		print("[GameOverOverlay] Transitioning to winning screen...")
-		SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
-	else:
-		# On failure, restart the level
-		print("[GameOverOverlay] Restarting level due to failure...")
-		get_tree().reload_current_scene()
-
-func _input(event: InputEvent) -> void:
-	# Allow any key to also close/dismiss (optional fallback)
-	if not can_close:
-		return
-		
-	if visible and (event is InputEventKey or event is InputEventMouseButton or event is InputEventJoypadButton):
-		if event.is_pressed() and event is not InputEventMouseButton:  # Don't trigger on mouse clicks (buttons handle those)
-			_on_lanjut_pressed()
+	await get_tree().process_frame
+	print("[GameOverOverlay] Transitioning to winning screen...")
+	SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
 
 func _reset_music_before_transition() -> void:
 	"""Reset music to lobby/main menu music before transitioning"""
@@ -128,6 +109,15 @@ func _reset_music_before_transition() -> void:
 	if music_manager and music_manager.has_method("switch_to_loop_music"):
 		music_manager.switch_to_loop_music()
 		print("[GameOverOverlay] Reset music to loop")
+
+func _disable_all_buttons() -> void:
+	"""Disable all buttons to prevent multiple clicks"""
+	if keluar_button:
+		keluar_button.disabled = true
+	if ulangi_button:
+		ulangi_button.disabled = true
+	if lanjut_button:
+		lanjut_button.disabled = true
 
 func close_overlay() -> void:
 	# Hide the overlay
