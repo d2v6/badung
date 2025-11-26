@@ -11,6 +11,7 @@ var collision_body: StaticBody2D = null
 var sfx_player: AudioStreamPlayer = null
 var sfx_locked_player: AudioStreamPlayer = null
 var interaction_hint: Sprite2D = null
+var light_occluder: LightOccluder2D = null
 
 var is_open: bool = false
 var is_locked: bool = true
@@ -29,6 +30,8 @@ func _ready() -> void:
 				interaction_hint = child
 		elif child is StaticBody2D:
 			collision_body = child
+		elif child is LightOccluder2D:
+			light_occluder = child
 	
 	# Connect signals via code for safety
 	interaction_area.body_entered.connect(_on_body_entered)
@@ -141,6 +144,9 @@ func toggle_door() -> void:
 		if collision_body:
 			collision_body.set_collision_layer_value(1, false)
 			collision_body.set_collision_mask_value(1, false)
+		# Hide light occluder when door is open
+		if light_occluder:
+			light_occluder.visible = false
 	else:
 		print("Door Closed")
 		# Show close sprite, hide open sprite
@@ -152,6 +158,9 @@ func toggle_door() -> void:
 		if collision_body:
 			collision_body.set_collision_layer_value(1, true)
 			collision_body.set_collision_mask_value(1, true)
+		# Show light occluder when door is closed
+		if light_occluder:
+			light_occluder.visible = true
 
 # --- Signal Callbacks ---
 

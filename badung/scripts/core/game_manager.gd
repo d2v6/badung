@@ -8,7 +8,7 @@ var collected_keys: Array[String] = []  # Track which keys have been collected
 var mom_reference: CharacterBody2D = null
 
 # Level progression tracking
-var highest_level_unlocked: int = 4  # Level 1 always unlocked at start
+var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
 
 # Current level's door configuration
 var door_configs: Dictionary = {}
@@ -43,8 +43,25 @@ var level_door_configs: Dictionary = {
 		'DoorLivingV': {"is_locked": true, "required_key_id": "A"},
 	},
 	"level5": {
+		'DoorAnak': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaV': {"is_locked": true, "required_key_id": "A"},
+		'DoorTamuV': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuH': {"is_locked": false, "required_key_id": ""},
+		'DoorKamarMandi': {"is_locked": false, "required_key_id": ""},
+		'DoorLivingV': {"is_locked": true, "required_key_id": ""},
+		'DoorLivingH': {"is_locked": true, "required_key_id": "B"},
+		'DoorEmak': {"is_locked": true, "required_key_id": "C"},
 	},
 		"level6": {
+		'DoorAnak': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaV': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuV': {"is_locked": true, "required_key_id": "A"},
+		'DoorTamuH': {"is_locked": false, "required_key_id": ""},
+		'DoorKamarMandi': {"is_locked": false, "required_key_id": ""},
+		'DoorLivingV': {"is_locked": true, "required_key_id": ""},
+		'DoorLivingH': {"is_locked": true, "required_key_id": "C"},
+		'DoorEmak': {"is_locked": true, "required_key_id": "B"},
 	},
 }
 

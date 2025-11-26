@@ -9,6 +9,10 @@ func _ready() -> void:
 		GameManager.load_door_configs(level_name)
 		print("[StageLoader] Loaded door configs for '", level_name, "'")
 	
+	# Setup lighting for level 6
+	if level_name == "level6":
+		setup_level6_lighting()
+	
 	# Show UI Manager's player UI (stamina bar and inventory)
 	if UIManager:
 		UIManager.show_ui()
@@ -28,6 +32,14 @@ func get_level_name() -> String:
 		return "level1"
 	elif "level2" in scene_name:
 		return "level2"
+	elif "level3" in scene_name:
+		return "level3"
+	elif "level4" in scene_name:
+		return "level4"
+	elif "level5" in scene_name:
+		return "level5"
+	elif "level6" in scene_name:
+		return "level6"
 	elif "tutorial" in scene_name:
 		return "tutorial"
 	else:
@@ -41,3 +53,32 @@ func _exit_tree() -> void:
 	# Reset UI when leaving the level
 	if UIManager:
 		UIManager.reset_ui()
+
+func setup_level6_lighting() -> void:
+	"""Enable lighting system for level 6"""
+	print("[StageLoader] Setting up lighting for level 6...")
+	
+	# Enable player's line of sight
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		var line_of_sight = player.get_node_or_null("LineOfSight")
+		if line_of_sight:
+			line_of_sight.visible = true
+			print("[StageLoader] Enabled player LineOfSight")
+	
+	# Enable canvas modulate and light occlusions in background
+	var background = get_tree().get_first_node_in_group("background")
+	if background:
+		# Enable canvas modulate
+		var canvas_modulate = background.get_node_or_null("CanvasModulate")
+		if canvas_modulate:
+			canvas_modulate.visible = true
+			print("[StageLoader] Enabled CanvasModulate")
+		
+		# Enable all light occlusions
+		var light_occlusions = background.get_node_or_null("LightOcclusions")
+		if light_occlusions:
+			for child in light_occlusions.get_children():
+				if child is LightOccluder2D:
+					child.visible = true
+			print("[StageLoader] Enabled light occlusions")

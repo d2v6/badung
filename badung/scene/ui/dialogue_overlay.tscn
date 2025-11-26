@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://b5xypkc8otld6" path="res://assets/sprites/dialogue/emak.png" id="2_6c2s7"]
 [ext_resource type="Texture2D" uid="uid://buk4qys07o61h" path="res://assets/sprites/dialogue/textbar.png" id="3_4b4v1"]
 [ext_resource type="FontFile" uid="uid://boaocjh7xh734" path="res://assets/fonts/MochiyPopOne-Regular.ttf" id="4_4b4v1"]
-[ext_resource type="AudioStream" uid="uid://dko6kxl34pwqg" path="res://assets/sfx/adek-gibberish.mp3" id="6_adek"]
-[ext_resource type="AudioStream" uid="uid://c5nlqkptmajk1" path="res://assets/sfx/mom-dialog-gibberish.mp3" id="7_emak"]
+[ext_resource type="AudioStream" uid="uid://btylp8nk028yl" path="res://assets/sfx/adek-gibberish.mp3" id="6_adek"]
+[ext_resource type="AudioStream" uid="uid://dac8gp655qino" path="res://assets/sfx/mom-dialog-gibberish.mp3" id="7_emak"]
 
 [sub_resource type="Gradient" id="Gradient_6c2s7"]
 colors = PackedColorArray(0.2, 0.17254902, 0.48235294, 0.5882353, 0.2, 0.17254902, 0.48235294, 0.5882353)
@@ -74,13 +74,13 @@ text = "[ tekan SPACE untuk lanjut]"
 
 [node name="Dialogue" type="RichTextLabel" parent="Control"]
 layout_mode = 0
-offset_left = 120.0
-offset_top = 644.0
-offset_right = 1477.0
-offset_bottom = 746.0
+offset_left = 115.0
+offset_top = 633.0
+offset_right = 1472.0
+offset_bottom = 735.0
 theme_override_colors/default_color = Color(0.19607843, 0.1764706, 0.5294118, 1)
 theme_override_fonts/normal_font = ExtResource("4_4b4v1")
-theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/normal_font_size = 32
 text = "aasda"
 
 [node name="AnakSFX" type="AudioStreamPlayer" parent="Control"]

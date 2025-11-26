@@ -40,6 +40,8 @@ var stun_throw_timer: float = 0.0
 var has_thrown_stun: bool = false
 var stun_cooldown_timer: float = 0.0
 var is_playing_lempar: bool = false
+var lempar_animation_timer: float = 0.0
+const LEMPAR_ANIMATION_DURATION: float = 0.5  # Duration of lempar animation
 var stun_projectile_scene = preload("res://scene/interactables/stun_projectile.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -78,10 +80,6 @@ func _ready() -> void:
 		# Make vision area visible with default color (green for not detecting)
 		if vision_shape:
 			vision_shape.modulate = Color(0, 1, 0, 0.3)  # Green with transparency
-	
-	# Connect animation finished signal
-	if animated_sprite:
-		animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func _setup_navigation() -> void:
 	# Wait for navigation to be ready
@@ -100,6 +98,15 @@ func _physics_process(delta: float) -> void:
 	if report_cooldown_timer > 0:
 		report_cooldown_timer -= delta
 	
+	# Update lempar animation timer
+	if is_playing_lempar:
+		lempar_animation_timer -= delta
+		if lempar_animation_timer <= 0:
+			is_playing_lempar = false
+			if animated_sprite:
+				animated_sprite.play("idle")
+			print("[Kaka] Lempar animation timer finished, returning to idle")
+	
 	# If currently reporting, increment report duration timer
 	if has_reported:
 		report_duration_timer += delta
@@ -114,9 +121,6 @@ func _physics_process(delta: float) -> void:
 			# Reset vision color to green
 			if vision_shape:
 				vision_shape.modulate = Color(0, 1, 0, 0.3)
-			# Reset animation to idle
-			if animated_sprite:
-				animated_sprite.play("idle")
 	
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
@@ -273,6 +277,7 @@ func throw_stun_projectile() -> void:
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("lempar"):
 		animated_sprite.play("lempar")
 		is_playing_lempar = true
+		lempar_animation_timer = LEMPAR_ANIMATION_DURATION
 		print("[Kaka] Playing lempar animation")
 	
 	# Instantiate stun projectile
@@ -382,10 +387,3 @@ func update_animation() -> void:
 		# Play idle animation when stopped
 		if animated_sprite.animation != "idle" and animated_sprite.animation != "tunjuk":
 			animated_sprite.play("idle")
-
-func _on_animation_finished() -> void:
-	"""Called when any animation finishes"""
-	if animated_sprite and animated_sprite.animation == "lempar":
-		is_playing_lempar = false
-		animated_sprite.play("idle")
-		print("[Kaka] Lempar animation finished, returning to idle")

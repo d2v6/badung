@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://qcdy8lpbr3fq"]
+[gd_scene load_steps=38 format=3 uid="uid://4kkxdmjjbtw"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_n5s75"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_s7iqn"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="4_ojrxv"]
 [ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="5_mgojm"]
 [ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="6_147nw"]
-[ext_resource type="Texture2D" uid="uid://cfc2isuwhieiy" path="res://assets/sprites/door-and-key/key_green.png" id="7_fy0ye"]
+[ext_resource type="Texture2D" uid="uid://s7qaa2w2ueme" path="res://assets/sprites/door-and-key/key_teal.png" id="7_s7iqn"]
 [ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="8_aq4su"]
+[ext_resource type="Texture2D" uid="uid://bdfvxmx25sb6x" path="res://assets/sprites/door-and-key/IMG_0363 1.png" id="8_b6jia"]
 [ext_resource type="Texture2D" uid="uid://c3cdbtulh75mj" path="res://assets/sprites/door-and-key/horizontal-orange.png" id="9_vke3c"]
 [ext_resource type="Texture2D" uid="uid://dwqhfo4pxn0at" path="res://assets/sprites/door-and-key/horizontal-opened-orange.png" id="10_rr40c"]
 [ext_resource type="Texture2D" uid="uid://dbsun50da5y1h" path="res://assets/sprites/door-and-key/horizontal-teal.png" id="11_1g3qw"]
@@ -64,27 +65,36 @@ limit_bottom = 920
 position = Vector2(387, 518)
 
 [node name="Objective" parent="." instance=ExtResource("5_mgojm")]
-position = Vector2(-627, -288)
+position = Vector2(796, -373)
 
 [node name="Keys" type="Node" parent="."]
 
 [node name="A" parent="Keys" instance=ExtResource("6_147nw")]
-position = Vector2(-715, 544)
+position = Vector2(64, -403)
 key_id = "A"
 
 [node name="Sprite2D" type="Sprite2D" parent="Keys/A"]
 position = Vector2(-4, 6)
 scale = Vector2(0.2638037, 0.2638037)
-texture = ExtResource("7_fy0ye")
+texture = ExtResource("7_s7iqn")
 
 [node name="B" parent="Keys" instance=ExtResource("6_147nw")]
-position = Vector2(668, 45)
+position = Vector2(-14, 566)
 key_id = "B"
 
 [node name="Sprite2D" type="Sprite2D" parent="Keys/B"]
 position = Vector2(-4, 6)
 scale = Vector2(0.2638037, 0.2638037)
-texture = ExtResource("7_fy0ye")
+texture = ExtResource("8_b6jia")
+
+[node name="C" parent="Keys" instance=ExtResource("6_147nw")]
+position = Vector2(-726, -125)
+key_id = "C"
+
+[node name="Sprite2D" type="Sprite2D" parent="Keys/C"]
+position = Vector2(-4, 6)
+scale = Vector2(0.2638037, 0.2638037)
+texture = ExtResource("8_b6jia")
 
 [node name="Doors" type="Node" parent="."]
 
@@ -341,6 +351,22 @@ position = Vector2(77, 61)
 scale = Vector2(0.12322285, 0.12322275)
 texture = ExtResource("31_mkpqk")
 
+[node name="Decoy4" parent="Decoys" instance=ExtResource("30_kmtxy")]
+position = Vector2(-782, -370)
+
+[node name="Decoy" type="Sprite2D" parent="Decoys/Decoy4"]
+position = Vector2(77, 61)
+scale = Vector2(0.12322285, 0.12322275)
+texture = ExtResource("31_mkpqk")
+
+[node name="Decoy5" parent="Decoys" instance=ExtResource("30_kmtxy")]
+position = Vector2(-690, 412)
+
+[node name="Decoy" type="Sprite2D" parent="Decoys/Decoy5"]
+position = Vector2(77, 61)
+scale = Vector2(0.12322285, 0.12322275)
+texture = ExtResource("31_mkpqk")
+
 [node name="Decoy3" parent="Decoys" instance=ExtResource("30_kmtxy")]
 position = Vector2(203, 506)
 
@@ -358,7 +384,7 @@ scale = Vector2(0.020370353, 0.020370353)
 texture = ExtResource("32_kqjgb")
 
 [node name="Kaka" parent="." instance=ExtResource("33_d3qxp")]
-position = Vector2(-232, 183)
+position = Vector2(-805, 241)
 
 [editable path="Traps/DuckTrap1"]
 [editable path="Traps/Trap2"]
