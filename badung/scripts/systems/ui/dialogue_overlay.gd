@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready var anak_sprite: Sprite2D = $Control/anak
 @onready var emak_sprite: Sprite2D = $Control/emak
 @onready var info_label: Label = $Control/Info
+@onready var anak_sfx: AudioStreamPlayer = $Control/AnakSFX
+@onready var emak_sfx: AudioStreamPlayer = $Control/EmakSFX
 
 # Dialogue data structure: [{character: "Anak", text: "dialogue text", show_character: true}, ...]
 var dialogue_queue: Array = []
@@ -52,18 +54,31 @@ func show_current_dialogue() -> void:
 	if "text" in current:
 		dialogue_label.text = current["text"]
 	
-	# Show appropriate character sprite
+	# Show appropriate character sprite and play sound effect
 	anak_sprite.visible = false
 	emak_sprite.visible = false
 	
 	if "show_character" in current and current["show_character"]:
-		if current.get("character", "") == "Anak":
+		var character_name = current.get("character", "")
+		if character_name == "Anak":
 			anak_sprite.visible = true
-		elif current.get("character", "") == "Emak":
+			# Play Anak sound effect only once per dialogue entry
+			if anak_sfx and not anak_sfx.playing:
+				anak_sfx.play()
+		elif character_name == "Emak":
 			emak_sprite.visible = true
+			# Play Emak sound effect only once per dialogue entry
+			if emak_sfx and not emak_sfx.playing:
+				emak_sfx.play()
 
 func next_dialogue() -> void:
 	"""Move to the next dialogue in the queue"""
+	# Stop any playing sound effects
+	if anak_sfx and anak_sfx.playing:
+		anak_sfx.stop()
+	if emak_sfx and emak_sfx.playing:
+		emak_sfx.stop()
+	
 	current_index += 1
 	show_current_dialogue()
 

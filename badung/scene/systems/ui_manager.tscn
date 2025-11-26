@@ -1,15 +1,17 @@
-[gd_scene load_steps=22 format=3 uid="uid://qv1j206mmie0"]
+[gd_scene load_steps=24 format=3 uid="uid://qv1j206mmie0"]
 
 [ext_resource type="Script" uid="uid://b8pikn1fm374t" path="res://scripts/core/ui_manager.gd" id="1_ui_mgr"]
 [ext_resource type="Shader" uid="uid://cdgpa10vfwdgf" path="res://shaders/vignette.gdshader" id="1_vignette"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://ck7gdb15bw2ng" path="res://assets/sprites/Aset Inventory/stamina_bar.png" id="2_l4qss"]
-[ext_resource type="Texture2D" uid="uid://2gyapyksy6cu" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]
+[ext_resource type="Texture2D" uid="uid://uxxcesxu70g8" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]
 [ext_resource type="Texture2D" uid="uid://bbulft4v67mb2" path="res://assets/sprites/ipad.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://l6prb2xn7vcw" path="res://assets/sprites/Aset Inventory/stamina_text.png" id="3_66m5t"]
 [ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="4_quitbtn"]
 [ext_resource type="Texture2D" uid="uid://bdr10nmvwn8eo" path="res://assets/sprites/Aset Button/Home button/quit hover.png" id="5_quithvr"]
+[ext_resource type="Texture2D" uid="uid://daqfovwxbce4i" path="res://assets/sprites/Aset Inventory/objective.png" id="10_msu3q"]
 [ext_resource type="Texture2D" uid="uid://b5dly3werhqi1" path="res://assets/sprites/Aset Karakter & animasi/DIKEJAR/D1.png" id="10_w4qes"]
+[ext_resource type="FontFile" uid="uid://boaocjh7xh734" path="res://assets/fonts/MochiyPopOne-Regular.ttf" id="11_6nsgr"]
 [ext_resource type="Texture2D" uid="uid://bso2wlnvp2dvn" path="res://assets/sprites/Aset Karakter & animasi/DIKEJAR/D2.png" id="11_07ebe"]
 [ext_resource type="Texture2D" uid="uid://dwgm3nifw4er7" path="res://assets/sprites/Aset Karakter & animasi/DIKEJAR/D3.png" id="12_ibjf7"]
 [ext_resource type="Texture2D" uid="uid://d4n4bgiovs33" path="res://assets/sprites/Aset Karakter & animasi/DIKEJAR/D4.png" id="13_ijtn6"]
@@ -57,6 +59,7 @@ animations = [{
 
 [node name="UIManager" type="CanvasLayer"]
 script = ExtResource("1_ui_mgr")
+metadata/_edit_vertical_guides_ = [800.0]
 
 [node name="Vignette" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vignette")
@@ -109,7 +112,7 @@ offset_bottom = 896.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_l4qss")
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerUI/InventoryBar"]
-position = Vector2(116, 50.999977)
+position = Vector2(117, 48.999977)
 scale = Vector2(0.1360215, 0.13602148)
 texture = ExtResource("2_lam8e")
 
@@ -123,9 +126,9 @@ color = Color(0.2, 0.2, 0.2, 0.8)
 
 [node name="SlotContainer" type="HBoxContainer" parent="PlayerUI/InventoryBar"]
 layout_mode = 0
-offset_left = 34.0
+offset_left = -14.0
 offset_top = 20.0
-offset_right = 200.83333
+offset_right = 242.0
 offset_bottom = 90.0
 theme_override_constants/separation = 10
 alignment = 1
@@ -137,7 +140,6 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_lam8e")
 
 [node name="ItemIcon" type="Sprite2D" parent="PlayerUI/InventoryBar/SlotContainer/ObjectiveSlot"]
-visible = false
 position = Vector2(39.999977, 29.00002)
 scale = Vector2(0.2853981, 0.2853981)
 texture = ExtResource("3")
@@ -165,7 +167,6 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_hqrmp")
 
 [node name="ItemIcon" type="Sprite2D" parent="PlayerUI/InventoryBar/SlotContainer/DecoySlot"]
-visible = false
 position = Vector2(40.000023, 27.999977)
 scale = Vector2(0.014654315, 0.014654315)
 texture = ExtResource("2")
@@ -186,6 +187,33 @@ text = "Decoy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="KeySlot" type="Panel" parent="PlayerUI/InventoryBar/SlotContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hqrmp")
+
+[node name="ItemIcon" type="Sprite2D" parent="PlayerUI/InventoryBar/SlotContainer/KeySlot"]
+z_index = 1
+position = Vector2(32.57, 28.32)
+scale = Vector2(0.2, 0.2)
+
+[node name="Label" type="Label" parent="PlayerUI/InventoryBar/SlotContainer/KeySlot"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -23.0
+offset_right = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Key"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="QuitButton" type="TextureButton" parent="PlayerUI"]
 z_index = 4096
 layout_mode = 0
@@ -197,7 +225,36 @@ texture_normal = ExtResource("4_quitbtn")
 texture_pressed = ExtResource("5_quithvr")
 texture_hover = ExtResource("5_quithvr")
 
+[node name="Sprite2D" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(340.21423, 111.500015)
+scale = Vector2(0.10732981, 0.10732982)
+texture = ExtResource("10_msu3q")
+
+[node name="Label" type="Label" parent="PlayerUI/Sprite2D"]
+z_index = 1
+offset_left = -1213.2158
+offset_top = -265.53674
+offset_right = -523.7517
+offset_bottom = -67.53674
+theme_override_colors/font_color = Color(0.16470589, 0.14509805, 0.45882353, 1)
+theme_override_fonts/font = ExtResource("11_6nsgr")
+theme_override_font_sizes/font_size = 136
+text = "Objektif"
+
+[node name="ObjectiveLabel" type="Label" parent="PlayerUI"]
+z_index = 1
+layout_mode = 0
+offset_left = 210.0
+offset_top = 109.0
+offset_right = 358.0
+offset_bottom = 142.0
+theme_override_colors/font_color = Color(0.16470589, 0.14509805, 0.45882353, 1)
+theme_override_fonts/font = ExtResource("11_6nsgr")
+theme_override_font_sizes/font_size = 20
+text = "Ayo cari ipad"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(799, 455)
 scale = Vector2(0.8379628, 0.837963)
 sprite_frames = SubResource("SpriteFrames_wdxge")

@@ -1,0 +1,96 @@
+[gd_scene load_steps=16 format=3 uid="uid://bepqdii2wb6bl"]
+
+[ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_7hofv"]
+[ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_3ipii"]
+[ext_resource type="PackedScene" uid="uid://8no6klrt2tee" path="res://scene/player/player.tscn" id="3_ovmep"]
+[ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="4_apt16"]
+[ext_resource type="PackedScene" uid="uid://cnu7hnl4ahmta" path="res://scene/levels/finish_zone.tscn" id="5_wd4mw"]
+[ext_resource type="PackedScene" uid="uid://bljpmixwqyh0l" path="res://scene/interactables/objective.tscn" id="6_n1ycs"]
+[ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="7_d556p"]
+[ext_resource type="Texture2D" uid="uid://fw6vtwodump1" path="res://assets/sprites/door-and-key/key_orange.png" id="8_cip8g"]
+[ext_resource type="PackedScene" uid="uid://bl7fgry7ovtea" path="res://scene/interactables/door.tscn" id="9_w080d"]
+[ext_resource type="Texture2D" uid="uid://c3cdbtulh75mj" path="res://assets/sprites/door-and-key/horizontal-orange.png" id="10_jl67d"]
+[ext_resource type="Texture2D" uid="uid://dwqhfo4pxn0at" path="res://assets/sprites/door-and-key/horizontal-opened-orange.png" id="11_t3c1u"]
+[ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="12_sshe1"]
+[ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="13_pv8kv"]
+[ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="14_ef5o3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmu4x"]
+size = Vector2(86, 90)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_7hofv")
+
+[node name="Background" parent="." instance=ExtResource("2_3ipii")]
+
+[node name="Player" parent="." instance=ExtResource("3_ovmep")]
+position = Vector2(602, 694)
+
+[node name="Camera" type="Camera2D" parent="Player"]
+position = Vector2(70, 0)
+zoom = Vector2(1.51, 1.51)
+limit_left = -1200
+limit_top = -920
+limit_right = 1200
+limit_bottom = 920
+
+[node name="Mom" parent="." instance=ExtResource("4_apt16")]
+position = Vector2(-59, 189)
+
+[node name="Finish Zone" parent="." instance=ExtResource("5_wd4mw")]
+position = Vector2(387, 518)
+
+[node name="Objective" parent="." instance=ExtResource("6_n1ycs")]
+position = Vector2(-32, 572)
+
+[node name="Keys" type="Node" parent="."]
+
+[node name="Key" parent="Keys" instance=ExtResource("7_d556p")]
+position = Vector2(541, 603)
+key_id = "key_orange"
+
+[node name="Sprite2D" type="Sprite2D" parent="Keys/Key"]
+position = Vector2(-2.9999998, 2.9999995)
+scale = Vector2(0.19631882, 0.19631882)
+texture = ExtResource("8_cip8g")
+
+[node name="Doors" type="Node" parent="."]
+
+[node name="DoorA" parent="Doors" instance=ExtResource("9_w080d")]
+position = Vector2(359, 464)
+door_id = "DoorA"
+
+[node name="Close" type="Sprite2D" parent="Doors/DoorA"]
+position = Vector2(-0.9999962, 1.4424324e-05)
+scale = Vector2(0.66780543, 0.6678055)
+texture = ExtResource("10_jl67d")
+
+[node name="Open" type="Sprite2D" parent="Doors/DoorA"]
+visible = false
+position = Vector2(-31, -4.0000076)
+scale = Vector2(0.65486777, 0.65486777)
+texture = ExtResource("11_t3c1u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Doors/DoorA"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/DoorA/StaticBody2D"]
+position = Vector2(2, 1)
+shape = SubResource("RectangleShape2D_pmu4x")
+
+[node name="Decoy" parent="." instance=ExtResource("12_sshe1")]
+position = Vector2(436, 318)
+
+[node name="Sprite2D" type="Sprite2D" parent="Decoy"]
+position = Vector2(9.536743e-06, 6.67572e-06)
+scale = Vector2(0.011265435, 0.011265435)
+texture = ExtResource("13_pv8kv")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="PauseOverlay" parent="UI" instance=ExtResource("14_ef5o3")]
+visible = false
+
+[node name="PatrolPoints" type="Node2D" parent="."]
+
+[node name="A" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(-207, 199)

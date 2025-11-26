@@ -16,6 +16,11 @@ func goto_main_menu() -> void:
 	"""Navigate to main menu and reset game state"""
 	print("[NavigationManager] Going to main menu...")
 	
+	# Reset UI state
+	if UIManager:
+		UIManager.reset_ui()
+		print("[NavigationManager] UIManager state reset")
+	
 	# Reset game state
 	if GameManager:
 		GameManager.reset()
@@ -36,10 +41,20 @@ func goto_main_menu() -> void:
 func goto_scene(scene_path: String) -> void:
 	"""Navigate to a scene"""
 	print("[NavigationManager] Going to scene: ", scene_path)
+	
+	# Reset UI when leaving a level
+	if UIManager:
+		UIManager.reset_ui()
+	
 	get_tree().change_scene_to_file(scene_path)
 
 func reset_current_scene() -> void:
 	"""Reload current scene"""
 	print("[NavigationManager] Reloading scene: ", current_scene)
+	
+	# Reset UI before reloading
+	if UIManager:
+		UIManager.reset_ui()
+	
 	get_tree().paused = false
 	get_tree().change_scene_to_file(current_scene)

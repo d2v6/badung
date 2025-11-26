@@ -8,7 +8,7 @@ var collected_keys: Array[String] = []  # Track which keys have been collected
 var mom_reference: CharacterBody2D = null
 
 # Level progression tracking
-var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
+var highest_level_unlocked: int = 4  # Level 1 always unlocked at start
 
 # Current level's door configuration
 var door_configs: Dictionary = {}
@@ -323,6 +323,10 @@ func handle_success() -> void:
 func handle_failure() -> void:
 	"""Handle player failure (caught by mom)"""
 	print("[GameManager] Handling failure - restarting level")
+	
+	# Reset UI before restarting
+	if UIManager:
+		UIManager.reset_ui()
 	
 	# Just restart the level
 	get_tree().paused = false
