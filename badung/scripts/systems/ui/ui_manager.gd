@@ -64,7 +64,3 @@ func show_game_over(is_success: bool) -> void:
 		print("[UIManager] Game Over screen shown - Player won!")
 	else:
 		print("[UIManager] Game Over screen shown - Player caught!")
-
-func show_game_over_failure() -> void:
-	"""Deprecated: Use show_game_over(false) instead. Kept for backwards compatibility."""
-	show_game_over(false)

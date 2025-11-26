@@ -55,6 +55,7 @@ func reset() -> void:
 	has_objective = false
 	reported = false
 	mom_reference = null
+	is_processing_result = false  # Reset result processing flag
 	print("GameManager: State reset - has_objective=false, reported=false")
 
 func collect_objective() -> void:
@@ -92,6 +93,30 @@ func on_level_completed() -> void:
 	
 	# Call DOWN to handle_game_result
 	handle_game_result(true)  # true = success/win
+
+func on_chase_started() -> void:
+	"""Called by Mom when chase starts - signals UP from Mom"""
+	print("GameManager: Chase started!")
+	
+	# Call DOWN to MusicManager to change music
+	var music_manager = get_tree().get_first_node_in_group("music_manager")
+	if music_manager and music_manager.has_method("switch_to_danger_music"):
+		music_manager.switch_to_danger_music()
+		print("GameManager: Told MusicManager to switch to danger music")
+	else:
+		push_warning("GameManager: MusicManager not found!")
+
+func on_chase_ended() -> void:
+	"""Called by Mom when chase ends - signals UP from Mom"""
+	print("GameManager: Chase ended!")
+	
+	# Call DOWN to MusicManager to change music back
+	var music_manager = get_tree().get_first_node_in_group("music_manager")
+	if music_manager and music_manager.has_method("switch_to_game_music"):
+		music_manager.switch_to_game_music()
+		print("GameManager: Told MusicManager to switch to game music")
+	else:
+		push_warning("GameManager: MusicManager not found!")
 
 func get_door_config(door_id: String) -> Dictionary:
 	"""Get configuration for a specific door"""

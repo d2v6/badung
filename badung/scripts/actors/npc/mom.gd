@@ -27,6 +27,7 @@ var target_decoy: Node2D = null
 # Raycasts for wall detection
 var wall_raycasts = []
 var hunt_mode: bool = false  # True when player is reported - chase never cancels
+var has_caught_player: bool = false  # Prevent multiple catch triggers
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -90,21 +91,31 @@ func _physics_process(delta: float) -> void:
 	if hunt_mode:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
-			#if not is_chasing:
+			if not is_chasing:
 				# print("[Mom] Hunt mode active - chasing player!")
-			is_chasing = true
+				is_chasing = true
+				# Signal UP to GameManager that chase started
+				if GameManager:
+					GameManager.on_chase_started()
 			investigating_decoy = false
 			investigating_last_position = false
 			chase_player(player, delta)
 		else:
 			# No player found, wander
-			is_chasing = false
+			if is_chasing:
+				is_chasing = false
+				# Signal UP to GameManager that chase ended
+				if GameManager:
+					GameManager.on_chase_ended()
 			patrol(delta)
 	# Normal mode: chase only when player in sight
 	elif player_in_sight and player_reference:
-		#if not is_chasing:
+		if not is_chasing:
 			# print("[Mom] Starting chase mode!")
-		is_chasing = true
+			is_chasing = true
+			# Signal UP to GameManager that chase started
+			if GameManager:
+				GameManager.on_chase_started()
 		investigating_decoy = false
 		investigating_last_position = false
 		# Update last seen position while we can see the player
@@ -112,17 +123,28 @@ func _physics_process(delta: float) -> void:
 		chase_player(player_reference, delta)
 	elif investigating_last_position:
 		# Medium-high priority: investigate last seen position after losing sight
-		is_chasing = false
+		if is_chasing:
+			is_chasing = false
+			# Signal UP to GameManager that chase ended
+			if GameManager:
+				GameManager.on_chase_ended()
 		investigate_last_position(delta)
 	elif investigating_decoy and target_decoy:
 		# Medium priority: investigate decoy
-		is_chasing = false
+		if is_chasing:
+			is_chasing = false
+			# Signal UP to GameManager that chase ended
+			if GameManager:
+				GameManager.on_chase_ended()
 		investigate_decoy(delta)
 	else:
 		# Lowest priority: normal patrol
-		#if is_chasing:
+		if is_chasing:
 			# print("[Mom] Ending chase mode - back to patrol")
-		is_chasing = false
+			is_chasing = false
+			# Signal UP to GameManager that chase ended
+			if GameManager:
+				GameManager.on_chase_ended()
 		investigating_decoy = false
 		investigating_last_position = false
 		patrol(delta)
@@ -218,6 +240,11 @@ func _on_vision_body_exited(body: Node2D) -> void:
 
 func _on_catch_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		# Prevent multiple catches
+		if has_caught_player:
+			return
+		
+		has_caught_player = true
 		# print("[Mom] Player caught!")
 		# Signal UP to GameManager
 		if GameManager:
