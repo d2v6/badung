@@ -7,6 +7,9 @@ var collected_keys: Array[String] = []  # Track which keys have been collected
 
 var mom_reference: CharacterBody2D = null
 
+# Level progression tracking
+var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
+
 # Door configuration: door_id -> {is_locked: bool, required_key_id: String}
 var door_configs: Dictionary = {
 	"DoorA": {"is_locked": true, "required_key_id": "key_orange"},
@@ -45,7 +48,7 @@ func _find_mom() -> void:
 			print("GameManager: No Mom node found in scene")
 
 func reset() -> void:
-	# Reset all game state variables
+	# Reset all game state variables (but keep highest_level_unlocked for progression)
 	has_objective = false
 	reported = false
 	mom_reference = null
@@ -93,3 +96,13 @@ func on_key_collected(key_id: String) -> void:
 	if key_id not in collected_keys:
 		collected_keys.append(key_id)
 		print("GameManager: Key collected - ", key_id)
+
+func unlock_level(level_number: int) -> void:
+	"""Unlock a level after completing the current level"""
+	if level_number > highest_level_unlocked:
+		highest_level_unlocked = level_number
+		print("GameManager: Level ", level_number, " unlocked! Highest unlocked: ", highest_level_unlocked)
+
+func is_level_unlocked(level_number: int) -> bool:
+	"""Check if a level is unlocked"""
+	return level_number <= highest_level_unlocked
