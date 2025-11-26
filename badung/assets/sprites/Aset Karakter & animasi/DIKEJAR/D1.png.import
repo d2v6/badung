@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://modgteth0cdm"
-path="res://.godot/imported/logo.png-fa4f2828b1b8ff425dd793328e25d3a2.ctex"
+uid="uid://b5dly3werhqi1"
+path="res://.godot/imported/D1.png-545afb9ef045650a0d78b002a621fb82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/logo/logo.png"
-dest_files=["res://.godot/imported/logo.png-fa4f2828b1b8ff425dd793328e25d3a2.ctex"]
+source_file="res://assets/sprites/Aset Karakter & animasi/DIKEJAR/D1.png"
+dest_files=["res://.godot/imported/D1.png-545afb9ef045650a0d78b002a621fb82.ctex"]
 
 [params]
 
