@@ -1,7 +1,7 @@
 extends Area2D
 
 # Finish zone triggers level completion
-# Delegates to ResultManager for handling game result flow
+# Delegates to GameManager for handling game result flow
 
 var current_level: String = ""
 
@@ -32,14 +32,5 @@ func _on_body_entered(player: Node2D) -> void:
 	print(">>> Level complete! Player has objective <<<")
 	level_completed.emit()
 	
-	# Delegate to ResultManager to handle the win flow
-	trigger_level_completion()
-
-func trigger_level_completion() -> void:
-	"""Delegate level completion to ResultManager"""
-	var result_manager = get_tree().get_first_node_in_group("result_manager")
-	if result_manager and result_manager.has_method("handle_game_result"):
-		result_manager.handle_game_result(true)  # true = success/win
-		print("[FinishZone] Delegated to ResultManager")
-	else:
-		push_warning("[FinishZone] Result manager not found!")
+	# Signal UP to GameManager
+	GameManager.on_level_completed()

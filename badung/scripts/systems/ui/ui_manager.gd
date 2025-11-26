@@ -50,12 +50,21 @@ func update_decoy_slot(has_decoy: bool) -> void:
 func get_stamina_bar() -> ProgressBar:
 	return stamina_bar
 
-func show_game_over_failure() -> void:
-	"""Show game over screen when player is caught"""
+func show_game_over(is_success: bool) -> void:
+	"""Show game over screen for success or failure"""
 	# Load and instance the game over overlay
 	var GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
 	var overlay = GAME_OVER_OVERLAY.instantiate()
 	# Add it to the root scene so it renders properly
 	get_tree().root.add_child(overlay)
-	overlay.show_game_over(overlay.GameOverType.FAILURE)
-	print("[UIManager] Game Over screen shown - Player caught!")
+	# Show the appropriate screen (SUCCESS or FAILURE)
+	var result_type = overlay.GameOverType.SUCCESS if is_success else overlay.GameOverType.FAILURE
+	overlay.show_game_over(result_type)
+	if is_success:
+		print("[UIManager] Game Over screen shown - Player won!")
+	else:
+		print("[UIManager] Game Over screen shown - Player caught!")
+
+func show_game_over_failure() -> void:
+	"""Deprecated: Use show_game_over(false) instead. Kept for backwards compatibility."""
+	show_game_over(false)

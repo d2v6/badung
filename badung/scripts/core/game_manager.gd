@@ -17,6 +17,9 @@ var door_configs: Dictionary = {
 	# "DoorB": {"is_locked": false, "required_key_id": ""},
 }
 
+# Result manager state
+var is_processing_result: bool = false  # Flag to prevent multiple result handling
+
 signal objective_collected()
 signal player_reported()
 signal stage_started()
@@ -80,8 +83,15 @@ func on_player_caught() -> void:
 	
 	# Call DOWN to UIManager to show game over screen
 	if UIManager:
-		UIManager.show_game_over_failure()
+		UIManager.show_game_over(false)  # false = failure
 		print("GameManager: Told UIManager to show game over")
+
+func on_level_completed() -> void:
+	"""Called by FinishZone when player completes level - signals UP from FinishZone"""
+	print("GameManager: Level completed!")
+	
+	# Call DOWN to handle_game_result
+	handle_game_result(true)  # true = success/win
 
 func get_door_config(door_id: String) -> Dictionary:
 	"""Get configuration for a specific door"""
@@ -106,3 +116,76 @@ func unlock_level(level_number: int) -> void:
 func is_level_unlocked(level_number: int) -> bool:
 	"""Check if a level is unlocked"""
 	return level_number <= highest_level_unlocked
+
+# ===== RESULT MANAGER FUNCTIONALITY =====
+
+func handle_game_result(is_success: bool) -> void:
+	"""Called when a game result occurs (win or lose)"""
+	# Prevent handling multiple results simultaneously
+	if is_processing_result:
+		print("[GameManager] Result already being processed, ignoring duplicate call")
+		return
+	
+	is_processing_result = true
+	print("[GameManager] Handling game result: is_success=", is_success)
+	
+	# Call DOWN to UIManager to show game over overlay
+	if UIManager and UIManager.has_method("show_game_over"):
+		UIManager.show_game_over(is_success)
+		print("[GameManager] Told UIManager to show game over")
+	else:
+		push_warning("[GameManager] UIManager not found!")
+	
+	# Play the appropriate sound
+	play_result_sound(is_success)
+	
+	# Note: The overlay buttons will handle transitions
+	# No need to await here - buttons take control
+
+func play_result_sound(is_success: bool) -> void:
+	"""Play the appropriate result sound via the sound manager"""
+	var sound_manager = get_tree().get_first_node_in_group("sound_manager")
+	if sound_manager and sound_manager.has_method("play_result_sound"):
+		sound_manager.play_result_sound(is_success)
+		print("[GameManager] Called sound manager to play result sound")
+	else:
+		push_warning("[GameManager] Sound manager not found!")
+
+func handle_success() -> void:
+	"""Handle successful level completion"""
+	print("[GameManager] Handling success")
+	
+	# Get current level info
+	var current_level = get_current_level()
+	
+	match current_level:
+		"tutorial":
+			print("[GameManager] Tutorial complete - showing winning screen")
+			await get_tree().create_timer(0.5).timeout
+			SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
+		
+		"stage1", "level1":
+			print("[GameManager] Stage 1 complete - Unlocking level 2 and showing winning screen!")
+			unlock_level(2)
+			await get_tree().create_timer(0.5).timeout
+			SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
+		
+		_:
+			print("[GameManager] Level complete - showing winning screen")
+			await get_tree().create_timer(0.5).timeout
+			SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
+
+func handle_failure() -> void:
+	"""Handle player failure (caught by mom)"""
+	print("[GameManager] Handling failure - restarting level")
+	
+	# Just restart the level
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+func get_current_level() -> String:
+	"""Get the current level name"""
+	var scene = get_tree().current_scene
+	if scene:
+		return scene.name.to_lower()
+	return ""

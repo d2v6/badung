@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://vliww4ddhpnd"]
+[gd_scene load_steps=16 format=3 uid="uid://vliww4ddhpnd"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_fcruq"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_k7kyu"]
@@ -14,8 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://dwqhfo4pxn0at" path="res://assets/sprites/door-and-key/horizontal-opened-orange.png" id="9_rtj1j"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="10_abxrp"]
 [ext_resource type="PackedScene" uid="uid://dbom6lkuu7fsa" path="res://scene/interactables/key.tscn" id="10_rtj1j"]
-[ext_resource type="Script" uid="uid://b1bk58gvyfpgm" path="res://scripts/systems/audio/result_sound_manager.gd" id="15_result_sound"]
-[ext_resource type="Script" uid="uid://8lk7lrvn80kc" path="res://scripts/core/result_manager.gd" id="16_result_manager"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmu4x"]
 size = Vector2(86, 90)
@@ -96,9 +94,3 @@ visible = false
 
 [node name="A" type="Marker2D" parent="PatrolPoints"]
 position = Vector2(-207, 199)
-
-[node name="ResultSoundManager" type="Node" parent="."]
-script = ExtResource("15_result_sound")
-
-[node name="ResultManager" type="Node" parent="."]
-script = ExtResource("16_result_manager")
