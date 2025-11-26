@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjr0fylm3g8xu"
-path="res://.godot/imported/L-button.png-2e6040fa87b1a44e7b3f17f5898f4464.ctex"
+uid="uid://de6ljti73jdut"
+path="res://.godot/imported/game_exit.png-76e64049c5038adc09325f9deab0caed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Aset Button/WASD/L-button.png"
-dest_files=["res://.godot/imported/L-button.png-2e6040fa87b1a44e7b3f17f5898f4464.ctex"]
+source_file="res://assets/sprites/ingame-pause/game_exit.png"
+dest_files=["res://.godot/imported/game_exit.png-76e64049c5038adc09325f9deab0caed.ctex"]
 
 [params]
 

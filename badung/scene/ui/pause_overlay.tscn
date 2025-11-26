@@ -1,6 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7qvx8b3rkfmj"]
+[gd_scene load_steps=19 format=3 uid="uid://c7qvx8b3rkfmj"]
 
 [ext_resource type="Script" uid="uid://dagapf3wyae38" path="res://scripts/systems/ui/pause_overlay.gd" id="1_pause"]
+[ext_resource type="Texture2D" uid="uid://c03e4rtk4tlgx" path="res://assets/sprites/ingame-pause/game_resume.png" id="2_m43oi"]
+[ext_resource type="Texture2D" uid="uid://bfuj2r4p76dt4" path="res://assets/sprites/ingame-pause/game_pause_bg.png" id="2_voca6"]
+[ext_resource type="Texture2D" uid="uid://cfe5ovq0wocvo" path="res://assets/sprites/ingame-pause/game_resume_hover.png" id="3_w8eri"]
+[ext_resource type="Texture2D" uid="uid://dw7i3hldt64vy" path="res://assets/sprites/ingame-pause/game_redo.png" id="4_1vwxl"]
+[ext_resource type="Texture2D" uid="uid://cmkqyb2vea6rw" path="res://assets/sprites/ingame-pause/game_redo_hover.png" id="5_l413k"]
+[ext_resource type="Texture2D" uid="uid://de6ljti73jdut" path="res://assets/sprites/ingame-pause/game_exit.png" id="6_gux7q"]
+[ext_resource type="Texture2D" uid="uid://cth5gojqaod3i" path="res://assets/sprites/ingame-pause/game_exit_hover.png" id="7_1ykid"]
+[ext_resource type="Texture2D" uid="uid://clxbkwl8tuchb" path="res://assets/sprites/settings/icons/music/music_icon.png" id="8_r4opo"]
+[ext_resource type="Texture2D" uid="uid://df7u7yhl0h6iv" path="res://assets/sprites/settings/icons/music/music_icon_hover.png" id="9_voca6"]
+[ext_resource type="Texture2D" uid="uid://dxo4a6vljh8j5" path="res://assets/sprites/settings/icons/sfx/sound_icon.png" id="10_htlgu"]
+[ext_resource type="Texture2D" uid="uid://jfdby1pn2ebh" path="res://assets/sprites/settings/icons/sfx/sound_icon_hover.png" id="11_wwi4w"]
+[ext_resource type="Texture2D" uid="uid://dfllsc5nplw8t" path="res://assets/sprites/settings/icons/slider_icon/slider_holder.png" id="12_8h6f1"]
+[ext_resource type="Texture2D" uid="uid://dth8u5ss1ktg" path="res://assets/sprites/settings/icons/slider_icon/slider_holder_grabbing.png" id="13_itpjd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_251l0"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdkrg"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_epkju"]
+bg_color = Color(0.89764225, 0.44884586, 0.37753448, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yx8fn"]
+bg_color = Color(0.8980392, 0.44705883, 0.3764706, 1)
 
 [node name="PauseOverlay" type="CanvasLayer"]
 layer = 100
@@ -21,40 +46,105 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.5)
+color = Color(0.28235295, 0.19607843, 0.42745098, 0.45882353)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = -10.999996
+offset_right = 1300.0
+offset_bottom = 1054.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_voca6")
 
-[node name="Label" type="Label" parent="Control/VBoxContainer"]
-layout_mode = 2
-text = "PAUSED"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="ResumeButton" type="TextureButton" parent="Control"]
+z_index = 2
+layout_mode = 0
+offset_left = 727.0
+offset_top = 540.0
+offset_right = 900.0
+offset_bottom = 736.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("2_m43oi")
+texture_hover = ExtResource("3_w8eri")
 
-[node name="ResumeButton" type="Button" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "Resume"
+[node name="RedoButton" type="TextureButton" parent="."]
+z_index = 2
+offset_left = 595.0
+offset_top = 552.0
+offset_right = 734.0
+offset_bottom = 713.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("4_1vwxl")
+texture_hover = ExtResource("5_l413k")
 
-[node name="SettingsButton" type="Button" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "Settings"
+[node name="ExitButton" type="TextureButton" parent="."]
+z_index = 2
+offset_left = 887.0
+offset_top = 556.0
+offset_right = 1027.0
+offset_bottom = 717.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("6_gux7q")
+texture_pressed = ExtResource("7_1ykid")
+texture_hover = ExtResource("7_1ykid")
 
-[node name="MainMenuButton" type="Button" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "Main Menu"
+[node name="musicBtn" type="TextureButton" parent="."]
+z_index = 2
+offset_left = 576.00006
+offset_top = 403.0
+offset_right = 625.00006
+offset_bottom = 449.0
+scale = Vector2(1.8, 1.8)
+texture_normal = ExtResource("8_r4opo")
+texture_pressed = ExtResource("9_voca6")
+texture_hover = ExtResource("9_voca6")
+
+[node name="sfxBtn" type="TextureButton" parent="."]
+z_index = 2
+offset_left = 578.0
+offset_top = 300.0
+offset_right = 627.0
+offset_bottom = 347.0
+scale = Vector2(1.8, 1.8)
+texture_normal = ExtResource("10_htlgu")
+texture_pressed = ExtResource("11_wwi4w")
+texture_hover = ExtResource("11_wwi4w")
+
+[node name="HSliderSfx" type="HSlider" parent="."]
+z_index = 2
+offset_left = 694.0
+offset_top = 319.0
+offset_right = 900.0
+offset_bottom = 354.0
+scale = Vector2(1.5, 1.5)
+theme_override_icons/grabber = ExtResource("12_8h6f1")
+theme_override_icons/grabber_highlight = ExtResource("13_itpjd")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_251l0")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_hdkrg")
+max_value = 1.0
+step = 0.01
+value = 0.03
+
+[node name="HSliderMusic" type="HSlider" parent="."]
+z_index = 2
+offset_left = 687.0
+offset_top = 417.0
+offset_right = 893.0
+offset_bottom = 452.0
+scale = Vector2(1.5, 1.5)
+theme_override_icons/grabber = ExtResource("12_8h6f1")
+theme_override_icons/grabber_highlight = ExtResource("13_itpjd")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_epkju")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_yx8fn")
+max_value = 1.0
+step = 0.01
+value = 0.05
+
+[connection signal="pressed" from="Control/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="RedoButton" to="." method="_on_redo_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="musicBtn" to="." method="_on_music_btn_pressed"]
+[connection signal="pressed" from="sfxBtn" to="." method="_on_sfx_btn_pressed"]
+[connection signal="drag_ended" from="HSliderSfx" to="." method="_on_h_slider_sfx_drag_ended"]
+[connection signal="drag_ended" from="HSliderMusic" to="." method="_on_h_slider_music_drag_ended"]
