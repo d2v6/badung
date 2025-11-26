@@ -31,6 +31,7 @@ offset_left = 45.0
 offset_top = 35.0
 offset_right = 136.0
 offset_bottom = 146.0
+scale = Vector2(1.67, 1.67)
 texture_normal = ExtResource("2_nh80o")
 texture_pressed = ExtResource("3_twebx")
 texture_hover = ExtResource("3_twebx")
@@ -38,20 +39,20 @@ texture_hover = ExtResource("3_twebx")
 [node name="levelbuttons" type="CanvasGroup" parent="."]
 
 [node name="1" type="TextureButton" parent="levelbuttons"]
-offset_left = 177.0
-offset_top = 134.0
-offset_right = 484.0
-offset_bottom = 435.0
+offset_left = 262.0
+offset_top = 165.0
+offset_right = 569.0
+offset_bottom = 466.0
 texture_normal = ExtResource("4_sgnxe")
 texture_pressed = ExtResource("5_6sg40")
 texture_hover = ExtResource("5_6sg40")
 texture_disabled = ExtResource("7_sgnxe")
 
 [node name="2" type="TextureButton" parent="levelbuttons"]
-offset_left = 631.0
-offset_top = 132.0
-offset_right = 938.0
-offset_bottom = 431.0
+offset_left = 650.0
+offset_top = 163.0
+offset_right = 957.0
+offset_bottom = 462.0
 disabled = true
 texture_normal = ExtResource("6_alfip")
 texture_pressed = ExtResource("7_bh7e1")
@@ -59,10 +60,10 @@ texture_hover = ExtResource("7_bh7e1")
 texture_disabled = ExtResource("7_sgnxe")
 
 [node name="3" type="TextureButton" parent="levelbuttons"]
-offset_left = 1075.0
-offset_top = 130.0
-offset_right = 1385.0
-offset_bottom = 440.0
+offset_left = 1028.0
+offset_top = 168.0
+offset_right = 1338.0
+offset_bottom = 478.0
 disabled = true
 texture_normal = ExtResource("8_rssin")
 texture_pressed = ExtResource("9_jj170")
@@ -70,10 +71,10 @@ texture_hover = ExtResource("9_jj170")
 texture_disabled = ExtResource("7_sgnxe")
 
 [node name="4" type="TextureButton" parent="levelbuttons"]
-offset_left = 178.0
-offset_top = 495.0
-offset_right = 492.0
-offset_bottom = 801.0
+offset_left = 265.0
+offset_top = 491.0
+offset_right = 579.0
+offset_bottom = 797.0
 disabled = true
 texture_normal = ExtResource("10_qvii8")
 texture_pressed = ExtResource("11_ae648")
@@ -81,10 +82,10 @@ texture_hover = ExtResource("11_ae648")
 texture_disabled = ExtResource("7_sgnxe")
 
 [node name="5" type="TextureButton" parent="levelbuttons"]
-offset_left = 637.0
-offset_top = 495.0
-offset_right = 944.0
-offset_bottom = 791.0
+offset_left = 653.0
+offset_top = 493.0
+offset_right = 960.0
+offset_bottom = 789.0
 disabled = true
 texture_normal = ExtResource("12_agnr5")
 texture_pressed = ExtResource("13_6iohf")
@@ -92,10 +93,10 @@ texture_hover = ExtResource("13_6iohf")
 texture_disabled = ExtResource("7_sgnxe")
 
 [node name="6" type="TextureButton" parent="levelbuttons"]
-offset_left = 1080.0
-offset_top = 499.0
-offset_right = 1398.0
-offset_bottom = 800.0
+offset_left = 1036.0
+offset_top = 492.0
+offset_right = 1354.0
+offset_bottom = 793.0
 disabled = true
 texture_normal = ExtResource("14_s5e36")
 texture_pressed = ExtResource("15_2b4pt")

@@ -9,6 +9,8 @@ var levels = {
 	6: "res://scene/levels/level6.tscn",
 }
 
+const ButtonSoundHandler = preload("res://scripts/ui/button_sound_handler.gd")
+
 
 func _ready() -> void:
 	# Connect level buttons and set up unlock status
@@ -19,11 +21,21 @@ func _ready() -> void:
 			button.pressed.connect(_on_level_pressed.bindv([i]))
 			# Set button disabled state based on unlock status
 			button.disabled = not GameManager.is_level_unlocked(i)
+			# Add button sound handler
+			_add_button_sounds(button)
 	
 	# Connect exit button
 	var exit_button = $Exit
 	if exit_button:
 		exit_button.pressed.connect(_on_exit_pressed)
+		# Add button sound handler to exit button
+		_add_button_sounds(exit_button)
+
+
+func _add_button_sounds(button: Node) -> void:
+	"""Add sound effects to any button"""
+	var sound_handler = ButtonSoundHandler.new()
+	button.add_child(sound_handler)
 
 
 func _on_exit_pressed() -> void:

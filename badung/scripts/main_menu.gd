@@ -10,6 +10,8 @@ var move_interval: float = 5.0  # Longer intervals between direction changes
 var initial_position: Vector2
 var initial_scale: Vector2
 
+const ButtonSoundHandler = preload("res://scripts/ui/button_sound_handler.gd")
+
 
 func _ready() -> void:
 	if background:
@@ -18,6 +20,12 @@ func _ready() -> void:
 		# Zoom background slightly to prevent edges from showing
 		background.scale = initial_scale * 1.1
 		_set_new_target()
+	
+	# Add button sounds to all menu buttons
+	_add_button_sounds($start)
+	_add_button_sounds($quit)
+	_add_button_sounds($setting)
+	_add_button_sounds($TextureButton)
 
 
 func _process(delta: float) -> void:
@@ -46,6 +54,13 @@ func _set_new_target() -> void:
 		randf_range(-movement_range, movement_range)
 	)
 	target_position = initial_position + random_offset
+
+
+func _add_button_sounds(button: Node) -> void:
+	"""Add sound effects to any button"""
+	if button:
+		var sound_handler = ButtonSoundHandler.new()
+		button.add_child(sound_handler)
 
 
 func _on_tutorial_pressed() -> void:
