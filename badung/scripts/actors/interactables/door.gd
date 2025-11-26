@@ -9,6 +9,7 @@ var close_sprite: Sprite2D = null
 var open_sprite: Sprite2D = null
 var collision_body: StaticBody2D = null
 var sfx_player: AudioStreamPlayer = null
+var sfx_locked_player: AudioStreamPlayer = null
 
 var is_open: bool = false
 var is_locked: bool = false  # Will be set by GameManager in _ready
@@ -50,11 +51,16 @@ func _ready() -> void:
 	update_lock_visibility()
 
 func _setup_audio() -> void:
-	"""Create audio player for door sound effects"""
+	"""Create audio players for door sound effects"""
 	sfx_player = AudioStreamPlayer.new()
 	sfx_player.stream = load("res://assets/sfx/sfx-door-open.mp3")
 	sfx_player.bus = "SFX"
 	add_child(sfx_player)
+	
+	sfx_locked_player = AudioStreamPlayer.new()
+	sfx_locked_player.stream = load("res://assets/sfx/sfx-door-still-locked.mp3")
+	sfx_locked_player.bus = "SFX"
+	add_child(sfx_locked_player)
 
 func update_lock_visibility() -> void:
 	"""Update lock sprite visibility based on locked state"""
@@ -65,6 +71,9 @@ func update_lock_visibility() -> void:
 func interact() -> void:
 	if is_locked:
 		print("Door is locked! Find a key to unlock it.")
+		# Play locked door sound
+		if sfx_locked_player:
+			sfx_locked_player.play()
 		return
 	
 	toggle_door()
@@ -80,6 +89,9 @@ func try_unlock_with_keys(player_keys: Array[String]) -> void:
 				toggle_door()
 		else:
 			print("Door is locked! You need the '", required_key_id, "' key.")
+			# Play locked door sound
+			if sfx_locked_player:
+				sfx_locked_player.play()
 	else:
 		# Door is already unlocked, just toggle it
 		toggle_door()
