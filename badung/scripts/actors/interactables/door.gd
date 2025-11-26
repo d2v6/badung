@@ -8,6 +8,7 @@ extends Node2D
 var close_sprite: Sprite2D = null
 var open_sprite: Sprite2D = null
 var collision_body: StaticBody2D = null
+var sfx_player: AudioStreamPlayer = null
 
 var is_open: bool = false
 var is_locked: bool = false  # Will be set by GameManager in _ready
@@ -29,6 +30,9 @@ func _ready() -> void:
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
 	
+	# Setup audio player
+	_setup_audio()
+	
 	# Get door configuration from GameManager
 	if GameManager:
 		var config = GameManager.get_door_config(door_id)
@@ -44,6 +48,13 @@ func _ready() -> void:
 	
 	# Show lock sprite if door is locked
 	update_lock_visibility()
+
+func _setup_audio() -> void:
+	"""Create audio player for door sound effects"""
+	sfx_player = AudioStreamPlayer.new()
+	sfx_player.stream = load("res://assets/sfx/sfx-door-open.mp3")
+	sfx_player.bus = "SFX"
+	add_child(sfx_player)
 
 func update_lock_visibility() -> void:
 	"""Update lock sprite visibility based on locked state"""
@@ -92,6 +103,10 @@ func lock() -> void:
 
 func toggle_door() -> void:
 	is_open = !is_open
+	
+	# Play door sound effect
+	if sfx_player:
+		sfx_player.play()
 	
 	if is_open:
 		print("Door Opened")
