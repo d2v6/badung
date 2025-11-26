@@ -52,9 +52,11 @@ func show_game_over(type: GameOverType = GameOverType.FAILURE) -> void:
 	if type == GameOverType.SUCCESS:
 		berhasil_sprite.visible = true
 		gagal_sprite.visible = false
+		lanjut_button.visible = true  # Show next level button on success
 	else:
 		berhasil_sprite.visible = false
 		gagal_sprite.visible = true
+		lanjut_button.visible = false  # Hide next level button on failure
 	
 	# Ensure the game is paused
 	get_tree().paused = true
@@ -76,32 +78,34 @@ func _on_keluar_pressed() -> void:
 	"""Handle Keluar (Exit) button - go to main menu"""
 	print("[GameOverOverlay] Keluar pressed - returning to main menu")
 	_disable_all_buttons()
-	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame
+	# Keep game paused during transition
 	SceneTransition.change_scene("res://scene/menus/main_menu.tscn")
+	# Unpause will happen when scene changes
+	get_tree().paused = false
 
 func _on_ulangi_pressed() -> void:
 	"""Handle Ulangi (Retry) button - restart level"""
 	print("[GameOverOverlay] Ulangi pressed - restarting level")
 	_disable_all_buttons()
-	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame
+	# Unpause before reload so new scene starts fresh
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func _on_lanjut_pressed() -> void:
 	"""Handle Lanjut (Continue/Next) button - go to next level or winning screen"""
 	print("[GameOverOverlay] Lanjut pressed - going to next level")
 	_disable_all_buttons()
-	get_tree().paused = false
 	_reset_music_before_transition()
 	close_overlay()
-	await get_tree().process_frame
 	print("[GameOverOverlay] Transitioning to winning screen...")
+	# Keep game paused during transition
 	SceneTransition.change_scene("res://scene/game_results/winning_bg.tscn")
+	# Unpause will happen when scene changes
+	get_tree().paused = false
 
 func _reset_music_before_transition() -> void:
 	"""Reset music to lobby/main menu music before transitioning"""
