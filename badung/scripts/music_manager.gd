@@ -140,3 +140,7 @@ func reset_to_loop() -> void:
 	loop_player.volume_db = -80.0
 	loop_player.play()
 	fade_in(loop_player, FADE_DURATION)
+
+func switch_to_loop_music() -> void:
+	"""Alias for reset_to_loop - switch to loop music (main menu/lobby music)"""
+	reset_to_loop()

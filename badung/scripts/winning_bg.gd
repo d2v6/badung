@@ -20,33 +20,27 @@ func _ready() -> void:
 				current_level = int(level_num)
 				print("[WinningBg] Current level detected: ", current_level)
 	
-	# Connect button signals
+	# Connect button signals with ONE_SHOT to prevent multiple presses
 	if keluar_button:
-		keluar_button.pressed.connect(_on_keluar_pressed)
+		keluar_button.pressed.connect(_on_keluar_pressed, CONNECT_ONE_SHOT)
 		print("[WinningBg] Keluar button connected")
 	else:
 		print("[WinningBg] Warning: Keluar button not found!")
 	
 	if lanjut_button:
-		lanjut_button.pressed.connect(_on_lanjut_pressed)
+		lanjut_button.pressed.connect(_on_lanjut_pressed, CONNECT_ONE_SHOT)
 		print("[WinningBg] Lanjut button connected")
 	
 	if ulangi_button:
-		ulangi_button.pressed.connect(_on_ulangi_pressed)
+		ulangi_button.pressed.connect(_on_ulangi_pressed, CONNECT_ONE_SHOT)
 		print("[WinningBg] Ulangi button connected")
 
 func _on_keluar_pressed() -> void:
 	"""Handle Keluar (Exit) button press - go back to main menu"""
 	print("[WinningBg] Keluar button pressed - returning to main menu")
-	
-	# Use NavigationManager to go to main menu
-	var nav_manager = get_node_or_null("/root/NavigationManager")
-	if nav_manager:
-		nav_manager.goto_main_menu()
-	else:
-		# Fallback if NavigationManager not available
-		get_tree().paused = false
-		get_tree().change_scene_to_file("res://scene/menus/main_menu.tscn")
+	_reset_music_before_transition()
+	get_tree().paused = false
+	SceneTransition.change_scene("res://scene/menus/main_menu.tscn")
 
 func _on_lanjut_pressed() -> void:
 	"""Handle Lanjut (Continue) button press - proceed to next level"""
@@ -60,14 +54,24 @@ func _on_lanjut_pressed() -> void:
 	# Check if next level exists, otherwise go to level selection
 	var next_level_path = "res://scene/levels/level%d.tscn" % next_level
 	if ResourceLoader.exists(next_level_path):
+		_reset_music_before_transition()
 		SceneTransition.change_scene(next_level_path)
 	else:
 		# No more levels, go back to level selection
 		print("[WinningBg] No more levels. Returning to level selection.")
+		_reset_music_before_transition()
 		SceneTransition.change_scene("res://scene/level_selection/level_selection.tscn")
 
 func _on_ulangi_pressed() -> void:
 	"""Handle Ulangi (Retry) button press - restart current level"""
 	print("[WinningBg] Ulangi button pressed - restarting level")
+	_reset_music_before_transition()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _reset_music_before_transition() -> void:
+	"""Reset music to lobby/main menu music before transitioning"""
+	var music_manager = get_tree().get_first_node_in_group("music_manager")
+	if music_manager and music_manager.has_method("switch_to_loop_music"):
+		music_manager.switch_to_loop_music()
+		print("[WinningBg] Reset music to loop")

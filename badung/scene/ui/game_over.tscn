@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://w2iooaxir5ac"]
+[gd_scene load_steps=9 format=3 uid="uid://w2iooaxir5ac"]
 
 [ext_resource type="Script" uid="uid://dskxcjq7wl25h" path="res://scripts/game_over_overlay.gd" id="1_a3h4v"]
 [ext_resource type="Texture2D" uid="uid://7gwjc6lhc150" path="res://assets/sprites/berhasil.png" id="2_oq5cf"]
 [ext_resource type="Texture2D" uid="uid://donm8dbdt5o3e" path="res://assets/sprites/gagal.png" id="2_ssmgp"]
+[ext_resource type="Texture2D" uid="uid://vg2oe11t2g2t" path="res://assets/sprites/game_results/winning_button/lanjut-button.png" id="3_lanjut"]
+[ext_resource type="Texture2D" uid="uid://oxvm1jxw3wa0" path="res://assets/sprites/game_results/winning_button/lanjut-button-hover.png" id="4_lanjut_hover"]
+[ext_resource type="Texture2D" uid="uid://cd2apdoheomy4" path="res://assets/sprites/game_results/winning_button/keluar-button.png" id="5_keluar"]
+[ext_resource type="Texture2D" uid="uid://dis5p2xsb7c18" path="res://assets/sprites/game_results/winning_button/keluar-button-hover.png" id="6_keluar_hover"]
+[ext_resource type="Texture2D" uid="uid://cd1p46ywrwrv0" path="res://assets/sprites/game_results/winning_button/ulangi-button.png" id="7_ulangi"]
+[ext_resource type="Texture2D" uid="uid://nixoemjtj8fc" path="res://assets/sprites/game_results/winning_button/ulangi-button-hover.png" id="8_ulangi_hover"]
 
 [node name="GameOverOverlay" type="CanvasLayer"]
 layer = 100
@@ -33,26 +39,41 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.7)
 
-[node name="CenterContainer" type="CenterContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -5.0
-offset_top = -6.0
-offset_right = -5.0
-offset_bottom = -6.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Berhasil" type="Sprite2D" parent="Control/CenterContainer"]
+[node name="Berhasil" type="Sprite2D" parent="Control"]
 visible = false
-position = Vector2(566, 330)
-scale = Vector2(0.6234532, 0.6234533)
+position = Vector2(560, 360)
+scale = Vector2(0.55, 0.55)
 texture = ExtResource("2_oq5cf")
 
-[node name="Gagal" type="Sprite2D" parent="Control/CenterContainer"]
+[node name="Gagal" type="Sprite2D" parent="Control"]
 visible = false
-position = Vector2(567, 324)
-scale = Vector2(0.6293588, 0.6293588)
+position = Vector2(560, 360)
+scale = Vector2(0.55, 0.55)
 texture = ExtResource("2_ssmgp")
+
+[node name="Keluar" type="TextureButton" parent="."]
+offset_left = 624.0
+offset_top = 362.0
+offset_right = 959.0
+offset_bottom = 492.0
+texture_normal = ExtResource("5_keluar")
+texture_pressed = ExtResource("6_keluar_hover")
+texture_hover = ExtResource("6_keluar_hover")
+
+[node name="Ulangi" type="TextureButton" parent="."]
+offset_left = 626.0
+offset_top = 496.0
+offset_right = 959.0
+offset_bottom = 625.0
+texture_normal = ExtResource("7_ulangi")
+texture_pressed = ExtResource("8_ulangi_hover")
+texture_hover = ExtResource("8_ulangi_hover")
+
+[node name="Lanjut" type="TextureButton" parent="."]
+offset_left = 626.0
+offset_top = 626.0
+offset_right = 957.0
+offset_bottom = 754.0
+texture_normal = ExtResource("3_lanjut")
+texture_pressed = ExtResource("4_lanjut_hover")
+texture_hover = ExtResource("4_lanjut_hover")

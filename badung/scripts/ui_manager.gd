@@ -52,19 +52,10 @@ func get_stamina_bar() -> ProgressBar:
 
 func show_game_over_failure() -> void:
 	"""Show game over screen when player is caught"""
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		print("[UIManager] Error: Player not found!")
-		return
-
-	var camera = player.get_node_or_null("Camera")
-	if not camera:
-		print("[UIManager] Error: Camera not found on player!")
-		return
-	
 	# Load and instance the game over overlay
 	var GAME_OVER_OVERLAY = preload("res://scene/ui/game_over.tscn")
 	var overlay = GAME_OVER_OVERLAY.instantiate()
-	camera.add_child(overlay)
+	# Add it to the root scene so it renders properly
+	get_tree().root.add_child(overlay)
 	overlay.show_game_over(overlay.GameOverType.FAILURE)
 	print("[UIManager] Game Over screen shown - Player caught!")
