@@ -244,4 +244,6 @@ polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision"]
 polygon = PackedVector2Array(0, 0, 300, -100, 300, 100)
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
 [connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]

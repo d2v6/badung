@@ -7,6 +7,9 @@ const PATH_RECALC_DISTANCE = 50.0  # Recalculate path when this far from target
 
 var patrol_points: Array[Vector2] = []
 var current_patrol_index: int = 0
+var patrol_wait_timer: float = 0.0
+const PATROL_WAIT_TIME: float = 1.0
+var is_waiting_at_patrol: bool = false
 var is_chasing = false
 var stuck_timer = 0.0
 var last_position = Vector2.ZERO
@@ -30,9 +33,14 @@ var target_trap: Node2D = null
 var trap_investigation_timer: float = 0.0
 const TRAP_INVESTIGATION_TIME: float = 3.0
 
+# Report investigation
+var investigating_report: bool = false
+var reported_position: Vector2 = Vector2.ZERO
+var report_investigation_timer: float = 0.0
+const REPORT_INVESTIGATION_TIME: float = 3.0
+
 # Raycasts for wall detection
 var wall_raycasts = []
-var hunt_mode: bool = false  # True when player is reported - chase never cancels
 var has_caught_player: bool = false  # Prevent multiple catch triggers
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
@@ -97,31 +105,9 @@ func _physics_process(delta: float) -> void:
 	# Note: Traps notify Mom directly when activated (on_trap_activated)
 	# No need to scan for traps every frame
 
-	# Priority: Hunt mode > Player vision > Trap > Decoy > Wander
-	# Hunt mode: chase player regardless of vision (never cancels)
-	if hunt_mode:
-		var player = get_tree().get_first_node_in_group("player")
-		if player:
-			if not is_chasing:
-				# print("[Mom] Hunt mode active - chasing player!")
-				is_chasing = true
-				# Signal UP to GameManager that chase started
-				if GameManager:
-					GameManager.on_chase_started()
-			investigating_trap = false
-			investigating_decoy = false
-			investigating_last_position = false
-			chase_player(player, delta)
-		else:
-			# No player found, wander
-			if is_chasing:
-				is_chasing = false
-				# Signal UP to GameManager that chase ended
-				if GameManager:
-					GameManager.on_chase_ended()
-			patrol(delta)
-	# Normal mode: chase only when player in sight
-	elif player_in_sight and player_reference:
+	# Priority: Player vision > Report investigation > Last position > Trap > Decoy > Wander
+	# Chase only when player in sight
+	if player_in_sight and player_reference:
 		if not is_chasing:
 			# print("[Mom] Starting chase mode!")
 			is_chasing = true
@@ -134,6 +120,14 @@ func _physics_process(delta: float) -> void:
 		# Update last seen position while we can see the player
 		last_seen_position = player_reference.global_position
 		chase_player(player_reference, delta)
+	elif investigating_report:
+		# High priority: investigate reported position
+		if is_chasing:
+			is_chasing = false
+			# Signal UP to GameManager that chase ended
+			if GameManager:
+				GameManager.on_chase_ended()
+		investigate_reported_position(delta)
 	elif investigating_last_position:
 		# Medium-high priority: investigate last seen position after losing sight
 		if is_chasing:
@@ -209,6 +203,9 @@ func update_vision() -> void:
 	if is_chasing:
 		# Darker red when chasing player (more opaque and saturated)
 		vision_shape.modulate = Color(1, 0, 0, 0.5)  # Brighter/more opaque red
+	elif investigating_report:
+		# Purple when investigating report
+		vision_shape.modulate = Color(0.8, 0, 0.8, 0.4)  # Purple color
 	elif investigating_trap:
 		# Red/orange when investigating trap
 		vision_shape.modulate = Color(1, 0.4, 0, 0.4)  # Red-orange color
@@ -250,11 +247,6 @@ func _on_vision_body_entered(body: Node2D) -> void:
 
 func _on_vision_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and body == player_reference:
-		# Don't lose sight if in hunt mode - hunt never cancels
-		if hunt_mode:
-			# print("[Mom] Player exited vision but hunt mode active - continuing chase")
-			return
-		
 		# Don't immediately lose sight - vision cone rotates and player might still be visible
 		# print("[Mom] Player exited vision cone polygon")
 		# Vision will be lost only if we can't see player through walls anymore
@@ -277,10 +269,12 @@ func _on_catch_area_body_entered(body: Node2D) -> void:
 		if GameManager:
 			GameManager.on_player_caught()
 
-func activate_hunt_mode() -> void:
+func on_player_reported(player_position: Vector2) -> void:
 	"""Called by GameManager when player is reported - CALL DOWN pattern"""
-	hunt_mode = true
-	# print("[Mom] HUNT MODE ACTIVATED - Player reported! Chase will never cancel!")
+	investigating_report = true
+	reported_position = player_position
+	report_investigation_timer = 0.0
+	print("[Mom] Player reported at position: ", player_position)
 
 func chase_player(player: Node, _delta: float) -> void:
 	# Use A* pathfinding to chase player - update every frame for dynamic chase
@@ -316,7 +310,7 @@ func collect_patrol_points() -> void:
 	#else:
 		# print("[Mom] No patrol markers found!")
 
-func patrol(_delta: float) -> void:
+func patrol(delta: float) -> void:
 	if patrol_points.size() == 0:
 		# print("[Mom] No patrol points available!")
 		return
@@ -326,12 +320,25 @@ func patrol(_delta: float) -> void:
 	
 	# Check if we've reached the current patrol point
 	if global_position.distance_to(target) < 50.0:
-		# Move to next patrol point
-		current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
-		# print("[Mom] Reached patrol point! Moving to next: ", current_patrol_index)
+		if not is_waiting_at_patrol:
+			# Just arrived at patrol point, start waiting
+			is_waiting_at_patrol = true
+			patrol_wait_timer = 0.0
+			# print("[Mom] Reached patrol point! Waiting...")
+		else:
+			# Already waiting, increment timer
+			patrol_wait_timer += delta
+			if patrol_wait_timer >= PATROL_WAIT_TIME:
+				# Finished waiting, move to next patrol point
+				is_waiting_at_patrol = false
+				patrol_wait_timer = 0.0
+				current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
+				# print("[Mom] Moving to next patrol point: ", current_patrol_index)
 	
-	# NavigationAgent will find path through the navigation mesh to this point
-	set_navigation_target(target)
+	# Only set navigation target if not waiting
+	if not is_waiting_at_patrol:
+		# NavigationAgent will find path through the navigation mesh to this point
+		set_navigation_target(target)
 	
 	# Debug: Check if path is being calculated
 	# if not navigation_agent.is_navigation_finished():
@@ -371,9 +378,9 @@ func update_animation() -> void:
 # Trap detection and investigation functions
 func on_trap_activated(trap: Node2D) -> void:
 	"""Called by trap when player steps on it"""
-	# Don't investigate trap if chasing player or player is in sight
-	if hunt_mode or player_in_sight:
-		print("[Mom] Trap activated but ignoring - chasing player!")
+	# Don't investigate trap if chasing player or player is in sight or investigating report
+	if player_in_sight or investigating_report:
+		print("[Mom] Trap activated but ignoring - chasing/investigating player!")
 		return
 	
 	# If already investigating this trap, ignore
@@ -434,8 +441,8 @@ func check_for_decoys() -> void:
 					closest_distance = distance
 					closest_decoy = decoy
 
-	# If found a decoy, start investigating (but not if chasing player)
-	if closest_decoy and not hunt_mode and not player_in_sight:
+	# If found a decoy, start investigating (but not if chasing player or investigating report)
+	if closest_decoy and not player_in_sight and not investigating_report:
 		investigating_decoy = true
 		target_decoy = closest_decoy
 		print("[Mom] Detected decoy at ", closest_decoy.global_position)
@@ -502,6 +509,30 @@ func investigate_decoy(_delta: float) -> void:
 		investigating_decoy = false
 		target_decoy = null
 
+func investigate_reported_position(delta: float) -> void:
+	"""Move to reported position and wait before returning to patrol"""
+	if reported_position == Vector2.ZERO:
+		investigating_report = false
+		return
+	
+	# Set navigation target to reported position
+	navigation_agent.target_position = reported_position
+	
+	var distance_to_report = global_position.distance_to(reported_position)
+	
+	# If close enough to the reported position, start investigation timer
+	if distance_to_report < 50.0:
+		# Increment timer
+		report_investigation_timer += delta
+		print("[Mom] At reported location, investigating... (", report_investigation_timer, "/", REPORT_INVESTIGATION_TIME, " seconds)")
+		
+		# After waiting, resume patrol
+		if report_investigation_timer >= REPORT_INVESTIGATION_TIME:
+			print("[Mom] No player found at reported position - resuming patrol")
+			investigating_report = false
+			reported_position = Vector2.ZERO
+			report_investigation_timer = 0.0
+
 func investigate_last_position(_delta: float) -> void:
 	"""Move to last seen position of player before returning to patrol"""
 	if last_seen_position == Vector2.ZERO:
@@ -512,7 +543,7 @@ func investigate_last_position(_delta: float) -> void:
 	navigation_agent.target_position = last_seen_position
 	
 	# Check if we've reached the last seen position
-	if global_position.distance_to(last_seen_position) < 0.0:
+	if global_position.distance_to(last_seen_position) < 50.0:
 		# print("[Mom] Reached last seen position - resuming patrol")
 		investigating_last_position = false
 		last_seen_position = Vector2.ZERO

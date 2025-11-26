@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnfxn4qj6h57r"]
+
+[ext_resource type="Script" uid="uid://dpyl3loyi4u6b" path="res://scripts/actors/interactables/hiding_place.gd" id="1_wbd3v"]
+[ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="2_7myrt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fedu5"]
+radius = 57.428215
+
+[sub_resource type="Animation" id="Animation_scdjc"]
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i7ijm"]
+resource_name = "default"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nbup2"]
+_data = {
+&"RESET": SubResource("Animation_scdjc"),
+&"default": SubResource("Animation_i7ijm")
+}
+
+[node name="HidingPlace" type="Node2D"]
+script = ExtResource("1_wbd3v")
+
+[node name="HideArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HideArea"]
+shape = SubResource("CircleShape2D_fedu5")
+
+[node name="PickupPrompt" type="Sprite2D" parent="."]
+position = Vector2(0, -61)
+scale = Vector2(0.017283948, 0.017283948)
+texture = ExtResource("2_7myrt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PickupPrompt"]
+libraries = {
+&"": SubResource("AnimationLibrary_nbup2")
+}
+autoplay = "default"
+
+[node name="ShinyBackground" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.6, 0.4)
+z_index = -1
+scale = Vector2(0.8, 0.8)
+
+[node name="OuterCircle" type="Polygon2D" parent="ShinyBackground"]
+color = Color(1, 0.9, 0.5, 1)
+polygon = PackedVector2Array(0, -30, 8, -29, 15, -26, 21, -21, 26, -15, 29, -8, 30, 0, 29, 8, 26, 15, 21, 21, 15, 26, 8, 29, 0, 30, -8, 29, -15, 26, -21, 21, -26, 15, -29, 8, -30, 0, -29, -8, -26, -15, -21, -21, -15, -26, -8, -29, 0, -30)
+
+[node name="InnerGlow" type="Polygon2D" parent="ShinyBackground"]
+color = Color(1, 1, 0.8, 0.6)
+polygon = PackedVector2Array(0, -20, 6, -19, 10, -17, 14, -14, 17, -10, 19, -6, 20, 0, 19, 6, 17, 10, 14, 14, 10, 17, 6, 19, 0, 20, -6, 19, -10, 17, -14, 14, -17, 10, -19, 6, -20, 0, -19, -6, -17, -10, -14, -14, -10, -17, -6, -19, 0, -20)

@@ -8,7 +8,7 @@ var collected_keys: Array[String] = []  # Track which keys have been collected
 var mom_reference: CharacterBody2D = null
 
 # Level progression tracking
-var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
+var highest_level_unlocked: int = 3  # Level 1 always unlocked at start
 
 # Current level's door configuration
 var door_configs: Dictionary = {}
@@ -26,8 +26,21 @@ var level_door_configs: Dictionary = {
 		'DoorTamuV': {"is_locked": true, "required_key_id": "B"},
 	},
 	"level3": {
+		'DoorAnak': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaV': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuV': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuH': {"is_locked": false, "required_key_id": ""},
+		'DoorKamarMandi': {"is_locked": true, "required_key_id": "A"},
 	},
 	"level4": {
+		'DoorAnak': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaH': {"is_locked": false, "required_key_id": ""},
+		'DoorKakaV': {"is_locked": false, "required_key_id": ""},
+		'DoorTamuV': {"is_locked": true, "required_key_id": ""},
+		'DoorTamuH': {"is_locked": true, "required_key_id": "B"},
+		'DoorKamarMandi': {"is_locked": true, "required_key_id": "A"},
+		'DoorLivingV': {"is_locked": true, "required_key_id": "A"},
 	},
 	"level5": {
 	},
@@ -53,7 +66,7 @@ var level_dialogues: Dictionary = {
 		{"character": "Anak", "text": "Harus hati-hati juga sama mainan berantakan, kalo keinjek Emak bisa datang!", "show_character": true},
 	],
 	"level4": [
-		{"character": "Emak", "text": "Duh, dasar Si Badung! Tiap malam ada aja caranya dapet tablet!”", "show_character": true},
+		{"character": "Emak", "text": "Duh, dasar Si Badung! Tiap malam ada aja caranya dapet tablet!", "show_character": true},
 		{"character": "Emak", "text": "Butuh bantuan Kakak biar Si Badung gak kabur-kaburan lagi!", "show_character": true},
 	],
 	"level5": [
@@ -61,8 +74,8 @@ var level_dialogues: Dictionary = {
 		{"character": "Anak", "text": "Aha! Aku mau sembunyi-sembunyi di lemari, deh, biar gak ketauan!", "show_character": true},
 	],
 	"level6": [
-		{"character": "Anak", "text": "Sudah malam, tapi aku belum ngantuk..", "show_character": true},
-		{"character": "Anak", "text": "Pengen main Tablet, deh! Tapi Tabletnya disembunyiin, nih :(", "show_character": true},
+		{"character": "Emak", "text": "SI BADUNG! Kok masih bisa dapet tabletnya?!", "show_character": true},
+		{"character": "Emak", "text": "Mulai sekarang, lampu rumah bakal dimatiin biar Si Badung gak bisa ngambil tablet, lagi!", "show_character": true},
 	],
 }
 
@@ -178,10 +191,16 @@ func on_player_reported() -> void:
 	reported = true
 	print("GameManager: Player has been reported!")
 	
-	# Call DOWN to Mom to activate hunt mode
-	if mom_reference and mom_reference.has_method("activate_hunt_mode"):
-		mom_reference.activate_hunt_mode()
-		print("GameManager: Told Mom to activate hunt mode")
+	# Get player's current position
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		var player_position = player.global_position
+		# Call DOWN to Mom to investigate reported position
+		if mom_reference and mom_reference.has_method("on_player_reported"):
+			mom_reference.on_player_reported(player_position)
+			print("GameManager: Told Mom to investigate player at position: ", player_position)
+	else:
+		push_warning("GameManager: Player not found when trying to report position")
 
 func on_player_caught() -> void:
 	"""Called by Mom when player is caught - signals UP from Mom"""

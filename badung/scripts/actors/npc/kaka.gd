@@ -1,14 +1,11 @@
 extends CharacterBody2D
 
+@onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D
+
 # Movement settings
 const SPEED = 100.0
 const WANDER_RADIUS = 300.0  # How far from starting position to wander (smaller for single spot)
 const REPORT_TIME = 1.0  # How long to spot player before reporting
-
-# Wall avoidance settings
-const WALL_RAYCAST_DISTANCE = 50.0
-const WALL_AVOIDANCE_FORCE = 1.5
-const MAX_WALL_CHECK_ATTEMPTS = 5
 
 # Starting positions for each stage
 var stage_starting_positions = {
@@ -41,9 +38,6 @@ var stun_cooldown_timer: float = 0.0
 var is_playing_lempar: bool = false
 var stun_projectile_scene = preload("res://scene/interactables/stun_projectile.tscn")
 
-# Raycasts for wall detection
-var wall_raycasts = []
-
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var vision_area: Area2D = $Vision
 @onready var vision_shape: Polygon2D = $Vision/VisionPolygon
@@ -59,11 +53,14 @@ func _ready() -> void:
 	else:
 		starting_position = global_position
 	
-	# Create raycasts for wall detection
-	create_wall_raycasts()
+	# Configure navigation agent
+	navigation_agent_2d.max_speed = SPEED
+	navigation_agent_2d.path_desired_distance = 10.0
+	navigation_agent_2d.target_desired_distance = 20.0
 	
-	# Set initial wander target
-	choose_new_wander_target()
+	# Wait for navigation to be ready before setting target
+	call_deferred("_setup_navigation")
+	
 	last_position = global_position
 	
 	# Setup vision area collision - should detect player on layer 2
@@ -82,23 +79,13 @@ func _ready() -> void:
 	if animated_sprite:
 		animated_sprite.animation_finished.connect(_on_animation_finished)
 
-func create_wall_raycasts() -> void:
-	# Create raycasts in multiple directions (front, front-left, front-right, left, right)
-	var directions = [
-		Vector2.RIGHT,           # Front
-		Vector2.RIGHT.rotated(deg_to_rad(-45)),  # Front-right
-		Vector2.RIGHT.rotated(deg_to_rad(45)),   # Front-left
-		Vector2.RIGHT.rotated(deg_to_rad(-90)),  # Right
-		Vector2.RIGHT.rotated(deg_to_rad(90))    # Left
-	]
+func _setup_navigation() -> void:
+	# Wait for navigation to be ready
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	
-	for direction in directions:
-		var raycast = RayCast2D.new()
-		raycast.target_position = direction * WALL_RAYCAST_DISTANCE
-		raycast.enabled = true
-		raycast.collision_mask = 1  # Collide with physics layer 1 (walls)
-		add_child(raycast)
-		wall_raycasts.append(raycast)
+	# Set initial wander target
+	choose_new_wander_target()
 
 func _physics_process(delta: float) -> void:
 	# Update stun cooldown
@@ -157,19 +144,20 @@ func _physics_process(delta: float) -> void:
 		# Stop moving when tracking player
 		velocity = Vector2.ZERO
 	else:
-		# Check if stuck (not moving much)
-		check_if_stuck(delta)
-		
+		# Wander using navigation
 		wander(delta)
 		
-		# Apply wall avoidance
-		var avoidance = calculate_wall_avoidance()
-		if avoidance != Vector2.ZERO:
-			velocity += avoidance
-		
-		# Rotate vision cone to match movement direction
-		if velocity.length() > 10.0:
-			update_vision_direction()
+		# Move along navigation path
+		if not navigation_agent_2d.is_navigation_finished():
+			var next_position = navigation_agent_2d.get_next_path_position()
+			var direction = (next_position - global_position).normalized()
+			velocity = direction * SPEED
+			
+			# Rotate vision cone to match movement direction
+			if velocity.length() > 10.0:
+				update_vision_direction()
+		else:
+			velocity = Vector2.ZERO
 	
 	move_and_slide()
 	
@@ -288,96 +276,35 @@ func report_player() -> void:
 		GameManager.on_player_reported()
 		print("[Kaka] Successfully reported player to GameManager")
 
-func check_if_stuck(delta: float) -> void:
-	# Check if mom hasn't moved much
-	var distance_moved = global_position.distance_to(last_position)
-	
-	if distance_moved < 5.0:  # Barely moved
-		stuck_timer += delta
-		if stuck_timer > 1.0:  # Stuck for 1 second
-			# Choose new target or reverse direction
-			stuck_timer = 0.0
-	else:
-		stuck_timer = 0.0
 
-func calculate_wall_avoidance() -> Vector2:
-	var avoidance_vector = Vector2.ZERO
-	
-	# Update raycast directions based on current velocity
-	var move_direction = velocity.normalized()
-	if move_direction == Vector2.ZERO:
-		move_direction = Vector2.RIGHT
-	
-	# Check each raycast
-	for i in range(wall_raycasts.size()):
-		var raycast: RayCast2D = wall_raycasts[i]
-		
-		# Rotate raycast to match movement direction
-		var base_angle = 0.0
-		match i:
-			0: base_angle = 0.0        # Front
-			1: base_angle = -45.0      # Front-right
-			2: base_angle = 45.0       # Front-left
-			3: base_angle = -90.0      # Right
-			4: base_angle = 90.0       # Left
-		
-		var direction_angle = move_direction.angle()
-		raycast.target_position = Vector2.RIGHT.rotated(direction_angle + deg_to_rad(base_angle)) * WALL_RAYCAST_DISTANCE
-		raycast.force_raycast_update()
-		
-		if raycast.is_colliding():
-			# Get the collision point and normal
-			var collision_point = raycast.get_collision_point()
-			var collision_normal = raycast.get_collision_normal()
-			
-			# Calculate avoidance force based on distance to wall
-			var distance_to_wall = global_position.distance_to(collision_point)
-			var avoidance_strength = 1.0 - (distance_to_wall / WALL_RAYCAST_DISTANCE)
-			avoidance_strength = clamp(avoidance_strength, 0.0, 1.0)
-			
-			# Add avoidance in the direction of the wall's normal
-			avoidance_vector += collision_normal * avoidance_strength * WALL_AVOIDANCE_FORCE * SPEED
-	
-	return avoidance_vector
 
 func wander(delta: float) -> void:
 	wander_timer -= delta
 	
 	# Check if reached wander target or time to choose new target
-	if global_position.distance_to(wander_target) < 20.0 or wander_timer <= 0:
+	if navigation_agent_2d.is_navigation_finished() or wander_timer <= 0:
 		choose_new_wander_target()
 		wander_timer = wander_interval
-	
-	# Move towards wander target
-	var direction = (wander_target - global_position).normalized()
-	velocity = direction * SPEED
 
 func choose_new_wander_target() -> void:
-	# Try multiple times to find a valid wander target that doesn't hit walls
-	for attempt in range(MAX_WALL_CHECK_ATTEMPTS):
-		# Choose random point within wander radius from starting position
-		var random_angle = randf() * TAU  # Random angle in radians
-		var random_distance = randf() * WANDER_RADIUS
-		
-		var offset = Vector2(
-			cos(random_angle) * random_distance,
-			sin(random_angle) * random_distance
-		)
-		
-		var potential_target = starting_position + offset
-		
-		# Check if path to target is clear
-		if is_path_clear(global_position, potential_target):
-			wander_target = potential_target
-			return
+	# Choose random point within wander radius from starting position
+	var random_angle = randf() * TAU  # Random angle in radians
+	var random_distance = randf() * WANDER_RADIUS
 	
-	# If no clear path found after max attempts, just pick a random nearby point
-	var fallback_angle = randf() * TAU
-	var fallback_distance = 50.0
-	wander_target = global_position + Vector2(
-		cos(fallback_angle) * fallback_distance,
-		sin(fallback_angle) * fallback_distance
+	var offset = Vector2(
+		cos(random_angle) * random_distance,
+		sin(random_angle) * random_distance
 	)
+	
+	var potential_target = starting_position + offset
+	
+	# Use NavigationServer to find nearest reachable point on navmesh
+	var map = navigation_agent_2d.get_navigation_map()
+	var reachable_target = NavigationServer2D.map_get_closest_point(map, potential_target)
+	
+	# Set navigation target
+	navigation_agent_2d.target_position = reachable_target
+	wander_target = reachable_target
 
 func is_path_clear(from: Vector2, to: Vector2) -> bool:
 	# Use the physics space to check if there's a wall between two points
