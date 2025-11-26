@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://modgteth0cdm"
-path="res://.godot/imported/logo.png-fa4f2828b1b8ff425dd793328e25d3a2.ctex"
+uid="uid://chaoommguqsho"
+path="res://.godot/imported/L4.PNG-cbdce99576ceabc6bc01e74953f8bca5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/logo/logo.png"
-dest_files=["res://.godot/imported/logo.png-fa4f2828b1b8ff425dd793328e25d3a2.ctex"]
+source_file="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L4.PNG"
+dest_files=["res://.godot/imported/L4.PNG-cbdce99576ceabc6bc01e74953f8bca5.ctex"]
 
 [params]
 

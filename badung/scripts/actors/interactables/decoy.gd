@@ -199,10 +199,8 @@ func throw_decoy(direction: Vector2) -> void:
 	# Reset rotation
 	rotation = 0.0
 
-	# Enable detection area
-	if detection_area:
-		detection_area.monitoring = true
-		detection_area.monitorable = true
+	# Detection area will be enabled when landing (in force_landing)
+	# Keep it disabled during flight
 
 	# Notify player
 	if player_reference and player_reference.has_method("on_decoy_thrown"):
@@ -291,6 +289,11 @@ func force_landing() -> void:
 	set_collision_mask_value(1, false)
 
 	# Keep pickup area DISABLED - decoy is now attracting mom
+
+	# Enable detection area NOW - decoy can attract mom after landing
+	if detection_area:
+		detection_area.monitoring = true
+		detection_area.monitorable = true
 
 	# Show shiny background when attracting mom (red/orange glow)
 	if shiny_background:
@@ -390,3 +393,7 @@ func get_is_active() -> bool:
 
 func get_is_thrown() -> bool:
 	return is_thrown
+
+func get_has_landed() -> bool:
+	"""Returns whether the decoy has landed (stopped moving)"""
+	return is_landing

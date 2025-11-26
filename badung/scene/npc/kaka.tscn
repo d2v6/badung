@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bcf7cy8kf5xwn"]
+[gd_scene load_steps=48 format=3 uid="uid://bcf7cy8kf5xwn"]
 
 [ext_resource type="Script" uid="uid://yhlwosddjacr" path="res://scripts/actors/npc/kaka.gd" id="1_d4s0l"]
 [ext_resource type="Texture2D" uid="uid://gqj4ugvwcb3g" path="res://assets/sprites/Aset Karakter & animasi/BAYANGAN KARAKTER ANIMATED/bayangan-1.png" id="2_3ki67"]
@@ -25,12 +25,19 @@
 [ext_resource type="Texture2D" uid="uid://clius27f7nn4i" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j7.PNG" id="15_ajdh7"]
 [ext_resource type="Texture2D" uid="uid://cc453hmx7t1vd" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j8.PNG" id="16_i2ol4"]
 [ext_resource type="Texture2D" uid="uid://2x0o71n0to2g" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j9.PNG" id="17_va341"]
+[ext_resource type="Texture2D" uid="uid://cmkolqrd6h2u7" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L1.PNG" id="17_wiqie"]
+[ext_resource type="Texture2D" uid="uid://bknhhhqy4f418" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L2.PNG" id="18_ryj8u"]
 [ext_resource type="Texture2D" uid="uid://rtvbkrl8ybc1" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j10.PNG" id="18_wiqie"]
+[ext_resource type="Texture2D" uid="uid://cpo1onrdls87a" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L3.PNG" id="19_jri68"]
 [ext_resource type="Texture2D" uid="uid://dpf31el85qo5" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/JALAN NORMAL/j11.PNG" id="19_ryj8u"]
+[ext_resource type="Texture2D" uid="uid://chaoommguqsho" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L4.PNG" id="20_1u6nw"]
 [ext_resource type="Texture2D" uid="uid://b626kf0ovggnt" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9788.PNG" id="20_jri68"]
 [ext_resource type="Texture2D" uid="uid://cgx85hul1r751" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9789.PNG" id="21_1u6nw"]
+[ext_resource type="Texture2D" uid="uid://di7wsms27utej" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L5.PNG" id="21_id4eh"]
+[ext_resource type="Texture2D" uid="uid://c2rmv1vgr0h73" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L6.PNG" id="22_f3hv2"]
 [ext_resource type="Texture2D" uid="uid://csmov7accqshc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9790.PNG" id="22_id4eh"]
 [ext_resource type="Texture2D" uid="uid://dnj0ium4vfkfg" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9791.PNG" id="23_f3hv2"]
+[ext_resource type="Texture2D" uid="uid://cd8p4v3uyxp4k" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/LEMPAR/L7.PNG" id="23_ly36b"]
 [ext_resource type="Texture2D" uid="uid://cheg6ulqok8oc" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9792.PNG" id="24_ly36b"]
 [ext_resource type="Texture2D" uid="uid://c8o0fgrh4cg65" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9793.PNG" id="25_hfcgt"]
 [ext_resource type="Texture2D" uid="uid://dalin8otlxsen" path="res://assets/sprites/Aset Karakter & animasi/ANIMASI KAKAK/NUNJUK DIEM/IMG_9794.PNG" id="26_1kfu3"]
@@ -96,6 +103,32 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_wiqie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ryj8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_jri68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_1u6nw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_id4eh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_f3hv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ly36b")
+}],
+"loop": false,
+"name": &"lempar",
 "speed": 8.0
 }, {
 "frames": [{
@@ -187,12 +220,13 @@ autoplay = "default"
 frame_progress = 0.69430345
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-0.99999976, -7.0000076)
-scale = Vector2(0.09796163, 0.09796163)
+position = Vector2(-1, -7)
+scale = Vector2(0.09, 0.09)
 sprite_frames = SubResource("SpriteFrames_kk4ol")
-animation = &"idle"
+animation = &"lempar"
 autoplay = "idle"
-frame_progress = 0.8980341
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -17)
@@ -200,6 +234,8 @@ shape = SubResource("CircleShape2D_4reak")
 
 [node name="Vision" type="Area2D" parent="."]
 position = Vector2(0, -17)
+collision_layer = 0
+collision_mask = 2
 
 [node name="VisionPolygon" type="Polygon2D" parent="Vision"]
 color = Color(0, 1, 0, 0.3)

@@ -24,6 +24,12 @@ var investigating_last_position: bool = false
 var investigating_decoy: bool = false
 var target_decoy: Node2D = null
 
+# Trap detection
+var investigating_trap: bool = false
+var target_trap: Node2D = null
+var trap_investigation_timer: float = 0.0
+const TRAP_INVESTIGATION_TIME: float = 3.0
+
 # Raycasts for wall detection
 var wall_raycasts = []
 var hunt_mode: bool = false  # True when player is reported - chase never cancels
@@ -36,6 +42,8 @@ var has_caught_player: bool = false  # Prevent multiple catch triggers
 @onready var catch_area: Area2D = $CatchArea
 
 func _ready() -> void:
+	add_to_group("mom")  # Add to mom group so traps can notify us
+	
 	# Configure navigation agent
 	navigation_agent.max_speed = CHASE_SPEED
 	
@@ -85,8 +93,11 @@ func _physics_process(delta: float) -> void:
 
 	# Check for active decoys
 	check_for_decoys()
+	
+	# Note: Traps notify Mom directly when activated (on_trap_activated)
+	# No need to scan for traps every frame
 
-	# Priority: Hunt mode > Player vision > Decoy > Wander
+	# Priority: Hunt mode > Player vision > Trap > Decoy > Wander
 	# Hunt mode: chase player regardless of vision (never cancels)
 	if hunt_mode:
 		var player = get_tree().get_first_node_in_group("player")
@@ -97,6 +108,7 @@ func _physics_process(delta: float) -> void:
 				# Signal UP to GameManager that chase started
 				if GameManager:
 					GameManager.on_chase_started()
+			investigating_trap = false
 			investigating_decoy = false
 			investigating_last_position = false
 			chase_player(player, delta)
@@ -116,6 +128,7 @@ func _physics_process(delta: float) -> void:
 			# Signal UP to GameManager that chase started
 			if GameManager:
 				GameManager.on_chase_started()
+		investigating_trap = false
 		investigating_decoy = false
 		investigating_last_position = false
 		# Update last seen position while we can see the player
@@ -129,6 +142,16 @@ func _physics_process(delta: float) -> void:
 			if GameManager:
 				GameManager.on_chase_ended()
 		investigate_last_position(delta)
+	elif investigating_trap and target_trap:
+		# Medium-high priority: investigate trap (higher than decoy)
+		if is_chasing:
+			is_chasing = false
+			# Signal UP to GameManager that chase ended
+			if GameManager:
+				GameManager.on_chase_ended()
+		var trap_pos = target_trap.get_target_position() if target_trap.has_method("get_target_position") else target_trap.global_position
+		print("[Mom] Physics: My pos=", global_position, " Trap pos=", trap_pos, " instance=", target_trap.get_instance_id())
+		investigate_trap(delta)
 	elif investigating_decoy and target_decoy:
 		# Medium priority: investigate decoy
 		if is_chasing:
@@ -145,6 +168,7 @@ func _physics_process(delta: float) -> void:
 			# Signal UP to GameManager that chase ended
 			if GameManager:
 				GameManager.on_chase_ended()
+		investigating_trap = false
 		investigating_decoy = false
 		investigating_last_position = false
 		patrol(delta)
@@ -185,6 +209,9 @@ func update_vision() -> void:
 	if is_chasing:
 		# Darker red when chasing player (more opaque and saturated)
 		vision_shape.modulate = Color(1, 0, 0, 0.5)  # Brighter/more opaque red
+	elif investigating_trap:
+		# Red/orange when investigating trap
+		vision_shape.modulate = Color(1, 0.4, 0, 0.4)  # Red-orange color
 	elif investigating_decoy:
 		# Orange/yellow when investigating decoy
 		vision_shape.modulate = Color(1, 0.7, 0, 0.4)  # Orange color
@@ -341,6 +368,40 @@ func update_animation() -> void:
 		if animated_sprite.animation != "idle":
 			animated_sprite.play("idle")
 
+# Trap detection and investigation functions
+func on_trap_activated(trap: Node2D) -> void:
+	"""Called by trap when player steps on it"""
+	# Don't investigate trap if chasing player or player is in sight
+	if hunt_mode or player_in_sight:
+		print("[Mom] Trap activated but ignoring - chasing player!")
+		return
+	
+	# If already investigating this trap, ignore
+	if investigating_trap and target_trap == trap:
+		return
+	
+	# Start investigating this specific trap
+	investigating_trap = true
+	target_trap = trap
+	trap_investigation_timer = 0.0  # Reset timer
+	var trap_pos = trap.get_target_position() if trap.has_method("get_target_position") else trap.global_position
+	print("[Mom] Trap activated at ", trap_pos, " (instance ", trap.get_instance_id(), ")")
+	print("[Mom] My position: ", global_position, " - Distance: ", global_position.distance_to(trap_pos))
+
+func check_trap_status() -> void:
+	"""Check if current trap is still valid"""
+	if investigating_trap and target_trap:
+		if not is_instance_valid(target_trap):
+			# Trap was deleted
+			investigating_trap = false
+			target_trap = null
+			print("[Mom] Trap deleted, resuming patrol")
+		elif target_trap.has_method("get_is_active") and not target_trap.get_is_active():
+			# Trap is no longer active
+			investigating_trap = false
+			target_trap = null
+			print("[Mom] Trap deactivated, resuming patrol")
+
 # Decoy detection and investigation functions
 func check_for_decoys() -> void:
 	# If already investigating a valid active decoy, keep investigating
@@ -363,9 +424,9 @@ func check_for_decoys() -> void:
 	var closest_distance: float = INF
 
 	for decoy in decoys:
-		# Check if decoy is thrown and active
-		if decoy.has_method("get_is_active") and decoy.has_method("get_is_thrown"):
-			if decoy.get_is_active() and decoy.get_is_thrown():
+		# Check if decoy is thrown, active, AND has landed
+		if decoy.has_method("get_is_active") and decoy.has_method("get_is_thrown") and decoy.has_method("get_has_landed"):
+			if decoy.get_is_active() and decoy.get_is_thrown() and decoy.get_has_landed():
 				var distance = global_position.distance_to(decoy.global_position)
 
 				# Find the closest active decoy
@@ -373,11 +434,47 @@ func check_for_decoys() -> void:
 					closest_distance = distance
 					closest_decoy = decoy
 
-	# If found a decoy, start investigating
-	if closest_decoy:
+	# If found a decoy, start investigating (but not if chasing player)
+	if closest_decoy and not hunt_mode and not player_in_sight:
 		investigating_decoy = true
 		target_decoy = closest_decoy
-		# print("[Mom] Detected decoy at ", closest_decoy.global_position, "! Investigating...")
+		print("[Mom] Detected decoy at ", closest_decoy.global_position)
+		print("[Mom] My position: ", global_position, " - Distance: ", global_position.distance_to(closest_decoy.global_position))
+
+func investigate_trap(delta: float) -> void:
+	if not target_trap or not is_instance_valid(target_trap):
+		print("[Mom] Trap investigation stopped - trap invalid")
+		investigating_trap = false
+		target_trap = null
+		trap_investigation_timer = 0.0
+		return
+
+	# Get the actual target position (detection area position, not trap node position)
+	var trap_target_pos = target_trap.get_target_position() if target_trap.has_method("get_target_position") else target_trap.global_position
+
+	# Move towards the trap using navigation (same as decoy for smooth movement)
+	var distance_to_trap = global_position.distance_to(trap_target_pos)
+	print("[Mom] Mom pos=", global_position, " Trap pos=", trap_target_pos, " Distance=", distance_to_trap)
+	
+	# Set navigation target - updates every frame for smooth tracking
+	navigation_agent.target_position = trap_target_pos
+
+	# If close enough to the trap, start the investigation timer
+	if distance_to_trap < 30.0:
+		# Increment timer
+		trap_investigation_timer += delta
+		print("[Mom] At trap location, investigating... (", trap_investigation_timer, "/", TRAP_INVESTIGATION_TIME, " seconds)")
+		
+		# After waiting for 3 seconds, deactivate and resume patrol
+		if trap_investigation_timer >= TRAP_INVESTIGATION_TIME:
+			var trap_pos = target_trap.get_target_position() if target_trap.has_method("get_target_position") else target_trap.global_position
+			print("[Mom] Finished investigating trap instance ", target_trap.get_instance_id(), " at ", trap_pos, "! Deactivating and resuming patrol")
+			# Deactivate the trap now that we've investigated it
+			if target_trap.has_method("deactivate_trap"):
+				target_trap.deactivate_trap()
+			investigating_trap = false
+			target_trap = null
+			trap_investigation_timer = 0.0
 
 func investigate_decoy(_delta: float) -> void:
 	if not target_decoy or not is_instance_valid(target_decoy):
@@ -394,12 +491,13 @@ func investigate_decoy(_delta: float) -> void:
 
 	# Move towards the decoy using navigation
 	var distance_to_decoy = global_position.distance_to(target_decoy.global_position)
+	print("[Mom] Mom pos=", global_position, " Decoy pos=", target_decoy.global_position, " Distance=", distance_to_decoy)
 	
 	# Set navigation target
 	navigation_agent.target_position = target_decoy.global_position
 
 	# If close enough to the decoy, we've finished investigating
-	if distance_to_decoy < 30.0:
+	if distance_to_decoy < 5.0:
 		# print("[Mom] Reached decoy location, resuming patrol")
 		investigating_decoy = false
 		target_decoy = null

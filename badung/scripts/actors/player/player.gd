@@ -22,11 +22,40 @@ var current_interactable: Node2D = null
 var is_running_previously: bool = false
 var is_moving_previously: bool = false
 
+# Stun state
+var is_stunned: bool = false
+var stun_timer: float = 0.0
+const STUN_DURATION: float = 2.0
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	print("[Player] Ready - UIManager should be autoloaded")
 
 func _physics_process(_delta: float) -> void:
+	# Handle stun state - MUST be first to prevent any movement
+	if is_stunned:
+		stun_timer -= _delta
+		if stun_timer <= 0:
+			is_stunned = false
+			print("[Player] Stun ended")
+			# Reset back to idle animation
+			if idle_sprite:
+				idle_sprite.visible = true
+				idle_sprite.play("idle")
+			if movement_sprite:
+				movement_sprite.visible = false
+		else:
+			# Stay stunned - can't move, show dizzy animation
+			velocity = Vector2.ZERO
+			if idle_sprite:
+				idle_sprite.visible = true
+				if idle_sprite.animation != "dizzy":
+					idle_sprite.play("dizzy")
+			if movement_sprite:
+				movement_sprite.visible = false
+			move_and_slide()
+			return  # Exit early - no input processing while stunned
+	
 	var direction = Vector2(
 		Input.get_axis("left", "right"),
 		Input.get_axis("up", "down")
@@ -223,6 +252,28 @@ func on_key_picked_up(key_id: String) -> void:
 	"""Called when player picks up a key"""
 	held_keys.append(key_id)
 	print("Player now has keys: ", held_keys)
-	# Notify GameManager
-	if GameManager:
-		GameManager.on_key_collected(key_id)
+
+func apply_stun() -> void:
+	"""Called by stun projectile to stun the player"""
+	if is_stunned:
+		return  # Already stunned
+	
+	is_stunned = true
+	stun_timer = STUN_DURATION
+	print("[Player] Stunned for ", STUN_DURATION, " seconds!")
+	
+	# Stop movement immediately
+	velocity = Vector2.ZERO
+	
+	# Play dizzy animation (which is the idle animation)
+	if idle_sprite:
+		idle_sprite.visible = true
+		idle_sprite.play("dizzy")  # dizzy animation
+	if movement_sprite:
+		movement_sprite.visible = false
+	
+	# Stop all sounds
+	if walking_sfx and walking_sfx.playing:
+		walking_sfx.stop()
+	if running_sfx and running_sfx.playing:
+		running_sfx.stop()

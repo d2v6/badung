@@ -32,6 +32,15 @@ var player_reference: CharacterBody2D = null
 var spot_timer: float = 0.0
 var has_reported: bool = false
 
+# Stun throw settings
+const STUN_THROW_TIME = 0.5  # Time before throwing (shorter than report time)
+const STUN_COOLDOWN = 3.0  # Cooldown between throws
+var stun_throw_timer: float = 0.0
+var has_thrown_stun: bool = false
+var stun_cooldown_timer: float = 0.0
+var is_playing_lempar: bool = false
+var stun_projectile_scene = preload("res://scene/interactables/stun_projectile.tscn")
+
 # Raycasts for wall detection
 var wall_raycasts = []
 
@@ -57,13 +66,21 @@ func _ready() -> void:
 	choose_new_wander_target()
 	last_position = global_position
 	
-	# Connect vision area signals
+	# Setup vision area collision - should detect player on layer 2
 	if vision_area:
+		vision_area.collision_layer = 0  # Vision doesn't need to be on any layer
+		vision_area.collision_mask = 2   # Detect player on layer 2
 		vision_area.body_entered.connect(_on_vision_body_entered)
 		vision_area.body_exited.connect(_on_vision_body_exited)
+		print("[Kaka] Vision area configured - detecting layer 2 (player)")
 		
 		# Make vision area visible with default color (green for not detecting)
-		vision_shape.modulate = Color(0, 1, 0, 0.3)  # Green with transparency
+		if vision_shape:
+			vision_shape.modulate = Color(0, 1, 0, 0.3)  # Green with transparency
+	
+	# Connect animation finished signal
+	if animated_sprite:
+		animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func create_wall_raycasts() -> void:
 	# Create raycasts in multiple directions (front, front-left, front-right, left, right)
@@ -84,20 +101,34 @@ func create_wall_raycasts() -> void:
 		wall_raycasts.append(raycast)
 
 func _physics_process(delta: float) -> void:
+	# Update stun cooldown
+	if stun_cooldown_timer > 0:
+		stun_cooldown_timer -= delta
+	
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
 		# Verify line of sight is still clear
 		if not is_path_clear(global_position, player_reference.global_position):
 			# Wall is blocking, lose sight
 			player_in_sight = false
+			player_reference = null
 			spot_timer = 0.0
-			print("Kaka: Lost sight - wall blocking!")
+			stun_throw_timer = 0.0
+			has_thrown_stun = false
+			print("[Kaka] Lost sight - wall blocking!")
 			if vision_shape and not has_reported:
 				vision_shape.modulate = Color(0, 1, 0, 0.3)  # Back to green
 	
-	# Update spot timer if player is in sight
+	# Update spot timer and stun throw timer if player is in sight
 	if player_in_sight and player_reference and not has_reported:
 		spot_timer += delta
+		stun_throw_timer += delta
+		
+		# Throw stun projectile after STUN_THROW_TIME (before reporting)
+		if stun_throw_timer >= STUN_THROW_TIME and not has_thrown_stun and stun_cooldown_timer <= 0:
+			has_thrown_stun = true
+			throw_stun_projectile()
+			stun_cooldown_timer = STUN_COOLDOWN
 		
 		# Update vision color based on spot progress
 		var progress = spot_timer / REPORT_TIME
@@ -181,31 +212,65 @@ func update_vision_direction() -> void:
 func _on_vision_body_entered(body: Node2D) -> void:
 	# Check if it's the player
 	if body.is_in_group("player"):
+		print("[Kaka] Player detected in vision area!")
 		# Check if there's a clear line of sight (no walls blocking)
 		if is_path_clear(global_position, body.global_position):
 			player_in_sight = true
 			player_reference = body
 			spot_timer = 0.0
-			print("Kaka: Player entered vision!")
+			stun_throw_timer = 0.0
+			has_thrown_stun = false
+			print("[Kaka] Player entered vision - starting timer!")
 			# Change vision color to yellow (warning)
 			if vision_shape:
 				vision_shape.modulate = Color(1, 1, 0, 0.3)
 		else:
-			print("Kaka: Player in area but blocked by wall")
+			print("[Kaka] Player in area but blocked by wall")
 
 func _on_vision_body_exited(body: Node2D) -> void:
 	# Check if it's the player leaving
 	if body.is_in_group("player") and body == player_reference:
-		player_in_sight = false
-		player_reference = null
-		spot_timer = 0.0
-		print("Kaka: Player left vision!")
-		# Change vision color back to green (safe)
-		if vision_shape and not has_reported:
-			vision_shape.modulate = Color(0, 1, 0, 0.3)
+		# Don't immediately lose sight - check if still visible
+		if not is_path_clear(global_position, body.global_position):
+			player_in_sight = false
+			player_reference = null
+			spot_timer = 0.0
+			print("[Kaka] Player left vision!")
+			# Change vision color back to green (safe)
+			if vision_shape and not has_reported:
+				vision_shape.modulate = Color(0, 1, 0, 0.3)
+
+func throw_stun_projectile() -> void:
+	"""Throw a stun projectile at the player"""
+	if not player_reference:
+		return
+	
+	print("[Kaka] Throwing stun projectile at player!")
+	
+	# Play lempar animation
+	if animated_sprite and animated_sprite.sprite_frames.has_animation("lempar"):
+		animated_sprite.play("lempar")
+		is_playing_lempar = true
+		print("[Kaka] Playing lempar animation")
+	
+	# Instantiate stun projectile
+	var projectile = stun_projectile_scene.instantiate()
+	get_tree().current_scene.add_child(projectile)
+	
+	# Calculate throw direction (aim at player's current position)
+	var throw_direction = (player_reference.global_position - global_position).normalized()
+	
+	# Spawn projectile slightly in front of Kaka
+	var spawn_offset = 30.0
+	var spawn_position = global_position + throw_direction * spawn_offset
+	
+	# Throw the projectile
+	if projectile.has_method("throw_projectile"):
+		projectile.throw_projectile(spawn_position, throw_direction)
+		print("[Kaka] Projectile thrown!")
 
 func report_player() -> void:
-	print("Kaka: Player spotted for too long! Reporting...")
+	print("[Kaka] Player spotted for too long! Reporting to Mom...")
 	
 	# Play tunjuk animation
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("tunjuk"):
@@ -214,6 +279,7 @@ func report_player() -> void:
 	# Signal UP to GameManager (signal up, call down pattern)
 	if GameManager:
 		GameManager.on_player_reported()
+		print("[Kaka] Successfully reported player to GameManager")
 
 func check_if_stuck(delta: float) -> void:
 	# Check if mom hasn't moved much
@@ -325,8 +391,10 @@ func update_animation() -> void:
 	if not animated_sprite:
 		return
 	
-	# Don't override tunjuk animation if it's playing
+	# Don't override tunjuk or lempar animations if they're playing
 	if has_reported and animated_sprite.animation == "tunjuk":
+		return
+	if is_playing_lempar:
 		return
 	
 	# Check if kaka is moving
@@ -346,3 +414,10 @@ func update_animation() -> void:
 		# Play idle animation when stopped
 		if animated_sprite.animation != "idle" and animated_sprite.animation != "tunjuk":
 			animated_sprite.play("idle")
+
+func _on_animation_finished() -> void:
+	"""Called when any animation finishes"""
+	if animated_sprite and animated_sprite.animation == "lempar":
+		is_playing_lempar = false
+		animated_sprite.play("idle")
+		print("[Kaka] Lempar animation finished, returning to idle")
