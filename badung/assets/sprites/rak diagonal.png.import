@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://modgteth0cdm"
-path="res://.godot/imported/logo.PNG-6cb6970f0698fb0314a690af3823c607.ctex"
+uid="uid://cfpx1rf73aynk"
+path="res://.godot/imported/rak diagonal.png-357917fd47434d1783f923160461222a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/logo/logo.PNG"
-dest_files=["res://.godot/imported/logo.PNG-6cb6970f0698fb0314a690af3823c607.ctex"]
+source_file="res://assets/sprites/rak diagonal.png"
+dest_files=["res://.godot/imported/rak diagonal.png-357917fd47434d1783f923160461222a.ctex"]
 
 [params]
 

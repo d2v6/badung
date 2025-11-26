@@ -1,19 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bo3nnn5jqhgd2"]
+[gd_scene load_steps=2 format=3 uid="uid://dtuce2wpvv1kk"]
 
-[ext_resource type="Script" uid="uid://kgw81kjmf3vf" path="res://scripts/actors/interactables/trap.gd" id="1_trap_script"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mmkxw"]
+[ext_resource type="Script" path="res://scripts/actors/interactables/trap.gd" id="1_trap_script"]
 
 [node name="Trap" type="Node2D"]
 script = ExtResource("1_trap_script")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_mmkxw")
-
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
-monitoring = true
 monitorable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DetectionArea"]
