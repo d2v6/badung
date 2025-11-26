@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbj3t4s8x5gyr"]
+
+[ext_resource type="Texture2D" uid="uid://rn5mx8f6kqhp" path="res://assets/sprites/dialogue/anak.png" id="1_h48pk"]
+[ext_resource type="Script" uid="uid://driuya7wyud5p" path="res://scripts/systems/ui/dialogue_overlay.gd" id="1_y75rb"]
+[ext_resource type="Texture2D" uid="uid://b5xypkc8otld6" path="res://assets/sprites/dialogue/emak.png" id="2_6c2s7"]
+[ext_resource type="Texture2D" uid="uid://buk4qys07o61h" path="res://assets/sprites/dialogue/textbar.png" id="3_4b4v1"]
+[ext_resource type="FontFile" uid="uid://boaocjh7xh734" path="res://assets/fonts/MochiyPopOne-Regular.ttf" id="4_4b4v1"]
+
+[sub_resource type="Gradient" id="Gradient_6c2s7"]
+colors = PackedColorArray(0.2, 0.17254902, 0.48235294, 0.5882353, 0.2, 0.17254902, 0.48235294, 0.5882353)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4b4v1"]
+gradient = SubResource("Gradient_6c2s7")
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_y75rb")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1600.0
+offset_bottom = 900.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -18.0
+offset_right = 2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4b4v1")
+
+[node name="anak" type="Sprite2D" parent="Control"]
+position = Vector2(1217, 451)
+scale = Vector2(0.17555583, 0.17555584)
+texture = ExtResource("1_h48pk")
+
+[node name="emak" type="Sprite2D" parent="Control"]
+visible = false
+position = Vector2(1295.0001, 455.00003)
+scale = Vector2(0.1991617, 0.1991617)
+texture = ExtResource("2_6c2s7")
+
+[node name="textbox" type="Sprite2D" parent="Control"]
+position = Vector2(795.00006, 655)
+scale = Vector2(0.21749721, 0.17907986)
+texture = ExtResource("3_4b4v1")
+
+[node name="CharacterLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 527.0
+offset_right = 323.0
+offset_bottom = 597.0
+theme_override_fonts/font = ExtResource("4_4b4v1")
+theme_override_font_sizes/font_size = 40
+text = "Anak"
+
+[node name="Info" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 614.0
+offset_top = 833.0
+offset_right = 940.0
+offset_bottom = 863.0
+theme_override_fonts/font = ExtResource("4_4b4v1")
+theme_override_font_sizes/font_size = 20
+text = "[ tekan SPACE untuk lanjut]"
+
+[node name="Dialogue" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 644.0
+offset_right = 1477.0
+offset_bottom = 746.0
+theme_override_colors/default_color = Color(0.19607843, 0.1764706, 0.5294118, 1)
+theme_override_fonts/normal_font = ExtResource("4_4b4v1")
+theme_override_font_sizes/normal_font_size = 28
+text = "aasda"

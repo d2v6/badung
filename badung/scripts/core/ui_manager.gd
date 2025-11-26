@@ -21,6 +21,14 @@ func _ready() -> void:
 	hide_ui()
 	print("[UIManager] Initialized successfully")
 
+func show_dialogue(dialogues: Array) -> void:
+	"""Show dialogue overlay with the given dialogue sequence"""
+	var DIALOGUE_OVERLAY = preload("res://scene/ui/dialogue_overlay.tscn")
+	var overlay = DIALOGUE_OVERLAY.instantiate()
+	get_tree().root.add_child(overlay)
+	overlay.start_dialogue(dialogues)
+	print("[UIManager] Dialogue overlay shown with ", dialogues.size(), " dialogues")
+
 func show_ui() -> void:
 	"""Show the player UI (stamina bar and inventory)"""
 	if player_ui:

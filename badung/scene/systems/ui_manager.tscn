@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://qv1j206mmie0"]
 
-[ext_resource type="Script" uid="uid://b8pikn1fm374t" path="res://scripts/systems/ui/ui_manager.gd" id="1_ui_mgr"]
+[ext_resource type="Script" uid="uid://b8pikn1fm374t" path="res://scripts/core/ui_manager.gd" id="1_ui_mgr"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://ck7gdb15bw2ng" path="res://assets/sprites/Aset Inventory/stamina_bar.png" id="2_l4qss"]
 [ext_resource type="Texture2D" uid="uid://2gyapyksy6cu" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]

@@ -10,6 +10,37 @@ var mom_reference: CharacterBody2D = null
 # Level progression tracking
 var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
 
+# Level dialogue data
+var level_dialogues: Dictionary = {
+	"level1": [
+		{"character": "Anak", "text": "Sudah malam, tapi aku belum ngantuk..", "show_character": true},
+		{"character": "Anak", "text": "Pengen main Tablet, deh! Tapi Tabletnya disembunyiin, nih :(", "show_character": true},
+		{"character": "Anak", "text": "Bantuin aku ambil Tablet ya!", "show_character": true},
+	],
+	"level2": [
+		{"character": "Emak", "text": "Wah, Si Badung udah berani ambil tablet! Mulai malam ini aku harus jaga-jaga!", "show_character": true},
+		{"character": "Anak", "text": "Aduh, sekarang Emak jaga-jaga di dalam rumah! Aku harus hati-hati biar gak ketauan Emak!", "show_character": true},
+		{"character": "Anak", "text": "Ruangan-ruangan juga dikunci, nih! Aku harus cari kunci nya dulu baru bisa ambil tabletnya!", "show_character": true},
+	],
+	"level3": [
+		{"character": "Anak", "text": "Susah juga ambil tablet tanpa ketauan Emak...", "show_character": true},
+		{"character": "Anak", "text": "Aku harus ngerjain Emak dengan lempar barang-barang di rumah, biar Emak gak ngejar Aku!", "show_character": true},
+		{"character": "Anak", "text": "Harus hati-hati juga sama mainan berantakan, kalo keinjek Emak bisa datang!", "show_character": true},
+	],
+	"level4": [
+		{"character": "Emak", "text": "Duh, dasar Si Badung! Tiap malam ada aja caranya dapet tablet!”", "show_character": true},
+		{"character": "Emak", "text": "Butuh bantuan Kakak biar Si Badung gak kabur-kaburan lagi!", "show_character": true},
+	],
+	"level5": [
+		{"character": "Anak", "text": "Kakak ada di pihak Emak, nih! Susah banget mau ambil tablet!", "show_character": true},
+		{"character": "Anak", "text": "Aha! Aku mau sembunyi-sembunyi di lemari, deh, biar gak ketauan!", "show_character": true},
+	],
+	"level6": [
+		{"character": "Anak", "text": "Sudah malam, tapi aku belum ngantuk..", "show_character": true},
+		{"character": "Anak", "text": "Pengen main Tablet, deh! Tapi Tabletnya disembunyiin, nih :(", "show_character": true},
+	],
+}
+
 # Door configuration: door_id -> {is_locked: bool, required_key_id: String}
 var door_configs: Dictionary = {
 	"DoorA": {"is_locked": true, "required_key_id": "key_orange"},
@@ -57,6 +88,19 @@ func reset() -> void:
 	mom_reference = null
 	is_processing_result = false  # Reset result processing flag
 	print("GameManager: State reset - has_objective=false, reported=false")
+
+func start_level_with_dialogue(level_name: String) -> void:
+	"""Start a level by showing its intro dialogue first"""
+	var dialogues = level_dialogues.get(level_name, [])
+	
+	if dialogues.size() > 0:
+		print("[GameManager] Starting level '", level_name, "' with dialogue")
+		if UIManager and UIManager.has_method("show_dialogue"):
+			UIManager.show_dialogue(dialogues)
+		else:
+			push_warning("[GameManager] UIManager not found or missing show_dialogue method")
+	else:
+		print("[GameManager] No dialogue for level '", level_name, "'")
 
 func collect_objective() -> void:
 	has_objective = true

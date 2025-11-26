@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcdm7ysytvar2"
-path="res://.godot/imported/story.PNG-1b1532ccf8008ffe4cd1fd5b9cb48840.ctex"
+uid="uid://b5xypkc8otld6"
+path="res://.godot/imported/emak.png-ddea8761f984d1d232894391a3ce45d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/story.PNG"
-dest_files=["res://.godot/imported/story.PNG-1b1532ccf8008ffe4cd1fd5b9cb48840.ctex"]
+source_file="res://assets/sprites/dialogue/emak.png"
+dest_files=["res://.godot/imported/emak.png-ddea8761f984d1d232894391a3ce45d4.ctex"]
 
 [params]
 

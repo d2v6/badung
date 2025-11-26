@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7gwjc6lhc150"
-path="res://.godot/imported/berhasil.png-b2c280809a1be3370cbb8ccdbf606a56.ctex"
+uid="uid://buk4qys07o61h"
+path="res://.godot/imported/textbar.png-60b38a723af0b3cec216303f2aca0483.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/berhasil.png"
-dest_files=["res://.godot/imported/berhasil.png-b2c280809a1be3370cbb8ccdbf606a56.ctex"]
+source_file="res://assets/sprites/dialogue/textbar.png"
+dest_files=["res://.godot/imported/textbar.png-60b38a723af0b3cec216303f2aca0483.ctex"]
 
 [params]
 
