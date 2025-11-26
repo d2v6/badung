@@ -9,6 +9,7 @@ extends Node2D
 var player_in_range: bool = false
 var player_reference: Node2D = null
 var is_grabbed: bool = false
+var sfx_player: AudioStreamPlayer = null
 
 # Follow settings
 const FOLLOW_DISTANCE = 50.0  # Distance behind player
@@ -18,6 +19,7 @@ var target_position: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	# Add to objective group so GameManager can track it
 	add_to_group("objective")
+	_setup_audio()
 	#print("Objective initialized: ", name)
 	#print("Grab Area exists: ", has_node("Grab Area"))
 	if has_node("Grab Area"):
@@ -34,6 +36,13 @@ func _ready() -> void:
 		
 		#print("After setup - monitoring: ", grab_area.monitoring)
 		#print("After setup - collision_mask: ", grab_area.collision_mask)
+
+func _setup_audio() -> void:
+	"""Create audio player for pickup sound effect"""
+	sfx_player = AudioStreamPlayer.new()
+	sfx_player.stream = load("res://assets/sfx/sfx-ambil-ipad.mp3")
+	sfx_player.bus = "SFX"
+	add_child(sfx_player)
 
 func _process(delta: float) -> void:
 	# Check if player presses grab key while in range
@@ -79,6 +88,11 @@ func grab_objective() -> void:
 	is_grabbed = true
 	#print("Set is_grabbed to: ", is_grabbed)
 	#print("player_reference before operations: ", player_reference)
+	
+	# Play pickup sound effect
+	if sfx_player:
+		sfx_player.play()
+		print("Playing iPad pickup sound effect")
 	
 	# Notify the game manager that objective was collected
 	GameManager.collect_objective()
