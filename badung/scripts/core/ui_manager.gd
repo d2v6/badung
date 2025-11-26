@@ -5,12 +5,22 @@ extends CanvasLayer
 @onready var stamina_bar: ProgressBar = $PlayerUI/StaminaBar
 @onready var objective_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/ObjectiveSlot/ItemIcon
 @onready var decoy_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/DecoySlot/ItemIcon
+@onready var key_icon: Sprite2D = $PlayerUI/InventoryBar/SlotContainer/KeySlot/ItemIcon
 @onready var quit_button: TextureButton = $PlayerUI/QuitButton
+@onready var objective_label: Label = $PlayerUI/ObjectiveLabel
 @onready var vignette: ColorRect = $Vignette
 @onready var chase_animation: AnimatedSprite2D = $AnimatedSprite2D
 
 var pause_overlay_instance: CanvasLayer = null
 var mom_reference: CharacterBody2D = null
+
+# Key sprite mapping
+var key_sprites: Dictionary = {
+	"A": "res://assets/sprites/door-and-key/key_orange.png",
+	"B": "res://assets/sprites/door-and-key/key_teal.png",
+	"C": "res://assets/sprites/door-and-key/key_green.png",
+	"D": "res://assets/sprites/door-and-key/key_blue.png"
+}
 
 func _ready() -> void:
 	# Initialize UI
@@ -112,6 +122,50 @@ func hide_ui() -> void:
 		player_ui.visible = false
 		print("[UIManager] UI hidden")
 
+func reset_ui() -> void:
+	"""Reset all UI elements to their default state"""
+	# Clear inventory slots
+	update_objective_slot(false)
+	update_decoy_slot(false)
+	update_key_slot("")
+	
+	# Reset objective label
+	if objective_label:
+		objective_label.text = "Ayo cari iPad"
+	
+	# Reset stamina bar
+	if stamina_bar:
+		stamina_bar.value = 100
+	
+	# Hide and stop chase effects
+	if vignette:
+		vignette.visible = false
+	if chase_animation:
+		chase_animation.visible = false
+		chase_animation.stop()
+	
+	# Clear Mom reference
+	mom_reference = null
+	
+	# Close any open dialogue overlays
+	var dialogue_overlays = get_tree().get_nodes_in_group("dialogue_overlay")
+	for overlay in dialogue_overlays:
+		if overlay.has_method("end_dialogue"):
+			overlay.end_dialogue()
+		overlay.queue_free()
+	
+	# Hide pause overlay if visible
+	if pause_overlay_instance:
+		pause_overlay_instance.visible = false
+	
+	# Ensure game is unpaused
+	get_tree().paused = false
+	
+	# Hide UI
+	hide_ui()
+	
+	print("[UIManager] UI reset complete")
+
 func update_stamina_bar(value: float) -> void:
 	if stamina_bar:
 		stamina_bar.value = value
@@ -120,11 +174,32 @@ func update_objective_slot(has_objective: bool) -> void:
 	if objective_icon:
 		objective_icon.visible = has_objective
 		print("[UIManager] Updated objective slot to ", has_objective)
+	
+	# Update objective label text
+	if objective_label:
+		if has_objective:
+			objective_label.text = "Kembali ke kamar"
+		else:
+			objective_label.text = "Ayo cari iPad"
 
 func update_decoy_slot(has_decoy: bool) -> void:
 	if decoy_icon:
 		decoy_icon.visible = has_decoy
 		print("[UIManager] Updated decoy slot to ", has_decoy)
+
+func update_key_slot(key_id: String) -> void:
+	"""Update key slot with the appropriate key sprite. Empty string clears the slot."""
+	if key_icon:
+		if key_id == "":
+			key_icon.visible = false
+			key_icon.texture = null
+			print("[UIManager] Cleared key slot")
+		elif key_id in key_sprites:
+			key_icon.texture = load(key_sprites[key_id])
+			key_icon.visible = true
+			print("[UIManager] Updated key slot with key: ", key_id)
+		else:
+			print("[UIManager] WARNING - Unknown key ID: ", key_id)
 
 func get_stamina_bar() -> ProgressBar:
 	return stamina_bar

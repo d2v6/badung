@@ -38,6 +38,6 @@ func get_level_name() -> String:
 		return "unknown"
 
 func _exit_tree() -> void:
-	# Hide UI when leaving the level
+	# Reset UI when leaving the level
 	if UIManager:
-		UIManager.hide_ui()
+		UIManager.reset_ui()

@@ -80,6 +80,11 @@ func _on_keluar_pressed() -> void:
 	_disable_all_buttons()
 	_reset_music_before_transition()
 	close_overlay()
+	
+	# Reset UI before returning to menu
+	if UIManager:
+		UIManager.reset_ui()
+	
 	# Keep game paused during transition
 	SceneTransition.change_scene("res://scene/menus/main_menu.tscn")
 	# Unpause will happen when scene changes
@@ -91,6 +96,11 @@ func _on_ulangi_pressed() -> void:
 	_disable_all_buttons()
 	_reset_music_before_transition()
 	close_overlay()
+	
+	# Reset UI before reloading
+	if UIManager:
+		UIManager.reset_ui()
+	
 	# Unpause before reload so new scene starts fresh
 	get_tree().paused = false
 	get_tree().reload_current_scene()
@@ -101,6 +111,10 @@ func _on_lanjut_pressed() -> void:
 	_disable_all_buttons()
 	_reset_music_before_transition()
 	close_overlay()
+	
+	# Reset UI before changing scenes
+	if UIManager:
+		UIManager.reset_ui()
 	
 	# Get next level path from GameManager
 	var next_level_path = "res://scene/game_results/winning_bg.tscn"

@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://codt2qj04bycq" path="res://assets/sprites/door-and-key/horizontal-opened-teal.png" id="13_y23hw"]
 [ext_resource type="Texture2D" uid="uid://bwgq5fp1sn0l4" path="res://assets/sprites/door-and-key/horizontal-green.png" id="14_sagf7"]
 [ext_resource type="Texture2D" uid="uid://btpv3d88wr0q5" path="res://assets/sprites/door-and-key/horizontal-opened-green.png" id="15_4lvwr"]
-[ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="15_b5b7m"]
+[ext_resource type="PackedScene" uid="uid://bo3nnn5jqhgd2" path="res://scene/interactables/trap.tscn" id="15_b5b7m"]
 [ext_resource type="Texture2D" uid="uid://mbbp8bj0payr" path="res://assets/sprites/door-and-key/vertikal-opened-teal.png" id="15_y8nr6"]
 [ext_resource type="Texture2D" uid="uid://b2or6yqokrb83" path="res://assets/sprites/door-and-key/vertikal-orange.png" id="16_0ml45"]
 [ext_resource type="Texture2D" uid="uid://b85cbla2q83ho" path="res://assets/sprites/door-and-key/horizontal-blue.png" id="16_60sqm"]
@@ -312,28 +312,28 @@ texture = ExtResource("27_2gb2b")
 polygon = PackedVector2Array(-119, 263, -87, 233, -16, 186, -14, 133, 7, 134, -16, 86, -48, 84, -121, 125)
 
 [node name="D" type="Sprite2D" parent="."]
-position = Vector2(675, 369.00003)
-scale = Vector2(0.033333346, 0.033333346)
+position = Vector2(606, 374)
+scale = Vector2(0.029320998, 0.029320998)
 texture = ExtResource("28_bbh2d")
 
 [node name="A" type="Sprite2D" parent="."]
-position = Vector2(528.00006, 366.00012)
-scale = Vector2(0.03456789, 0.034567893)
+position = Vector2(503.00003, 374.00003)
+scale = Vector2(0.029629648, 0.029629651)
 texture = ExtResource("29_a6jvc")
 
 [node name="S" type="Sprite2D" parent="."]
-position = Vector2(601, 369.0001)
-scale = Vector2(0.03518518, 0.03518518)
+position = Vector2(555, 377)
+scale = Vector2(0.030169757, 0.028899467)
 texture = ExtResource("30_ogkjj")
 
 [node name="W" type="Sprite2D" parent="."]
-position = Vector2(602, 308)
-scale = Vector2(0.03580247, 0.03580247)
+position = Vector2(555.00006, 326)
+scale = Vector2(0.030092614, 0.030092614)
 texture = ExtResource("31_sa2q1")
 
 [node name="Shift" type="Sprite2D" parent="."]
-position = Vector2(444, 364)
-scale = Vector2(0.0404321, 0.0404321)
+position = Vector2(444.00003, 377.00003)
+scale = Vector2(0.029475318, 0.029475318)
 texture = ExtResource("32_i7qqk")
 
 [editable path="Traps/DuckTrap1"]

@@ -25,6 +25,11 @@ func change_scene(scene_path: String) -> void:
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == "fade_out":
 		print("[SceneTransition] Fade out complete, loading scene: ", next_scene)
+		
+		# Reset UI before changing scene
+		if UIManager:
+			UIManager.reset_ui()
+		
 		# Change scene
 		get_tree().change_scene_to_file(next_scene)
 		# Fade in

@@ -85,23 +85,26 @@ func interact() -> void:
 	
 	toggle_door()
 
-func try_unlock_with_keys(player_keys: Array[String]) -> void:
-	"""Try to unlock door with player's keys, or toggle if already unlocked"""
+func try_unlock_with_key(player_key: String) -> bool:
+	"""Try to unlock door with player's key, or toggle if already unlocked. Returns true if key was used."""
 	if is_locked:
 		# Check if player has the required key
-		if required_key_id in player_keys:
+		if required_key_id != "" and player_key == required_key_id:
 			unlock()
 			# Automatically open the door after unlocking
 			if not is_open:
 				toggle_door()
+			return true  # Key was consumed
 		else:
 			print("Door is locked! You need the '", required_key_id, "' key.")
 			# Play locked door sound
 			if sfx_locked_player:
 				sfx_locked_player.play()
+			return false  # Key not used
 	else:
 		# Door is already unlocked, just toggle it
 		toggle_door()
+		return false  # No key needed
 
 func unlock() -> void:
 	"""Unlock the door (called when player uses a key)"""

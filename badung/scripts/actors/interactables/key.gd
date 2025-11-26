@@ -23,9 +23,14 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	if body.name == "Player" or body.has_method("on_key_picked_up"):
+		# Check if player can pick up key
+		if body.has_method("can_pickup_key") and not body.can_pickup_key():
+			print("[Key] Player already holding a key, cannot pick up: ", key_id)
+			return
+		
 		is_picked_up = true
 		body.on_key_picked_up(key_id)
-		print("Player picked up key: ", key_id)
+		print("[Key] Player picked up key: ", key_id)
 		
 		# Play pickup sound effect
 		if sfx_player:
