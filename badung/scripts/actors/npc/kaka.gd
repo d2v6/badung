@@ -268,6 +268,13 @@ func throw_stun_projectile() -> void:
 	if projectile.has_method("throw_projectile"):
 		projectile.throw_projectile(spawn_position, throw_direction)
 		print("[Kaka] Projectile thrown!")
+	
+	# Play throw sound effect
+	var sound_manager = get_tree().get_first_node_in_group("sound_manager")
+	if sound_manager and sound_manager.has_method("play_throw_sound"):
+		sound_manager.play_throw_sound()
+	else:
+		push_warning("[Kaka] SoundManager not found or play_throw_sound method missing")
 
 func report_player() -> void:
 	print("[Kaka] Player spotted for too long! Reporting to Mom...")
