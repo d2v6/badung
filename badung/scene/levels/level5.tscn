@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://4kkxdmjjbtw"]
+[gd_scene load_steps=37 format=3 uid="uid://4kkxdmjjbtw"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_n5s75"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_s7iqn"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="25_cb4uy"]
 [ext_resource type="PackedScene" uid="uid://bnfxn4qj6h57r" path="res://scene/interactables/hiding_place.tscn" id="26_b6jia"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="26_hfb8n"]
+[ext_resource type="Texture2D" uid="uid://c3icw2ycy5gdv" path="res://assets/sprites/LEMARI.png" id="27_lemari"]
 [ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="27_nhowb"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="28_rqnho"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="29_6o7hc"]
@@ -294,7 +295,7 @@ position = Vector2(-201, -20)
 [node name="Lemari" type="Sprite2D" parent="Doors/HidingPlace2"]
 position = Vector2(-26.999998, -30)
 scale = Vector2(0.065368555, 0.08838586)
-texture = ExtResource("27_ojrxv")
+texture = ExtResource("27_lemari")
 
 [node name="HidingPlace" parent="Doors" instance=ExtResource("26_b6jia")]
 position = Vector2(621, 599)
