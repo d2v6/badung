@@ -244,15 +244,15 @@ func try_throw_decoy() -> void:
 		
 		# Update inventory UI
 		if UIManager:
-			UIManager.update_decoy_slot(false)
+			UIManager.update_decoy_slot(false, null)
 
-func on_decoy_picked_up(decoy: Node2D) -> void:
+func on_decoy_picked_up(decoy: Node2D, sprite_texture: Texture2D = null) -> void:
 	held_decoy = decoy
 	print("Player picked up decoy!")
 
-	# Update inventory UI
+	# Update inventory UI with the actual sprite texture
 	if UIManager:
-		UIManager.update_decoy_slot(true)
+		UIManager.update_decoy_slot(true, sprite_texture)
 
 func drop_current_decoy() -> void:
 	"""Drop the currently held decoy at player's position"""
@@ -282,12 +282,12 @@ func drop_current_decoy() -> void:
 
 	# Update inventory UI
 	if UIManager:
-		UIManager.update_decoy_slot(false)
+		UIManager.update_decoy_slot(false, null)
 
 func on_decoy_thrown() -> void:
 	print("Player threw decoy!")
 
-func on_key_picked_up(key_id: String) -> void:
+func on_key_picked_up(key_id: String, sprite_texture: Texture2D = null) -> void:
 	"""Called when player picks up a key"""
 	# Only pick up if not already holding a key
 	if held_key != "":
@@ -297,9 +297,9 @@ func on_key_picked_up(key_id: String) -> void:
 	held_key = key_id
 	print("[Player] Picked up key: ", key_id)
 	
-	# Update UI
+	# Update UI with the actual sprite texture
 	if UIManager:
-		UIManager.update_key_slot(key_id)
+		UIManager.update_key_slot(key_id, sprite_texture)
 
 func can_pickup_key() -> bool:
 	"""Check if player can pick up a key (not already holding one)"""

@@ -27,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://blgjurw033rme" path="res://assets/sprites/door-and-key/vertikal-opened-green.png" id="25_ymcsl"]
 [ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="26_6b15x"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="27_qdcfw"]
-[ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="28_gblns"]
+[ext_resource type="PackedScene" uid="uid://bo3nnn5jqhgd2" path="res://scene/interactables/trap.tscn" id="28_gblns"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="29_2cice"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="30_lrnm4"]
 [ext_resource type="PackedScene" uid="uid://bnfxn4qj6h57r" path="res://scene/interactables/hiding_place.tscn" id="31_1j8jp"]
@@ -405,32 +405,32 @@ stream = ExtResource("30_lrnm4")
 position = Vector2(267, 611)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(-0.03564453, -0.092285156)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("32_8olug")
 
 [node name="Decoy4" parent="Decoys" instance=ExtResource("31_ta7yt")]
 position = Vector2(-782, -370)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy4"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(0.9999924, 0.9999924)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("32_8olug")
 
 [node name="Decoy5" parent="Decoys" instance=ExtResource("31_ta7yt")]
 position = Vector2(-690, 412)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy5"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(-7.6293945e-06, -7.6293945e-06)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("32_8olug")
 
 [node name="Decoy3" parent="Decoys" instance=ExtResource("31_ta7yt")]
 position = Vector2(203, 506)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy3"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(1, 1)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("32_8olug")
 
 [node name="Decoy2" parent="Decoys" instance=ExtResource("31_ta7yt")]

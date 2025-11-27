@@ -479,7 +479,7 @@ func investigate_trap(delta: float) -> void:
 
 	# Move towards the trap using navigation (same as decoy for smooth movement)
 	var distance_to_trap = global_position.distance_to(trap_target_pos)
-	print("[Mom] Mom pos=", global_position, " Trap pos=", trap_target_pos, " Distance=", distance_to_trap)
+	# print("[Mom] Mom pos=", global_position, " Trap pos=", trap_target_pos, " Distance=", distance_to_trap)
 	
 	# Set navigation target - updates every frame for smooth tracking
 	navigation_agent.target_position = trap_target_pos
@@ -516,7 +516,7 @@ func investigate_decoy(_delta: float) -> void:
 
 	# Move towards the decoy using navigation
 	var distance_to_decoy = global_position.distance_to(target_decoy.global_position)
-	print("[Mom] Mom pos=", global_position, " Decoy pos=", target_decoy.global_position, " Distance=", distance_to_decoy)
+	# print("[Mom] Mom pos=", global_position, " Decoy pos=", target_decoy.global_position, " Distance=", distance_to_decoy)
 	
 	# Set navigation target
 	navigation_agent.target_position = target_decoy.global_position

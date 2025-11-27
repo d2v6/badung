@@ -29,7 +29,6 @@
 [ext_resource type="PackedScene" uid="uid://bnfxn4qj6h57r" path="res://scene/interactables/hiding_place.tscn" id="26_b6jia"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="26_hfb8n"]
 [ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="27_nhowb"]
-[ext_resource type="Texture2D" uid="uid://c3icw2ycy5gdv" path="res://assets/sprites/LEMARI.png" id="27_ojrxv"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="28_rqnho"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="29_6o7hc"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="30_kmtxy"]
@@ -364,32 +363,32 @@ stream = ExtResource("29_6o7hc")
 position = Vector2(267, 611)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(-0.03564453, -0.092285156)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy4" parent="Decoys" instance=ExtResource("30_kmtxy")]
 position = Vector2(-782, -370)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy4"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(0.9999924, 0.9999924)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy5" parent="Decoys" instance=ExtResource("30_kmtxy")]
 position = Vector2(-690, 412)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy5"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(-7.6293945e-06, -7.6293945e-06)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy3" parent="Decoys" instance=ExtResource("30_kmtxy")]
 position = Vector2(203, 506)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy3"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(1, 1)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy2" parent="Decoys" instance=ExtResource("30_kmtxy")]
