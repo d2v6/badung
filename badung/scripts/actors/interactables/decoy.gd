@@ -138,9 +138,35 @@ func pickup_decoy() -> void:
 		detection_area.monitoring = false
 		detection_area.monitorable = false
 
+	# Get the sprite texture from this decoy's Sprite2D child
+	# Try multiple possible child names (Sprite, Decoy, or any Sprite2D child)
+	var decoy_sprite: Sprite2D = null
+	if sprite and sprite.texture:
+		decoy_sprite = sprite
+	else:
+		# Try finding "Decoy" node first (most common in level scenes)
+		decoy_sprite = get_node_or_null("Decoy")
+		if not decoy_sprite or not decoy_sprite is Sprite2D or not decoy_sprite.texture:
+			# Try "GayungDecoy" node
+			decoy_sprite = get_node_or_null("GayungDecoy")
+		if not decoy_sprite or not decoy_sprite is Sprite2D or not decoy_sprite.texture:
+			# Find any Sprite2D child with a texture, but skip certain nodes
+			for child in get_children():
+				# Skip PickupPrompt, ShinyBackground, and other UI elements
+				if child is Sprite2D and child.texture and child.name not in ["PickupPrompt", "ShinyBackground"]:
+					decoy_sprite = child
+					break
+	
+	var sprite_texture: Texture2D = null
+	if decoy_sprite:
+		sprite_texture = decoy_sprite.texture
+		print("[Decoy] Found sprite texture: ", sprite_texture.resource_path if sprite_texture else "none")
+	else:
+		print("[Decoy] WARNING - No sprite texture found!")
+
 	# Notify player
 	if player_reference.has_method("on_decoy_picked_up"):
-		player_reference.on_decoy_picked_up(self)
+		player_reference.on_decoy_picked_up(self, sprite_texture)
 
 	print("Decoy picked up!")
 

@@ -14,14 +14,6 @@ extends CanvasLayer
 var pause_overlay_instance: CanvasLayer = null
 var mom_reference: CharacterBody2D = null
 
-# Key sprite mapping
-var key_sprites: Dictionary = {
-	"A": "res://assets/sprites/door-and-key/key_orange.png",
-	"B": "res://assets/sprites/door-and-key/key_teal.png",
-	"C": "res://assets/sprites/door-and-key/key_green.png",
-	"D": "res://assets/sprites/door-and-key/key_blue.png"
-}
-
 func _ready() -> void:
 	# Initialize UI
 	update_objective_slot(false)
@@ -126,7 +118,7 @@ func reset_ui() -> void:
 	"""Reset all UI elements to their default state"""
 	# Clear inventory slots
 	update_objective_slot(false)
-	update_decoy_slot(false)
+	update_decoy_slot(false, null)
 	update_key_slot("")
 	
 	# Reset objective label
@@ -182,24 +174,43 @@ func update_objective_slot(has_objective: bool) -> void:
 		else:
 			objective_label.text = "Ayo cari iPad"
 
-func update_decoy_slot(has_decoy: bool) -> void:
+func update_decoy_slot(has_decoy: bool, sprite_texture: Texture2D = null) -> void:
 	if decoy_icon:
-		decoy_icon.visible = has_decoy
-		print("[UIManager] Updated decoy slot to ", has_decoy)
+		if has_decoy and sprite_texture:
+			decoy_icon.texture = sprite_texture
+			decoy_icon.visible = true
+			
+			# Adjust scale based on texture size or filename
+			var texture_path = sprite_texture.resource_path
+			if "gayung" in texture_path.to_lower():
+				# Gayung is much larger, scale it down more
+				decoy_icon.scale = Vector2(0.02, 0.02)
+			else:
+				# Default scale for other decoys
+				decoy_icon.scale = Vector2(0.12, 0.12)
+			
+			print("[UIManager] Updated decoy slot with sprite (scale: ", decoy_icon.scale, ")")
+		elif not has_decoy:
+			decoy_icon.visible = false
+			decoy_icon.texture = null
+			decoy_icon.scale = Vector2(0.2, 0.2)  # Reset to default
+			print("[UIManager] Cleared decoy slot")
+		else:
+			print("[UIManager] WARNING - No sprite texture provided for decoy")
 
-func update_key_slot(key_id: String) -> void:
-	"""Update key slot with the appropriate key sprite. Empty string clears the slot."""
+func update_key_slot(key_id: String, sprite_texture: Texture2D = null) -> void:
+	"""Update key slot with the key sprite. Empty string clears the slot."""
 	if key_icon:
 		if key_id == "":
 			key_icon.visible = false
 			key_icon.texture = null
 			print("[UIManager] Cleared key slot")
-		elif key_id in key_sprites:
-			key_icon.texture = load(key_sprites[key_id])
+		elif sprite_texture:
+			key_icon.texture = sprite_texture
 			key_icon.visible = true
 			print("[UIManager] Updated key slot with key: ", key_id)
 		else:
-			print("[UIManager] WARNING - Unknown key ID: ", key_id)
+			print("[UIManager] WARNING - No sprite texture provided for key: ", key_id)
 
 func get_stamina_bar() -> ProgressBar:
 	return stamina_bar

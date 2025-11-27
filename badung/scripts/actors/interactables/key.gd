@@ -29,7 +29,14 @@ func _on_body_entered(body: Node2D) -> void:
 			return
 		
 		is_picked_up = true
-		body.on_key_picked_up(key_id)
+		
+		# Get the sprite texture from this key's Sprite2D child
+		var key_sprite: Sprite2D = get_node_or_null("Sprite2D")
+		var sprite_texture: Texture2D = null
+		if key_sprite:
+			sprite_texture = key_sprite.texture
+		
+		body.on_key_picked_up(key_id, sprite_texture)
 		print("[Key] Player picked up key: ", key_id)
 		
 		# Play pickup sound effect

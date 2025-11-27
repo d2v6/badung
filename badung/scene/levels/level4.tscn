@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://qcdy8lpbr3fq"]
+[gd_scene load_steps=37 format=3 uid="uid://dc0hqec6yyxun"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_n5s75"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_s7iqn"]
@@ -26,7 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://blgjurw033rme" path="res://assets/sprites/door-and-key/vertikal-opened-green.png" id="24_6y0wv"]
 [ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="25_cb4uy"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="26_hfb8n"]
-[ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="27_nhowb"]
+[ext_resource type="PackedScene" uid="uid://bo3nnn5jqhgd2" path="res://scene/interactables/trap.tscn" id="27_nhowb"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="28_rqnho"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="29_6o7hc"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="30_kmtxy"]
@@ -337,16 +337,16 @@ stream = ExtResource("29_6o7hc")
 position = Vector2(267, 611)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(-0.03564453, -0.092285156)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy3" parent="Decoys" instance=ExtResource("30_kmtxy")]
 position = Vector2(203, 506)
 
 [node name="Decoy" type="Sprite2D" parent="Decoys/Decoy3"]
-position = Vector2(77, 61)
-scale = Vector2(0.12322285, 0.12322275)
+position = Vector2(1, 1)
+scale = Vector2(0.09, 0.09)
 texture = ExtResource("31_mkpqk")
 
 [node name="Decoy2" parent="Decoys" instance=ExtResource("30_kmtxy")]
