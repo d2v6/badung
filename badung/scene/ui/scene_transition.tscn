@@ -1,35 +1,85 @@
-[gd_scene load_steps=6 format=3 uid="uid://xh5lr5nh3p0k"]
+[gd_scene load_steps=16 format=3 uid="uid://xh5lr5nh3p0k"]
 
 [ext_resource type="Script" uid="uid://bc6om3xi3l7uv" path="res://scripts/systems/ui/scene_transition.gd" id="1_transition"]
+[ext_resource type="Texture2D" uid="uid://bdxj7uvssbugg" path="res://assets/sprites/LOADING-SHEET.png" id="2_gkvsq"]
 
-[sub_resource type="Animation" id="Animation_lcwgi"]
-resource_name = "fade_out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.06666667, 0.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynthp"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(0, 0, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uurh1"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(1920, 0, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whok1"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(3840, 0, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o26ol"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(5760, 0, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4cfp"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(7680, 0, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32jwb"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(0, 1149, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dfks"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(1920, 1149, 1920, 1149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyt2t"]
+atlas = ExtResource("2_gkvsq")
+region = Rect2(3840, 1149, 1920, 1149)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rhnli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynthp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uurh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whok1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o26ol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4cfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32jwb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dfks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyt2t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
 
 [sub_resource type="Animation" id="Animation_x04lf"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_yawb0"]
@@ -37,14 +87,29 @@ resource_name = "fade_in"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0.100000024, 0.93333334),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lcwgi"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06666667, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rsq21"]
@@ -58,18 +123,10 @@ _data = {
 layer = 100
 script = ExtResource("1_transition")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rsq21")
-}
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(800, 448)
+scale = Vector2(0.832463, 0.832463)
+sprite_frames = SubResource("SpriteFrames_rhnli")
+autoplay = "default"
+frame_progress = 0.3879361
