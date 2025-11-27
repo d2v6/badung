@@ -8,7 +8,7 @@ var collected_keys: Array[String] = []  # Track which keys have been collected
 var mom_reference: CharacterBody2D = null
 
 # Level progression tracking
-var highest_level_unlocked: int = 1  # Level 1 always unlocked at start
+var highest_level_unlocked: int = 6  # Level 1 always unlocked at start
 
 # Current level's door configuration
 var door_configs: Dictionary = {}

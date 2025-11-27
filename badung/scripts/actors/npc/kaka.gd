@@ -124,6 +124,18 @@ func _physics_process(delta: float) -> void:
 	
 	# Continuously check line of sight if player is in vision area
 	if player_in_sight and player_reference:
+		# Check if player entered hiding
+		if player_reference.has_method("is_hiding") and player_reference.is_hiding:
+			print("[Kaka] Player entered hiding - lost sight!")
+			player_in_sight = false
+			player_reference = null
+			spot_timer = 0.0
+			stun_throw_timer = 0.0
+			has_thrown_stun = false
+			if vision_shape and not has_reported:
+				vision_shape.modulate = Color(0, 1, 0, 0.3)  # Back to green
+			return
+		
 		# Verify line of sight is still clear
 		if not is_path_clear(global_position, player_reference.global_position):
 			# Wall is blocking, lose sight
@@ -236,6 +248,11 @@ func update_vision_direction() -> void:
 func _on_vision_body_entered(body: Node2D) -> void:
 	# Check if it's the player
 	if body.is_in_group("player"):
+		# Don't detect hidden players
+		if body.has_method("is_hiding") and body.is_hiding:
+			print("[Kaka] Player is hiding - cannot detect!")
+			return
+		
 		print("[Kaka] Player detected in vision area!")
 		# Check if there's a clear line of sight (no walls blocking)
 		if is_path_clear(global_position, body.global_position):

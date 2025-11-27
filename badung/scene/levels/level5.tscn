@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://4kkxdmjjbtw"]
+[gd_scene load_steps=40 format=3 uid="uid://4kkxdmjjbtw"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_n5s75"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_s7iqn"]
@@ -26,8 +26,10 @@
 [ext_resource type="Texture2D" uid="uid://cpp6u402qn6m3" path="res://assets/sprites/door-and-key/vertikal-green.png" id="23_esrmb"]
 [ext_resource type="Texture2D" uid="uid://blgjurw033rme" path="res://assets/sprites/door-and-key/vertikal-opened-green.png" id="24_6y0wv"]
 [ext_resource type="PackedScene" uid="uid://c7qvx8b3rkfmj" path="res://scene/ui/pause_overlay.tscn" id="25_cb4uy"]
+[ext_resource type="PackedScene" uid="uid://bnfxn4qj6h57r" path="res://scene/interactables/hiding_place.tscn" id="26_b6jia"]
 [ext_resource type="PackedScene" uid="uid://es0hoh0nd4yw" path="res://scene/npc/mom.tscn" id="26_hfb8n"]
 [ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="27_nhowb"]
+[ext_resource type="Texture2D" uid="uid://c3icw2ycy5gdv" path="res://assets/sprites/LEMARI.png" id="27_ojrxv"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="28_rqnho"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="29_6o7hc"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="30_kmtxy"]
@@ -286,6 +288,21 @@ texture = ExtResource("24_6y0wv")
 [node name="DoorLivingV" type="CollisionShape2D" parent="Doors/DoorKamarMandi/DoorLivingV2"]
 position = Vector2(-1, 8)
 shape = SubResource("RectangleShape2D_pmu4x")
+
+[node name="HidingPlace2" parent="Doors" instance=ExtResource("26_b6jia")]
+position = Vector2(-201, -20)
+
+[node name="Lemari" type="Sprite2D" parent="Doors/HidingPlace2"]
+position = Vector2(-26.999998, -30)
+scale = Vector2(0.065368555, 0.08838586)
+texture = ExtResource("27_ojrxv")
+
+[node name="HidingPlace" parent="Doors" instance=ExtResource("26_b6jia")]
+position = Vector2(621, 599)
+
+[node name="Polygon2D" type="Polygon2D" parent="Doors/HidingPlace"]
+color = Color(1, 1, 0.1764706, 0.24313726)
+polygon = PackedVector2Array(3, 93, 3, -87, 45, -87, 45, 90, 45, 94, 43, 97, 40, 96, 39, 92, 10, 92, 9, 96, 6, 98, 5, 97)
 
 [node name="UI" type="Node" parent="."]
 

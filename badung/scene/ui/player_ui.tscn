@@ -1,10 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://4a383g1gxb83"]
+[gd_scene load_steps=22 format=3 uid="uid://cejte3tcsq8o8"]
 
 [ext_resource type="Shader" uid="uid://cdgpa10vfwdgf" path="res://shaders/vignette.gdshader" id="1_vignette"]
-[ext_resource type="Script" path="res://scripts/systems/ui/player_ui.gd" id="1_wbjh4"]
+[ext_resource type="Script" uid="uid://d3g103ih0brjd" path="res://scripts/systems/ui/player_ui.gd" id="1_wbjh4"]
 [ext_resource type="Texture2D" uid="uid://bn4w4wynawlnd" path="res://assets/sprites/Aset Furnitur/dapur/vas decoy.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://ck7gdb15bw2ng" path="res://assets/sprites/Aset Inventory/stamina_bar.png" id="2_l4qss"]
-[ext_resource type="Texture2D" uid="uid://2gyapyksy6cu" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]
+[ext_resource type="Texture2D" uid="uid://uxxcesxu70g8" path="res://assets/sprites/Aset Inventory/inventory.png" id="2_lam8e"]
 [ext_resource type="Texture2D" uid="uid://bbulft4v67mb2" path="res://assets/sprites/ipad.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://l6prb2xn7vcw" path="res://assets/sprites/Aset Inventory/stamina_text.png" id="3_66m5t"]
 [ext_resource type="Texture2D" uid="uid://brw5a3547qub7" path="res://assets/sprites/Aset Button/Home button/quit.png" id="4_quitbtn"]

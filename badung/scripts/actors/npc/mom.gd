@@ -102,6 +102,13 @@ func _physics_process(delta: float) -> void:
 	# Check for active decoys
 	check_for_decoys()
 	
+	# If player is in sight but hiding, lose sight immediately
+	if player_in_sight and player_reference:
+		if player_reference.has_method("is_hiding") and player_reference.is_hiding:
+			print("[Mom] Player entered hiding - lost sight!")
+			player_in_sight = false
+			player_reference = null
+	
 	# Note: Traps notify Mom directly when activated (on_trap_activated)
 	# No need to scan for traps every frame
 
@@ -237,6 +244,11 @@ func set_navigation_target(target: Vector2) -> void:
 
 func _on_vision_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		# Don't detect hidden players
+		if body.has_method("is_hiding") and body.is_hiding:
+			print("[Mom] Player is hiding - cannot detect!")
+			return
+		
 		# print("[Mom] Player detected in vision area!")
 		if is_path_clear(global_position, body.global_position):
 			player_in_sight = true

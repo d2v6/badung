@@ -7,6 +7,7 @@ const REGEN_COOLDOWN = 1.0 # Time to wait before regen starts
 
 @onready var idle_sprite: AnimatedSprite2D = $idle
 @onready var movement_sprite: AnimatedSprite2D = $moving
+@onready var shadow_sprite: AnimatedSprite2D = $shadow
 @onready var walking_sfx: AudioStreamPlayer = $WalkingSFX
 @onready var running_sfx: AudioStreamPlayer = $RunningSFX
 
@@ -27,12 +28,40 @@ var is_stunned: bool = false
 var stun_timer: float = 0.0
 const STUN_DURATION: float = 2.0
 
+# Hiding state
+var is_hiding: bool = false
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	print("[Player] Ready - UIManager should be autoloaded")
 
 func _physics_process(_delta: float) -> void:
-	# Handle stun state - MUST be first to prevent any movement
+	# Handle hiding state - MUST be first to prevent any actions except unhiding
+	if is_hiding:
+		# Can't move while hiding
+		velocity = Vector2.ZERO
+		
+		# Continue stamina regeneration while hiding
+		if regen_cooldown_timer > 0:
+			regen_cooldown_timer -= _delta
+		else:
+			stamina += _delta / 4.0
+		stamina = clamp(stamina, 0.0, SPRINT_DURATION)
+		
+		# Update UI
+		if UIManager:
+			var stamina_percent = stamina / SPRINT_DURATION
+			UIManager.update_stamina_bar(stamina_percent * 100)
+		
+		# Check for unhide input
+		if Input.is_action_just_pressed("open"):
+			if current_interactable != null and current_interactable.has_method("toggle_hiding"):
+				current_interactable.interact()
+		
+		move_and_slide()
+		return
+	
+	# Handle stun state - MUST be second to prevent any movement
 	if is_stunned:
 		stun_timer -= _delta
 		if stun_timer <= 0:
@@ -106,7 +135,12 @@ func _physics_process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 
 	if Input.is_action_just_pressed("open"):
-		try_interact()
+		# Check if current interactable is a hiding place
+		if current_interactable != null and current_interactable.has_method("toggle_hiding"):
+			current_interactable.interact()
+		else:
+			# Otherwise, try to interact with doors or other objects
+			try_interact()
 
 	if Input.is_action_just_pressed("pickup_decoy"):
 		try_pickup_decoy()
@@ -303,3 +337,61 @@ func apply_stun() -> void:
 		sound_manager.play_dizzy_sound()
 	else:
 		push_warning("[Player] SoundManager not found in scene")
+
+func enter_hiding() -> void:
+	"""Called when player enters a hiding place"""
+	is_hiding = true
+	velocity = Vector2.ZERO
+	
+	# Stop all sounds first
+	if walking_sfx and walking_sfx.playing:
+		walking_sfx.stop()
+	if running_sfx and running_sfx.playing:
+		running_sfx.stop()
+	
+	if idle_sprite:
+		idle_sprite.visible = false
+		idle_sprite.modulate.a = 0.0  # Make fully transparent
+		idle_sprite.stop()
+	if movement_sprite:
+		movement_sprite.visible = false
+		movement_sprite.modulate.a = 0.0  # Make fully transparent
+		movement_sprite.stop()
+	if shadow_sprite:
+		shadow_sprite.visible = false
+		shadow_sprite.modulate.a = 0.0  # Make fully transparent
+		shadow_sprite.stop()
+	
+	# Disable collision
+	set_collision_layer_value(2, false)  # Player is on layer 2 - make undetectable
+	set_collision_mask_value(1, false)   # Disable wall collision
+	set_collision_mask_value(2, false)   # Disable player-player collision
+	
+	print("[Player] Entered hiding - invisible and intangible")
+	print("[Player] Idle visible: ", idle_sprite.visible if idle_sprite else "N/A")
+	print("[Player] Movement visible: ", movement_sprite.visible if movement_sprite else "N/A")
+	print("[Player] Shadow visible: ", shadow_sprite.visible if shadow_sprite else "N/A")
+
+func exit_hiding() -> void:
+	"""Called when player exits a hiding place"""
+	is_hiding = false
+	
+	# Restore sprite visibility and transparency
+	if idle_sprite:
+		idle_sprite.visible = true
+		idle_sprite.modulate.a = 1.0  # Restore full opacity
+		idle_sprite.play("idle")
+	if movement_sprite:
+		movement_sprite.visible = false
+		movement_sprite.modulate.a = 1.0  # Restore full opacity
+	if shadow_sprite:
+		shadow_sprite.visible = true
+		shadow_sprite.modulate.a = 1.0  # Restore full opacity
+		shadow_sprite.play("default")
+	
+	# Re-enable collision
+	set_collision_layer_value(2, true)   # Player is on layer 2 - make detectable again
+	set_collision_mask_value(1, true)    # Enable wall collision
+	set_collision_mask_value(2, true)    # Enable player-player collision
+	
+	print("[Player] Exited hiding - visible and tangible again")

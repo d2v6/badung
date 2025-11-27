@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bnfxn4qj6h57r"]
 
 [ext_resource type="Script" uid="uid://dpyl3loyi4u6b" path="res://scripts/actors/interactables/hiding_place.gd" id="1_wbd3v"]
-[ext_resource type="Texture2D" uid="uid://dpllj2462phw2" path="res://assets/sprites/Aset Button/WASD/J1-1.png" id="2_7myrt"]
+[ext_resource type="Texture2D" uid="uid://bjr0fylm3g8xu" path="res://assets/sprites/Aset Button/WASD/L-button.png" id="2_7myrt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fedu5"]
 radius = 57.428215
@@ -47,13 +47,16 @@ _data = {
 script = ExtResource("1_wbd3v")
 
 [node name="HideArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HideArea"]
 shape = SubResource("CircleShape2D_fedu5")
 
 [node name="PickupPrompt" type="Sprite2D" parent="."]
-position = Vector2(0, -61)
-scale = Vector2(0.017283948, 0.017283948)
+visible = false
+position = Vector2(0, -73)
+scale = Vector2(0.022681074, 0.022681074)
 texture = ExtResource("2_7myrt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PickupPrompt"]
@@ -61,16 +64,3 @@ libraries = {
 &"": SubResource("AnimationLibrary_nbup2")
 }
 autoplay = "default"
-
-[node name="ShinyBackground" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 0.6, 0.4)
-z_index = -1
-scale = Vector2(0.8, 0.8)
-
-[node name="OuterCircle" type="Polygon2D" parent="ShinyBackground"]
-color = Color(1, 0.9, 0.5, 1)
-polygon = PackedVector2Array(0, -30, 8, -29, 15, -26, 21, -21, 26, -15, 29, -8, 30, 0, 29, 8, 26, 15, 21, 21, 15, 26, 8, 29, 0, 30, -8, 29, -15, 26, -21, 21, -26, 15, -29, 8, -30, 0, -29, -8, -26, -15, -21, -21, -15, -26, -8, -29, 0, -30)
-
-[node name="InnerGlow" type="Polygon2D" parent="ShinyBackground"]
-color = Color(1, 1, 0.8, 0.6)
-polygon = PackedVector2Array(0, -20, 6, -19, 10, -17, 14, -14, 17, -10, 19, -6, 20, 0, 19, 6, 17, 10, 14, 14, 10, 17, 6, 19, 0, 20, -6, 19, -10, 17, -14, 14, -17, 10, -19, 6, -20, 0, -19, -6, -17, -10, -14, -14, -10, -17, -6, -19, 0, -20)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://f6gjdam1wj4o"]
+[gd_scene load_steps=49 format=3 uid="uid://f6gjdam1wj4o"]
 
 [ext_resource type="Script" uid="uid://bp8xn4sawl26m" path="res://scripts/core/stage_loader.gd" id="1_0dvra"]
 [ext_resource type="PackedScene" uid="uid://ckcfmgsvevyhk" path="res://scene/environment/background.tscn" id="2_0sygd"]
@@ -30,8 +30,10 @@
 [ext_resource type="PackedScene" uid="uid://dtuce2wpvv1kk" path="res://scene/interactables/trap.tscn" id="28_gblns"]
 [ext_resource type="AudioStream" uid="uid://bsl6wxpju3rat" path="res://assets/sfx/sfx-duck-trap.mp3" id="29_2cice"]
 [ext_resource type="AudioStream" uid="uid://3f22qtfs2rnr" path="res://assets/sfx/sfx-lego.mp3" id="30_lrnm4"]
+[ext_resource type="PackedScene" uid="uid://bnfxn4qj6h57r" path="res://scene/interactables/hiding_place.tscn" id="31_1j8jp"]
 [ext_resource type="PackedScene" uid="uid://dnjn40pg0kryr" path="res://scene/interactables/decoy.tscn" id="31_ta7yt"]
 [ext_resource type="Texture2D" uid="uid://chu86rmjep1a3" path="res://assets/sprites/Aset Furnitur/Kamar Kakak/Decoy.png" id="32_8olug"]
+[ext_resource type="Texture2D" uid="uid://c3icw2ycy5gdv" path="res://assets/sprites/LEMARI.png" id="32_tl37t"]
 [ext_resource type="Texture2D" uid="uid://bi43ocsrewpyk" path="res://assets/sprites/Aset Furnitur/kamar mandi/gayung decoy.png" id="33_ypyoh"]
 [ext_resource type="PackedScene" uid="uid://bcf7cy8kf5xwn" path="res://scene/npc/kaka.tscn" id="34_5uk4w"]
 
@@ -348,6 +350,14 @@ visible = false
 
 [node name="Mom" parent="." instance=ExtResource("27_qdcfw")]
 position = Vector2(418, 337)
+
+[node name="HidingPlace" parent="." instance=ExtResource("31_1j8jp")]
+position = Vector2(-202, -22)
+
+[node name="Lemari" type="Sprite2D" parent="HidingPlace"]
+position = Vector2(-26.999998, -30)
+scale = Vector2(0.065368555, 0.08838586)
+texture = ExtResource("32_tl37t")
 
 [node name="PatrolPoints" type="Node2D" parent="."]
 
